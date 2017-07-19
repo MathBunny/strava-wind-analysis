@@ -31,3 +31,5 @@ npm-debug.log
 
 # The configuration file
 config.js
+
+.DS_Store
