@@ -8,6 +8,8 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
+var logout = require('./routes/logout');
+var segments = require('./routes/segments');
 
 const passport = require('passport');
 var StravaStrategy = require('passport-strava').Strategy;
@@ -48,6 +50,8 @@ passport.use(new StravaStrategy({
 app.use('/', index);
 app.use('/users', users);
 app.use('/login', login);
+app.use('/logout', logout);
+app.use('/segments', segments);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -74,7 +78,5 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(obj, done) {
   done(null, obj);
 });
-
-console.log('Started on Port 3000');
 
 module.exports = app;
