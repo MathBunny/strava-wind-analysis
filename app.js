@@ -10,6 +10,8 @@ var users = require('./routes/users');
 var login = require('./routes/login');
 var logout = require('./routes/logout');
 var segments = require('./routes/segments');
+var rides = require('./routes/rides');
+var settings = require('./routes/settings');
 
 const passport = require('passport');
 var StravaStrategy = require('passport-strava').Strategy;
@@ -52,6 +54,8 @@ app.use('/users', users);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/segments', segments);
+app.use('/rides', rides);
+app.use('/settings', settings);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
