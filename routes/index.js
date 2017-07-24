@@ -6,10 +6,10 @@ const passport = require('passport');
 router.get('/', function(req, res, next) {
   console.log(req.user);
   if (!req.isAuthenticated()){
-    res.render('login', {title: 'Welcome!'});
+    res.render('login', {title: 'Login'});
   }
   else{
-    res.render('index', {title: 'Welcome!'});
+    res.render('index', {title: 'Wind Analysis - Home'});
   }
 });
 

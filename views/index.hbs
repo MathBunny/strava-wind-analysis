@@ -5,14 +5,36 @@
         <title> Hello World </title>
     </head>
 
-    <body>
+    <body class="fw-300">
         <nav class="ink-navigation">
             <ul class="menu horizontal black">
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Post archive</a></li>
+                <div class="ink-grid">
+                    <li class="heading active"><a href="#">Home </a> </li>
+                    <li><a href="/segments">Segments</a></li>
+                    <li><a href="/rides">Rides</a></li>
+                    <li><a href="/settings">Settings</a></li>
+                    <li><a href="/logout">Logoff</a></li>
+                </div>
             </ul>
         </nav>
-        <h1>Home Page</h1>
-        <a href="/logout"> Log out </a>
+
+        <div class="ink-grid">
+            <br>
+            <p class="slab-300 section-title">Strava Wind Analysis</p>
+
+            <div class= "column-group">
+                <nav class= "ink-navigation sidebar">
+                    <div class= "all-20">
+                        <ul class="menu vertical">
+                            <li class="heading"> <p class="slab-300 section-title">Strava Wind Analysis</p> </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="all-80">
+                    <p class="fw-100"> hi </p>
+                </div>
+            </div>
+        </div>
+
     </body>
 </html>
