@@ -8,6 +8,7 @@
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/autoload.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/modernizr-all.js"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
         
     </head>
 
@@ -55,12 +56,12 @@
                             <li class="heading"> Distance </li>
                             <div class="fw-300">
                             <ul class="control unstyled">
-                                <li><input type="checkbox" id="cb5" name="cb5" value="Chimaira" checked="checked"><label for="cb5">  0km - 20km</label></li>
-                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 20km - 50km</label></li>
-                                <li><input type="checkbox" id="cb3" name="cb3" value="Motorhead" checked="checked"><label for="cb3"> 50km - 100km</label></li>
-                                <li><input type="checkbox" id="cb2" name="cb2" value="Pantera" checked="checked"><label for="cb2"> 100km - 200km</label></li>
-                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> 200km+</label></li>
-                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> Select All</label></li>
+                                <li><input type="checkbox" id="d1" checked="checked"><label for="cb5">  0km - 20km</label></li>
+                                <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
+                                <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
+                                <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
+                                <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 200km+</label></li>
+                                <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
                             </ul>
                             </div>
                         </ul>
@@ -71,14 +72,14 @@
                             <li class="heading"> Average Speed </li>
                             <div class="fw-300">
                             <ul class="control unstyled">
-                                <li><input type="checkbox" id="cb5" name="cb5" value="Chimaira" checked="checked"><label for="cb5">  0km/h - 15km/h</label></li>
-                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
-                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
-                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
-                                <li><input type="checkbox" id="cb3" name="cb3" value="Motorhead" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
-                                <li><input type="checkbox" id="cb2" name="cb2" value="Pantera" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
-                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> 37km/h+</label></li>
-                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> Select All</label></li>
+                                <li><input type="checkbox" id="s1" checked="checked"><label for="cb5">  0km/h - 15km/h</label></li>
+                                <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
+                                <li><input type="checkbox" id="s3" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
+                                <li><input type="checkbox" id="s4" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
+                                <li><input type="checkbox" id="s5" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
+                                <li><input type="checkbox" id="s6" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
+                                <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 37km/h+</label></li>
+                                <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All</label></li>
                             </ul>
                             </div>
                         </ul>
@@ -89,6 +90,26 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            let filteringGroups = new Map();
+            filteringGroups.set('d', 6);
+            filteringGroups.set('s', 8);
+
+            Array.from(filteringGroups.keys()).forEach((key) => {
+                let count = filteringGroups.get(key);
+                $('#' + key + '' + count).click(() => {
+                    for(let x = 1; x < count; x++){
+                        if ($('#' + key + '' + count).is(':checked')){
+                            $("#" + key + "" + x).prop('checked', true);
+                        }
+                        else{
+                            $("#" + key + "" + x).prop('checked', false);
+                        }
+                    }
+                });
+            });
+        </script>
 
     </body>
 </html>
