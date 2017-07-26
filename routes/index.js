@@ -6,7 +6,7 @@ const passport = require('passport');
 router.get('/', function(req, res, next) {
   console.log(req.user);
   if (!req.isAuthenticated()){
-    res.render('login', {title: 'Login'});
+    res.render('login', {title: 'Wind Analysis - Login'});
   }
   else{
     res.render('index', {title: 'Wind Analysis - Home'});
