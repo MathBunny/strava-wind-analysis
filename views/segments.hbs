@@ -1,9 +1,17 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
-        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/ink-all.min.js">
+        <!-- <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
+        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css"> -->
+        
+        <link rel="stylesheet" type="text/css" href="/stylesheets/ink-flex.min.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css">
+
+        <script type="text/javascript" src="/javascripts/holder.js"></script>
+        <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
+        <script type="text/javascript" src="/javascripts/autoload.js"></script>
+
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -24,7 +32,7 @@
         <div class="ink-grid">
             <div class="column-group">
                 <div class="all-80">
-                ...
+                    ...
                 </div>
                 <div class="all-20">
                     <nav class="ink-navigation sidebar">
@@ -32,10 +40,8 @@
                             <ul class="menu vertical">
                                 <div class="control-group all-50 small-100 tiny-100">
                                     <div class="control append-symbol">
-                                        <span>
-                                            <input type="text" name="segment" placeholder="segment id">
-                                            <i class="fa fa-search"></i>
-                                        </span>
+                                        <span><input type="text" name="segment" placeholder="segment id"></span>
+                                        <span> <i class="fa fa-search"></i> </span>
                                     </div>
                                 </div>
                             </ul>
@@ -44,15 +50,15 @@
                         <hr>
 
                         <ul class="menu vertical">
-                            <li class="heading"> Distances </li>
+                            <li class="heading"> Distance </li>
                             <div class="fw-300">
                             <ul class="control unstyled">
-                                <li><input type="checkbox" id="cb5" name="cb5" value="Chimaira" checked="checked"><label for="cb5"> 0m - 250m</label></li>
-                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 250m - 1km</label></li>
-                                <li><input type="checkbox" id="cb3" name="cb3" value="Motorhead" checked="checked"><label for="cb3"> 1km - 2.5km</label></li>
-                                <li><input type="checkbox" id="cb2" name="cb2" value="Pantera" checked="checked"><label for="cb2"> 2.5km - 5km</label></li>
-                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> 5km+</label></li>
-                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> Select All</label></li>
+                                <li><input type="checkbox" id="d1" checked="checked"><label for="cb5"> 0m - 250m</label></li>
+                                <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 250m - 1km</label></li>
+                                <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 1km - 2.5km</label></li>
+                                <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 2.5km - 5km</label></li>
+                                <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 5km+</label></li>
+                                <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
                             </ul>
                             </div>
                         </ul>
@@ -63,12 +69,30 @@
                             <li class="heading"> Rank </li>
                             <div class="fw-300">
                             <ul class="control unstyled">
-                                <li><input type="checkbox" id="cb5" name="cb5" value="Chimaira" checked="checked"><label for="cb5"> KOM / QOM</label></li>
-                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 2nd - 5th</label></li>
-                                <li><input type="checkbox" id="cb3" name="cb3" value="Motorhead" checked="checked"><label for="cb3"> 5th - 10th</label></li>
-                                <li><input type="checkbox" id="cb2" name="cb2" value="Pantera" checked="checked"><label for="cb2"> 10th - 25th</label></li>
-                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> 25th+</label></li>
-                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> Select All</label></li>
+                                <li><input type="checkbox" id="r1" checked="checked"><label for="cb5"> KOM / QOM</label></li>
+                                <li><input type="checkbox" id="r2" checked="checked"><label for="cb4"> 2nd - 5th</label></li>
+                                <li><input type="checkbox" id="r3" checked="checked"><label for="cb3"> 5th - 10th</label></li>
+                                <li><input type="checkbox" id="r4" checked="checked"><label for="cb2"> 10th - 25th</label></li>
+                                <li><input type="checkbox" id="r5" checked="checked"><label for="cb1"> 25th+</label></li>
+                                <li><input type="checkbox" id="r6" checked="checked"><label for="cb1"> Select All</label></li>
+                            </ul>
+                            </div>
+                        </ul>
+
+                        <hr>
+
+                        <ul class="menu vertical">
+                            <li class="heading"> Average Speed </li>
+                            <div class="fw-300">
+                            <ul class="control unstyled">
+                                <li><input type="checkbox" id="s1" checked="checked"><label for="cb5"> 0 - 15km/h</label></li>
+                                <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 23km/h</label></li>
+                                <li><input type="checkbox" id="s3" checked="checked"><label for="cb3"> 23km/h - 33km/h</label></li>
+                                <li><input type="checkbox" id="s4" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
+                                <li><input type="checkbox" id="s5" checked="checked"><label for="cb1"> 37km/h - 45km/h</label></li>
+                                <li><input type="checkbox" id="s6" checked="checked"><label for="cb1"> 45km/h - 57km/h </label></li>
+                                <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 57km/h+ </label></li>
+                                <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All </label></li>
                             </ul>
                             </div>
                         </ul>
@@ -79,6 +103,25 @@
                 </div>
             </div>
         </div>
+        <script>
+            let filteringGroups = new Map();
+            filteringGroups.set('d', 6);
+            filteringGroups.set('r', 6);
+            filteringGroups.set('s', 8);
 
+            Array.from(filteringGroups.keys()).forEach((key) => {
+                let count = filteringGroups.get(key);
+                $('#' + key + '' + count).click(() => {
+                    for(let x = 1; x < count; x++){
+                        if ($('#' + key + '' + count).is(':checked')){
+                            $("#" + key + "" + x).prop('checked', true);
+                        }
+                        else{
+                            $("#" + key + "" + x).prop('checked', false);
+                        }
+                    }
+                });
+            });
+        </script>
     </body>
 </html>

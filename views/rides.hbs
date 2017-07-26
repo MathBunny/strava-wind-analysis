@@ -1,7 +1,14 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
+        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink-flex.min.css">
+
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/holder.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/autoload.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/modernizr-all.js"></script>
+        
     </head>
 
     <body>
@@ -19,9 +26,68 @@
             </nav>
         </div>
 
+        <br>
+        <br>
+
         <div class="ink-grid">
-            <br>
-            <h2>Rides Page</h2>
+            <div class="column-group">
+                <div class="all-80">
+                    ...
+                </div>
+                <div class="all-20">
+                    <nav class="ink-navigation sidebar">
+                        <div class="fw-300">
+                            <ul class="menu vertical">
+                                <div class="control-group all-50 small-100 tiny-100">
+                                    <div class="control append-symbol">
+                                        <span>
+                                            <input type="text" name="segment" placeholder="segment id">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+
+                        <hr>
+
+                        <ul class="menu vertical">
+                            <li class="heading"> Distance </li>
+                            <div class="fw-300">
+                            <ul class="control unstyled">
+                                <li><input type="checkbox" id="cb5" name="cb5" value="Chimaira" checked="checked"><label for="cb5">  0km - 20km</label></li>
+                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 20km - 50km</label></li>
+                                <li><input type="checkbox" id="cb3" name="cb3" value="Motorhead" checked="checked"><label for="cb3"> 50km - 100km</label></li>
+                                <li><input type="checkbox" id="cb2" name="cb2" value="Pantera" checked="checked"><label for="cb2"> 100km - 200km</label></li>
+                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> 200km+</label></li>
+                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> Select All</label></li>
+                            </ul>
+                            </div>
+                        </ul>
+
+                        <hr>
+
+                        <ul class="menu vertical">
+                            <li class="heading"> Average Speed </li>
+                            <div class="fw-300">
+                            <ul class="control unstyled">
+                                <li><input type="checkbox" id="cb5" name="cb5" value="Chimaira" checked="checked"><label for="cb5">  0km/h - 15km/h</label></li>
+                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
+                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
+                                <li><input type="checkbox" id="cb4" name="cb4" value="Metallica" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
+                                <li><input type="checkbox" id="cb3" name="cb3" value="Motorhead" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
+                                <li><input type="checkbox" id="cb2" name="cb2" value="Pantera" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
+                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> 37km/h+</label></li>
+                                <li><input type="checkbox" id="cb1" name="cb1" value="Slayer" checked="checked"><label for="cb1"> Select All</label></li>
+                            </ul>
+                            </div>
+                        </ul>
+
+                    </nav>
+                    <hr>
+                    <button class="ink-button">Filter</button>
+                </div>
+            </div>
         </div>
 
     </body>
