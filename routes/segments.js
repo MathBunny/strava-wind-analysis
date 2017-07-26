@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     res.redirect('/');
   }
   else{
-    res.render('segments');
+    res.render('segments', {title: 'Wind Analysis - Segments'});
   }
 });
 
