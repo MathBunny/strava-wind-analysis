@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     res.redirect('/');
   }
   else{
-    res.render('rides');
+    res.render('rides', {title: 'Wind Analysis - Rides'});
   }
 });
 
