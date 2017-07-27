@@ -3,6 +3,7 @@
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink-flex.min.css">
+        <title> Wind Analysis - Rides </title>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/holder.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
@@ -37,7 +38,7 @@
                 </div>
                 <div class="all-20">
                     <nav class="ink-navigation sidebar">
-                        <div class="fw-300">
+                        <!--<div class="fw-300">
                             <ul class="menu vertical">
                                 <div class="control-group all-50 small-100 tiny-100">
                                     <div class="control append-symbol">
@@ -48,6 +49,16 @@
                                     </div>
                                 </div>
                             </ul>
+                        </div> -->
+                        <div class="fw-300">
+                            <form class="ink-form">
+                                <div class="control-group all-100 small-100 tiny-100">
+                                    <div class="control append-button" role="search">
+                                        <span><input type="text" name="name" id="name" placeholder="segment id"></span>
+                                        <button class="ink-button">Search</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
 
                         <hr>
@@ -86,7 +97,7 @@
 
                     </nav>
                     <hr>
-                    <button class="ink-button">Filter</button>
+                    <button class="ink-button">Filter Results</button>
                 </div>
             </div>
         </div>
