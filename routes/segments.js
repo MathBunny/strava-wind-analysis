@@ -51,4 +51,17 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.get('/details', (req, res, next) => {
+  if (!req.isAuthenticated()){
+    res.redirect('/');
+  }
+  else if (req.query.id == undefined){
+    res.render('error', {message: "No supplied segment id!"});
+  }
+  else{
+    console.log(req.query.id);
+    res.send("<h1> Ok </h1>");
+  }
+});
+
 module.exports = router;

@@ -38,8 +38,18 @@
                 </div>
                 <div class="all-80">
                     <div style="margin-left:20px">
+                        
                         <div id="2017-08-12">
-                            <h2 style="display: inline-block"> Correlation Scoring Algorithm <small>| August 12, 2017 </small></h2>
+                            <h2 style="display: inline-block"> Initial Release <small>| August 12, 2017 </small></h2>
+                            <p class="fw-300"> This is the initial release of the new Strava Wind Analysis website. The purpose of this website is to compute how wind influenced riders in segment leaderboards. 
+                                Unlike the previous version, this version is easier to use and doesn't require users to find segment IDs by themselves. Moreover, it features a newly design user interface.
+                                <br><br>
+                                You can find the legacy website <a href=""> here</a>.
+                                </p>
+                        </div>
+                        <hr>
+                        <div id="2017-07-30">
+                            <h2 style="display: inline-block"> Correlation Scoring Algorithm <small>| July 30, 2017 </small></h2>
                             <p class="fw-300"> The correlation scoring algorithm is the core of this site. The objective of the scoring is to provide a larger score if the user was assisted by wind more than other users.
                                 <br><br>The first step in the algorithm is to generate a vector $\vec{u}$ for the user's direction and a vector $\vec{w}$ for the wind's direction. 
                                 Now, take the two vectors and make them unit vectors, that is $\left \| \vec{u} \right \| = 1, \left \| \vec{w} \right \| = 1$.
@@ -47,9 +57,8 @@
                                 After, add the two vectors (tip to tail). Letting $\vec{z} = \vec{u} + \vec{w}$, the correlation score can be found as the following relation. Since $\vec{z}, \vec{u}, \vec{w} \in \mathbb{R}^{2}$, then
                                 let $\vec{z}_{x}$ be the first index and $\vec{z}_{y}$ be the second. The score is $\vec{z}$'s translation in a favourable shift ($\Delta y$ + $\Delta x$), more formally:
                                 
-                                <br>
-                                <br>
-                                correlation score = $\left\{\begin{matrix}
+                                <br><br>
+                                Correlation score = $\left\{\begin{matrix}
                                 \vec{z}_{x} - \vec{u}_{x} \mid  \vec{u}_x \geq 0
                                 \\ -\vec{z}_{x} - \vec{u}_x \mid \vec{u}_x < 0
 
@@ -59,15 +68,7 @@
                                 \\ -\vec{z}_{y} - \vec{u}_y \mid \vec{u}_y < 0
 
                                 \end{matrix}\right. $
-
-
-                                </p>
-                        </div>
-                        <hr>
-                        <div id="2017-07-30">
-                            <h2 style="display: inline-block"> Initial Release <small>| July 30, 2017 </small></h2>
-                            <p class="fw-300"> This is the initial release of the new Strava Wind Analysis website. The purpose of this website is to compute how wind influenced riders in segment leaderboards. 
-                                Unlike the previous version, this version is easier to use and doesn't require users to find segment IDs by themselves. Moreover, it features a newly design user interface.</p>
+                            </p>
                         </div>
                         
                     </div>
@@ -76,6 +77,9 @@
         </div>
 
         <script type="text/x-mathjax-config">
+            console.log("{{{title}}}");
+            let a = "{{{title}}}";
+            console.log(a);
             MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
         </script>
 
