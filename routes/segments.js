@@ -29,9 +29,11 @@ router.get('/', function(req, res, next) {
           requestify.get("https://www.strava.com/api/v3/activities/" + activity.id + "?access_token=" + req.user.accessToken).then(activityDetailsResponse => {
             let activityDetails = JSON.parse(activityDetailsResponse.body);
             activityDetails.segment_efforts.forEach(segment => {
+              segment = segment.segment;
               if (!segmentIDs.has(segment.id) && !segmentIDs.has(segment.name)){
                 segmentIDs.add(segment.id);
                 segmentIDs.add(segment.name);
+                
                 segments.push({name: segment.name, id: segment.id, distance: segment.distance, average_grade: segment.average_grade, maximum_grade: segment.maximum_grade});
               }
             });
