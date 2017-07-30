@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
         <title> Wind Analysis - Home </title>
     </head>
 
@@ -22,19 +23,37 @@
 
         <div class="ink-grid">
             <br>
-            <h2>Home Page</h2>
 
             <div class= "column-group">
-                <nav class= "ink-navigation sidebar">
-                    <div class= "all-20">
-                        <ul class="menu vertical">
-                            <li class="heading"> <p> Left bar</p> </li>
+                <div class= "all-20">
+                    <nav class= "ink-navigation sidebar">
+                        <ul>
+                            <li class="fw-200"> Post History </li>
+                            <hr>
+                            <li class="slab-100"> <a href=""> 2017-08-12 </a></li>
+                            <li class="slab-100"> <a href="#2017-07-30"> 2017-07-30 </a></li>
+                            
                         </ul>
-                    </div>
-
-                </nav>
+                    </nav>
+                </div>
                 <div class="all-80">
-                    <p class="fw-100"> Right Bar </p>
+                    <div style="margin-left:20px">
+                        <div id="2017-08-12">
+                            <h2 style="display: inline-block"> Correlation Scoring Algorithm <small>| August 12, 2017 </small></h2>
+                            <p class="fw-300"> The correlation scoring algorithm is the backbone of this application. The objective of the scoring is to provide a larger score if the user was assisted by wind more than other users.
+                                The first step in the algorithm is to generate a vector for the user's direction and a vector for the wind's direction. This can be easily created by taking the longitude/latitude from the segment start/end,
+                                and similarily take the wind direction and convert it to a vector. Now, take the two vectors and make them unit vectors, that is, the magnitude of the vectors is 1. After, add the vectors, by placing them tip to tail.
+                                The result is now the net change in the x and y coordinate of the resultant vector!
+                                </p>
+                        </div>
+                        <hr>
+                        <div id="2017-07-30">
+                            <h2 style="display: inline-block"> Initial Release <small>| July 30, 2017 </small></h2>
+                            <p class="fw-300"> This is the initial release of the new Strava Wind Analysis website. The purpose of this website is to compute how wind influenced riders in segment leaderboards. 
+                                Unlike the previous version, this version is easier to use and doesn't require users to find segment IDs by themselves. Moreover, it features a newly design user interface.</p>
+                        </div>
+                        
+                    </div>
                 </div>
             </div>
         </div>
