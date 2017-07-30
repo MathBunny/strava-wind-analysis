@@ -41,22 +41,19 @@
                                         <th class="align-left">Segment Name</th>
                                         <th class="align-left">Segment Information</th>
                                     </tr>
+                                    {{#each segments}}
+                                        <tr>
+                                            {{#with this}}
+                                                <td><div class="fw-150">{{name}}</div></td>
+                                                <td><div class="fw-100">{{distance}}m, </div></td>
+                                            {{/with}}
+                                        </tr>
+                                    {{/each}}
                                 </div>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="fw-200">
-                                            Don Mills Sprint
-                                        </div>
-                                        
-                                    </td>
-                                    <td>
-                                    <div class="fw-100">
-                                            2.0km, 3.6% grade, 170 Participants
-                                    </div>
-                                    </td>
-                                </tr>
+                                
+                               
                             </tbody>
                         </table>    
                     </div>            
@@ -156,7 +153,7 @@
             filteringGroups.set('r', 6);
             filteringGroups.set('s', 8);
 
-            Array.from(filteringGroups.keys()).forEach((key) => {
+            Array.from(filteringGroups.keys()).forEach(key => {
                 let count = filteringGroups.get(key);
                 $('#' + key + '' + count).click(() => {
                     for(let x = 1; x < count; x++){
@@ -169,6 +166,7 @@
                     }
                 });
             });
+
         </script>
     </body>
 </html>

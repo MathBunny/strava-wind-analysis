@@ -13,8 +13,7 @@ router.get('/', passport.authenticate('strava', { scope: ['public'] }),
 router.get('/callback', 
     passport.authenticate('strava', { failureRedirect: '/login' }),
     function(req, res) {
-        console.log(req);
-        //req.user.token = req.query.code;
+        console.log(req.user.accessToken);
         res.redirect('/');
 });
 
