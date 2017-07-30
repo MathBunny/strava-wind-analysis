@@ -59,8 +59,22 @@ router.get('/details', (req, res, next) => {
     res.render('error', {message: "No supplied segment id!"});
   }
   else{
-    console.log(req.query.id);
-    res.send("<h1> Ok </h1>");
+    let leaderboard = [];
+    let segmentID = req.query.id;
+    requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "/leaderboard?&access_token=" + req.user.accessToken).then(response => {
+        const leaderboardResponse = JSON.parse(response.body);
+        leaderboardResponse.entries.forEach(effort => {
+          leaderboard.push(effort);
+        });
+        // Get segment information
+        // https://www.strava.com/api/v3/segments/
+        requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "&access_token=" + req.user.accessToken).then(segmentResponse => {
+          const segmentDetails = segmentResponse.body;
+          res.render('details', {segmentDetails: segmentDetails, leaderboard: leaderboard});
+        });
+        res.send("<h1> Ok </h1>");
+    });
+    
   }
 });
 
