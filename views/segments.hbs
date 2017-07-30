@@ -39,18 +39,22 @@
                                 <div class="fw-500">
                                     <tr>
                                         <th class="align-left">Segment Name</th>
-                                        <th class="align-left">Segment Information & Statistics</th>
+                                        <th class="align-left">Location</th>
+                                        <th class="align-left">Distance</th>
+                                        <th class="align-left">ID</th>
                                     </tr>
                                 </div>
                             </thead>
                             <tbody>
                                 {{#each segments}}
-                                    <tr>
-                                        {{#with this}}
-                                            <td><div class="fw-100">{{name}}</div></td>
-                                            <td><div class="fw-100">{{distance}}m, {{average_grade}}% average slope, {{maximum_grade}}% maximum slope</div></td>
-                                        {{/with}}
-                                    </tr>
+                                    {{#with this}}
+                                            <tr class="fw-100">
+                                                <td>{{name}} ({{average_grade}}%)</td>
+                                                <td>{{city}}, {{country}}</td>
+                                                <td>{{distance}}m</td>
+                                                <td>{{id}}</td>
+                                            </tr>
+                                    {{/with}}
                                 {{/each}}
                             </tbody>
                         </table>    
