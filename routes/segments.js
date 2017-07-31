@@ -66,22 +66,24 @@ router.get('/details', (req, res, next) => {
         leaderboardResponse.entries.forEach(effort => {
           leaderboard.push(effort);
         });
-        console.log("DONE !");
         // Get segment information
         // https://www.strava.com/api/v3/segments/
-        requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "&access_token=" + req.user.accessToken).then(segmentResponse => {
-          console.log("GOT IT");
-          const segmentDetails = segmentResponse.body;
-          const segmentData = segmentDetails;
+        requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "?&access_token=" + req.user.accessToken).then(segmentResponse => {
+          let segmentDetails = JSON.parse(segmentResponse.body);
+          let segmentData = segmentDetails;
+          segmentData.distance /= 1000;
           segmentData.leaderboard = leaderboard;
-          res.render('details', leaderboard);
+          res.render('details', segmentData);
+          console.log('ok');
+
         }).fail(errorResponse => {
           let errorMessage = JSON.parse(errorResponse.body);
           res.render('error', {message: errorMessage.message});
-          console.log(errorResponse);
         });
+    }).fail(errorResponse => {
+      let errorMessage = JSON.parse(errorResponse.body);
+      res.render('error', {message: errorMessage.message});
     });
-    
   }
 });
 

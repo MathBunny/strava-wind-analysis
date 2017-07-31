@@ -1,9 +1,18 @@
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
+        <!-- <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
+        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css"> -->
+        
+        <link rel="stylesheet" type="text/css" href="/stylesheets/ink-flex.min.css">
+        <link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css">
+        <title> Wind Analysis - Segments </title>
+
+        <script type="text/javascript" src="/javascripts/holder.js"></script>
+        <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
+        <script type="text/javascript" src="/javascripts/autoload.js"></script>
+
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-        <title> Wind Analysis - Details </title>
+        <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -11,77 +20,78 @@
             <nav class="ink-navigation">
                 <ul class="menu horizontal black">
                     <div class="ink-grid">
-                        <li><a href="#">Home </a> </li>
-                        <li class="heading active"><a href="/segments">Segments</a></li>
-                        <li><a href="/rides">Rides</a></li>
-                        <li><a href="/settings">Settings</a></li>
-                        <li><a href="/logout">Logoff</a></li>
+                        <li><a href="../">Home </a> </li>
+                        <li class="heading active"><a href="">Segments</a></li>
+                        <li><a href="../rides">Rides</a></li>
+                        <li><a href="../settings">Settings</a></li>
+                        <li><a href="../logout">Logoff</a></li>
                     </div>
                 </ul>
             </nav>
         </div>
-
+        <br><br>
         <div class="ink-grid">
-            <br>
-
-            <div class= "column-group">
-                <div class= "all-40">
-                    <nav class= "ink-navigation sidebar">
-                        <ul>
-                            <li class="fw-200"> Post History </li>
-                            <hr>
-                            <li class="slab-100"> {{name}}</li>
-                            <li class="slab-100"> {{city}}, {{country}}</li>
-                            
-                        </ul>
-                    </nav>
-                </div>
-                <div class="all-60">
-                    <div style="margin-left:20px">
-                        
-                        <div id="2017-08-12">
-                            <h2 style="display: inline-block"> Initial Release <small>| August 12, 2017 </small></h2>
-                            <p class="fw-300"> This is the initial release of the new Strava Wind Analysis website. The purpose of this website is to compute how wind influenced riders in segment leaderboards. 
-                                Unlike the previous version, this version is easier to use and doesn't require users to find segment IDs by themselves. Moreover, it features a newly designed user interface.
-                                <br><br>
-                                You can find the legacy website <a href=""> here</a>.
-                                </p>
-                        </div>
+            <div class="column-group">
+                <div class="all-30">
+                    <div style="margin: 10px">
+                        <center> <h3 class="fw-400"> {{name}} </h3> </center>
                         <hr>
-                        <div id="2017-07-30">
-                            <h2 style="display: inline-block"> Correlation Scoring <small>| July 30, 2017 </small></h2>
-                            <p class="fw-300"> The correlation scoring algorithm is the core of this site. The objective of the scoring is to provide a larger score if the user was assisted by wind more than other users.
-                                <br><br>The first step in the algorithm is to generate a vector $\vec{u}$ for the user's direction and a vector $\vec{w}$ for the wind's direction. 
-                                Now, take the two vectors and make them unit vectors, that is $\left \| \vec{u} \right \| = 1, \left \| \vec{w} \right \| = 1$.
-                                To account for speed, multiply $\vec{w}$ by the speed in km/h. To keep proportions the same, multiply $\vec{u}$ by $50$ as well.
-                                After, add the two vectors (tip to tail). Letting $\vec{z} = \vec{u} + \vec{w}$, the correlation score can be found as the following relation. Since $\vec{z}, \vec{u}, \vec{w} \in \mathbb{R}^{2}$, then
-                                let $\vec{z}_{x}$ be the first index and $\vec{z}_{y}$ be the second. The score is $\vec{z}$'s translation in a favourable shift ($\Delta y$ + $\Delta x$), more formally:
-                                
-                                <br><br>
-                                Correlation score = $\left\{\begin{matrix}
-                                \vec{z}_{x} - \vec{u}_{x} \mid  \vec{u}_x \geq 0
-                                \\ -\vec{z}_{x} - \vec{u}_x \mid \vec{u}_x < 0
-
-                                \end{matrix}\right. $ + 
-                                $\left\{\begin{matrix}
-                                \vec{z}_{y} - \vec{u}_{y} \mid  \vec{u}_y \geq 0
-                                \\ -\vec{z}_{y} - \vec{u}_y \mid \vec{u}_y < 0
-
-                                \end{matrix}\right. $
-                            </p>
-                        </div>
-                        
+                        <nav class= "ink-navigation sidebar">
+                            <ul>
+                                <li> Average Slope: <div class="slab-100" style="display: inline"> {{average_grade}}% </div></li>
+                                <li> Maximum Slope: <div class="slab-100" style="display: inline"> {{maximum_grade}}% </div></li>
+                                <li> Distance: <div class="slab-100" style="display: inline"> {{distance}}km </div></li>
+                                <li> Location: <div class="slab-100" style="display: inline"> {{city}}, {{country}} </div></li>
+                            </ul>
+                        </nav>
+                    </div>            
+                </div>
+                <div class="all-70">
+                    <div style="margin: 10px">
+                        <center> <h3 class="fw-400"> Segment Leaderboard</h3> </center>
+                        <hr>
+                        <table class="ink-table hover alternating">
+                            <thead>
+                                <tr>
+                                    <th class="align-left">Rank</th>
+                                    <th class="align-left">Athlete Name</th>
+                                    <th class="align-left">Date</th>
+                                    <th class="align-left">Speed</th>
+                                    <th class="align-left">Wind Speed</th>
+                                    <th class="align-left">Wind Direction</th>
+                                    <th class="align-left">Ride Direction</th>
+                                    <th class="align-left">Influence Rating</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-300">
+                                <tr>
+                                    <td>1st</td>
+                                    <td>John Joe</td>
+                                    <td>2015-01-02</td>
+                                    <td>33.4km/h</td>
+                                    <td>12.3km/h</td>
+                                    <td>SW</td>
+                                    <td>SE</td>
+                                    <td>+1.88</td>
+                                </tr>
+                                 <tr>
+                                    <td>2nd</td>
+                                    <td>Bob Smith</td>
+                                    <td>2017-01-02</td>
+                                    <td>24.4km/h</td>
+                                    <td>1.3km/h</td>
+                                    <td>NW</td>
+                                    <td>SE</td>
+                                    <td>+0.32</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+        <script>
 
-        <script type="text/x-mathjax-config">
-            console.log("{{{title}}}");
-            let a = "{{{title}}}";
-            console.log(a);
-            MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
         </script>
-
     </body>
 </html>
