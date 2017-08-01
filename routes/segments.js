@@ -75,10 +75,12 @@ router.get('/details', (req, res, next) => {
           segmentData.distance = segmentData.distance.toFixed(2);
           segmentData.leaderboard = leaderboard;
           segmentData.participants = leaderboardResponse.entry_count;
+          segmentData.leaderboardLink = "https://www.strava.com/segments/" + segmentID + "?filter=overall";
 
           segmentData.leaderboard.forEach(effort => {
             effort.start_date = effort.start_date.substring(0, 10);
             effort.rank = effort.rank + ((effort.rank % 10 == 1) ? ("st") : (effort.rank % 10 == 2) ? ("nd") : (effort.rank % 10 == 3) ? "rd" : "th");
+            effort.speed = (((effort.distance * 3.6) / effort.elapsed_time).toFixed(2)) + "km/h";
           });
 
           res.render('details', segmentData);
