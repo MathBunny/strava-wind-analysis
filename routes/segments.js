@@ -72,7 +72,15 @@ router.get('/details', (req, res, next) => {
           let segmentDetails = JSON.parse(segmentResponse.body);
           let segmentData = segmentDetails;
           segmentData.distance /= 1000;
+          segmentData.distance = segmentData.distance.toFixed(2);
           segmentData.leaderboard = leaderboard;
+          segmentData.participants = leaderboardResponse.entry_count;
+
+          segmentData.leaderboard.forEach(effort => {
+            effort.start_date = effort.start_date.substring(0, 10);
+            effort.rank = effort.rank + ((effort.rank % 10 == 1) ? ("st") : (effort.rank % 10 == 2) ? ("nd") : (effort.rank % 10 == 3) ? "rd" : "th");
+          });
+
           res.render('details', segmentData);
           console.log('ok');
 

@@ -46,7 +46,7 @@ passport.use(new StravaStrategy({
     function(accessToken, refreshToken, profile, done) {
         // asynchronous verification, for effect...
         process.nextTick(function () {
-            return done(null, profile);
+            return done(null, profile); // add it here
     });
 }));
 

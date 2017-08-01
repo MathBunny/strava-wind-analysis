@@ -42,7 +42,10 @@
                                 <li> Maximum Slope: <div class="slab-100" style="display: inline"> {{maximum_grade}}% </div></li>
                                 <li> Distance: <div class="slab-100" style="display: inline"> {{distance}}km </div></li>
                                 <li> Location: <div class="slab-100" style="display: inline"> {{city}}, {{country}} </div></li>
+                                <li> Participants: <div class="slab-100" style="display: inline"> {{participants}} athletes</div></li>
                             </ul>
+                            <hr>
+                            <img src="http://cdn.newsapi.com.au/image/v1/0a0ceda4bda18e664ffac1a8fa86a7d1">
                         </nav>
                     </div>            
                 </div>
@@ -60,30 +63,24 @@
                                     <th class="align-left">Wind Speed</th>
                                     <th class="align-left">Wind Direction</th>
                                     <th class="align-left">Ride Direction</th>
-                                    <th class="align-left">Influence Rating</th>
+                                    <th class="align-left">Influence</th>
                                 </tr>
                             </thead>
                             <tbody class="fw-300">
-                                <tr>
-                                    <td>1st</td>
-                                    <td>John Joe</td>
-                                    <td>2015-01-02</td>
-                                    <td>33.4km/h</td>
-                                    <td>12.3km/h</td>
-                                    <td>SW</td>
-                                    <td>SE</td>
-                                    <td>+1.88</td>
-                                </tr>
-                                 <tr>
-                                    <td>2nd</td>
-                                    <td>Bob Smith</td>
-                                    <td>2017-01-02</td>
-                                    <td>24.4km/h</td>
-                                    <td>1.3km/h</td>
-                                    <td>NW</td>
-                                    <td>SE</td>
-                                    <td>+0.32</td>
-                                </tr>
+                                {{#each leaderboard}}
+                                    {{#with this}}
+                                            <tr class="fw-100">
+                                                <td>{{rank}}</td>
+                                                <td>{{athlete_name}}</td>
+                                                <td>{{start_date}}</td>
+                                                <td>33.4km/h</td>
+                                                <td>12.3km/h</td>
+                                                <td>SW</td>
+                                                <td>SE</td>
+                                                <td>+1.88</td>
+                                            </tr>
+                                    {{/with}}
+                                {{/each}}
                             </tbody>
                         </table>
                     </div>
