@@ -9,6 +9,7 @@ var path;
 
 /* This method initializes the Google maps and outputs it on the page */
 function initialize() {
+    console.log("OK " + latitude + " " + longitude);
     var myLatlng = new google.maps.LatLng(latitude, longitude);
     var myOptions = {
         zoom: 14,

@@ -66,16 +66,18 @@ router.get('/details', (req, res, next) => {
         leaderboardResponse.entries.forEach(effort => {
           leaderboard.push(effort);
         });
-        
+
         // Get segment information
         requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "?&access_token=" + req.user.accessToken).then(segmentResponse => {
           let segmentDetails = JSON.parse(segmentResponse.body);
-          let segmentData = segmentDetails;
+          let segmentData = segmentDetails; // ?? 
           segmentData.distance /= 1000;
           segmentData.distance = segmentData.distance.toFixed(2);
           segmentData.leaderboard = leaderboard;
           segmentData.participants = leaderboardResponse.entry_count;
           segmentData.leaderboardLink = "https://www.strava.com/segments/" + segmentID + "?filter=overall";
+          segmentData.latitude = segmentData.start_latlng[0];
+          segmentData.longitude = segmentData.start_latlng[1];
 
           segmentData.leaderboard.forEach(effort => {
             effort.start_date = effort.start_date.substring(0, 10);

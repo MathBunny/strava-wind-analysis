@@ -6,7 +6,7 @@
         <link rel="stylesheet" type="text/css" href="/stylesheets/ink-flex.min.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="/stylesheets/map.css">
-        <title> Wind Analysis - Segments </title>
+        <title> Wind Analysis - Segment Details </title>
 
         <script type="text/javascript" src="/javascripts/holder.js"></script>
         <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
@@ -93,7 +93,11 @@
             </div>
         </div>
         <script>
+            //console.log({{latitude}} + " " + {{longitude}});
+            longitude = parseFloat({{longitude}}).toFixed(6);
+            latitude = parseFloat({{latitude}}).toFixed(6);
             initialize();
+
         </script>
     </body>
 </html>

@@ -170,8 +170,14 @@
             });
             
             $('.ink-form').submit(function(){
-                window.location = window.location + "/details?id=" + $("#segment-id").val();
-                return false;
+                if ($("#segment-id").val() == ""){
+                    alert("Please enter a segment ID");
+                    return false;
+                }
+                else{
+                    window.location = window.location + "/details?id=" + $("#segment-id").val();
+                    return false;
+                }
             });
             $('#filter').click(() => {
                 alert("Sorry, feature is coming soon!");
