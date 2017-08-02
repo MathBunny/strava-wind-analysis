@@ -87,8 +87,8 @@
                             <form class="ink-form">
                                 <div class="control-group all-100 small-100 tiny-100">
                                     <div class="control append-button" role="search">
-                                        <span><input type="text" name="name" id="name" placeholder="segment id"></span>
-                                        <button class="ink-button">Search</button>
+                                        <span><input type="text" name="" id="segment-id" placeholder="segment id"></span>
+                                        <button class="ink-button" id="search-button">Search</button>
                                     </div>
                                 </div>
                             </form>
@@ -167,6 +167,11 @@
                         }
                     }
                 });
+            });
+            
+            $('.ink-form').submit(function(){
+                window.location = window.location + "/details?id=" + $("#segment-id").val();
+                return false;
             });
 
         </script>
