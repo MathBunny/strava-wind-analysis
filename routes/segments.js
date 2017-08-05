@@ -96,30 +96,23 @@ router.get('/details', (req, res, next) => {
             effort.speed = (((effort.distance * 3.6) / effort.elapsed_time).toFixed(2)) + "km/h";
             
             var darkskyrequest = "https://api.forecast.io/forecast/81c978e8db7b136e4bf3c8988c2d90a6/" + segmentData.latitude + "," + segmentData.longitude + "," + effort.start_date_iso + "?units=ca";
-            console.log(darkskyrequest);
-
-
             requestify.get(darkskyrequest).then(windDataResponse => {
               let windData = JSON.parse(windDataResponse.body);
               effort.wind_speed = windData.hourly.data[12].windSpeed;
               effort.wind_speed_str = effort.wind_speed.toFixed(2);
               effort.wind_bearing = windData.hourly.data[12].windBearing;
               effort.wind_bearing_str = convertToCardinal(effort.wind_bearing);
+              effort.ride_bearing_str = longLatToCardinal(segmentData.start_latlng[0], segmentData.start_latlng[1], segmentData.end_latlng[0], segmentData.end_latlng[1]);
+
               count++;
-              console.log(count + " " + segmentData.leaderboard.length);
               if (count == segmentData.leaderboard.length){
                 res.render('details', segmentData);
               }
-              console.log(effort.wind_speed);
-              console.log(effort.wind_bearing);
             }).fail(err => {
               res.render('error', {message: error});
               console.log(err);
             });
           });
-
-         // res.render('details', segmentData);
-
         }).fail(errorResponse => {
           let errorMessage = JSON.parse(errorResponse.body);
           res.render('error', {message: errorMessage.message});
@@ -130,6 +123,33 @@ router.get('/details', (req, res, next) => {
     });
   }
 });
+
+function longLatToCardinal(lat1, long1, lat2, long2){
+    margin = Math.PI/90; // 2 degree tolerance for cardinal directions
+    o = lat1 - lat2;
+    a = long1 - long2;
+    angle = Math.atan2(o,a);
+
+    if (angle > -margin && angle < margin)
+            return "E";
+    else if (angle > Math.PI/2 - margin && angle < Math.PI/2 + margin)
+            return "N";
+    else if (angle > Math.PI - margin && angle < -Math.PI + margin)
+            return "W";
+    else if (angle > -Math.PI/2 - margin && angle < -Math.PI/2 + margin)
+            return "S";
+    
+    if (angle > 0 && angle < Math.PI/2) 
+        return "NE";
+    else if (angle > Math.PI/2 && angle < Math.PI) {
+        return "NW";
+    } else if (angle > -Math.PI/2 && angle < 0) {
+        return "SE";
+    } else {
+        return "SW";
+    }
+    return "error";
+}
 
 function convertToCardinal(q){ 
     s=String;
