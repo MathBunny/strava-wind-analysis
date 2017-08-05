@@ -89,8 +89,6 @@ router.get('/details', (req, res, next) => {
           }
           segmentData.map.polyline = polyline;
 
-          console.log(segmentData.map.polyline);
-
           segmentData.leaderboard.forEach(effort => {
             effort.start_date = effort.start_date.substring(0, 10);
             effort.rank = effort.rank + ((effort.rank % 10 == 1) ? ("st") : (effort.rank % 10 == 2) ? ("nd") : (effort.rank % 10 == 3) ? "rd" : "th");

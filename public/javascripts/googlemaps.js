@@ -18,8 +18,6 @@ function initialize() {
 
     var map = new google.maps.Map(document.getElementById("map"), myOptions);
     path.polyline = path.polyline.replace(/&#x60;/g, '`');
-    console.log(path.polyline);
-    console.log("^new");
     var decodedPath = google.maps.geometry.encoding.decodePath(path.polyline);
     var decodedLevels = decodeLevels("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 
