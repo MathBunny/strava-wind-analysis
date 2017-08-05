@@ -104,6 +104,7 @@ router.get('/details', (req, res, next) => {
               effort.wind_speed = windData.hourly.data[12].windSpeed;
               effort.wind_speed_str = effort.wind_speed.toFixed(2);
               effort.wind_bearing = windData.hourly.data[12].windBearing;
+              effort.wind_bearing_str = convertToCardinal(effort.wind_bearing);
               count++;
               console.log(count + " " + segmentData.leaderboard.length);
               if (count == segmentData.leaderboard.length){
@@ -112,6 +113,7 @@ router.get('/details', (req, res, next) => {
               console.log(effort.wind_speed);
               console.log(effort.wind_bearing);
             }).fail(err => {
+              res.render('error', {message: error});
               console.log(err);
             });
           });
@@ -128,5 +130,18 @@ router.get('/details', (req, res, next) => {
     });
   }
 });
+
+function convertToCardinal(q){ 
+    s=String;
+    s.prototype.a=s.prototype.replace;
+    var a=q/11.25,a=a+0.5|0,b,k,c=a,d=c%8,c=c/8|0,e=["north","east","south","west"],f,g,h;
+    f=e[c];
+    g=e[(c+1)%4];
+    h=f==e[0]|f==e[2]?f+g:g+f;
+    b="1;1 by 2;1-C;C by 1;C;C by 2;2-C;2 by 1".split(";")[d].a(1,f).a(2,g).a("C",h);
+    k=b.a(/north/g,"N").a(/east/g,"E").a(/south/g,"S").a(/west/g,"W").a(/by/g,"").a(/[\s-]/g,"");
+    b=b[0].toUpperCase()+b.slice(1); //credits to overflow for such a short solution!
+    return(k)
+}
 
 module.exports = router;
