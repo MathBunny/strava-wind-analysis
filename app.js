@@ -17,7 +17,11 @@ const passport = require('passport');
 var StravaStrategy = require('passport-strava').Strategy;
 
 var app = express();
-const config = require('./config.js') || {};
+let config = {};
+
+try{ 
+  config = require('./config.js');
+} catch(e){console.log("Configuration not found, resorting to ENV variables")}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
