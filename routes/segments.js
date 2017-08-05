@@ -78,6 +78,18 @@ router.get('/details', (req, res, next) => {
           segmentData.leaderboardLink = "https://www.strava.com/segments/" + segmentID + "?filter=overall";
           segmentData.latitude = segmentData.start_latlng[0];
           segmentData.longitude = segmentData.start_latlng[1];
+          let polyline = "";
+          for(var x = 0; x < segmentData.map.polyline.length; x++){
+            if (segmentData.map.polyline.charAt(x) != '\\'){
+              polyline += segmentData.map.polyline.charAt(x);
+            }
+            else{
+              polyline += '\\' + segmentData.map.polyline.charAt(x);
+            }
+          }
+          segmentData.map.polyline = polyline;
+
+          console.log(segmentData.map.polyline);
 
           segmentData.leaderboard.forEach(effort => {
             effort.start_date = effort.start_date.substring(0, 10);

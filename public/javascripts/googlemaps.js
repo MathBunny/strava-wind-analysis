@@ -9,7 +9,6 @@ var path;
 
 /* This method initializes the Google maps and outputs it on the page */
 function initialize() {
-    console.log("OK " + latitude + " " + longitude);
     var myLatlng = new google.maps.LatLng(latitude, longitude);
     var myOptions = {
         zoom: 14,
@@ -18,7 +17,10 @@ function initialize() {
     }
 
     var map = new google.maps.Map(document.getElementById("map"), myOptions);
-    /*var decodedPath = google.maps.geometry.encoding.decodePath(path.polyline);
+    path.polyline = path.polyline.replace(/&#x60;/g, '`');
+    console.log(path.polyline);
+    console.log("^new");
+    var decodedPath = google.maps.geometry.encoding.decodePath(path.polyline);
     var decodedLevels = decodeLevels("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
 
     var setRegion = new google.maps.Polyline({
@@ -28,7 +30,7 @@ function initialize() {
         strokeOpacity: 1.0,
         strokeWeight: 2,
         map: map
-    });*/
+    });
 }
 
 /* This method decodes the map from the summary polyline */

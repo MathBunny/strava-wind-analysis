@@ -93,11 +93,17 @@
             </div>
         </div>
         <script>
-            //console.log({{latitude}} + " " + {{longitude}});
             longitude = parseFloat({{longitude}}).toFixed(6);
             latitude = parseFloat({{latitude}}).toFixed(6);
-            initialize();
 
+            path = [];
+            {{#with map}}
+                path["id"] = "{{id}}";
+                path["polyline"] = "{{polyline}}";
+                path["resource_state"] = {{resource_state}};
+            {{/with}}
+            console.log(path);
+            initialize();
         </script>
     </body>
 </html>
