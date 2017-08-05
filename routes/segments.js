@@ -69,8 +69,7 @@ router.get('/details', (req, res, next) => {
 
         // Get segment information
         requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "?&access_token=" + req.user.accessToken).then(segmentResponse => {
-          let segmentDetails = JSON.parse(segmentResponse.body);
-          let segmentData = segmentDetails; // ?? 
+          let segmentData = JSON.parse(segmentResponse.body);
           segmentData.distance /= 1000;
           segmentData.distance = segmentData.distance.toFixed(2);
           segmentData.leaderboard = leaderboard;
@@ -90,9 +89,16 @@ router.get('/details', (req, res, next) => {
           segmentData.map.polyline = polyline;
 
           segmentData.leaderboard.forEach(effort => {
+            effort.start_date_iso = effort.start_date;
             effort.start_date = effort.start_date.substring(0, 10);
             effort.rank = effort.rank + ((effort.rank % 10 == 1) ? ("st") : (effort.rank % 10 == 2) ? ("nd") : (effort.rank % 10 == 3) ? "rd" : "th");
             effort.speed = (((effort.distance * 3.6) / effort.elapsed_time).toFixed(2)) + "km/h";
+            
+            var darkskyrequest = "https://api.forecast.io/forecast/81c978e8db7b136e4bf3c8988c2d90a6/" + segmentData.latitude + "," + segmentData.longitude + "," + effort.start_date_iso + "?units=ca";
+            requestify.get(darkskyrequest).then(windData => {
+              effort.windSpeed = windData.hourly.data[12].windSpeed;
+              effort.windBearing = windData.hourly.data[12].windBearing;
+            });
           });
 
           res.render('details', segmentData);
