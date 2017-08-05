@@ -17,7 +17,7 @@ const passport = require('passport');
 var StravaStrategy = require('passport-strava').Strategy;
 
 var app = express();
-const config = require('./config.js');
+const config = require('./config.js') || {};
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -39,9 +39,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new StravaStrategy({
-        clientID: config.clientID,
-        clientSecret: config.clientSecret,
-        callbackURL: "http://localhost:3000/login/callback"
+        clientID: config.clientID || process.env.CLIENT_ID,
+        clientSecret: config.clientSecret || process.env.CLIENT_SECRET,
+        callbackURL: process.env.CALLBACK_URL || "http://localhost:3000/login/callback"
     },
     function(accessToken, refreshToken, profile, done) {
         // asynchronous verification, for effect...
