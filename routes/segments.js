@@ -88,6 +88,7 @@ router.get('/details', (req, res, next) => {
           }
           segmentData.map.polyline = polyline;
 
+          let count = 0;
           segmentData.leaderboard.forEach(effort => {
             effort.start_date_iso = effort.start_date;
             effort.start_date = effort.start_date.substring(0, 10);
@@ -95,13 +96,27 @@ router.get('/details', (req, res, next) => {
             effort.speed = (((effort.distance * 3.6) / effort.elapsed_time).toFixed(2)) + "km/h";
             
             var darkskyrequest = "https://api.forecast.io/forecast/81c978e8db7b136e4bf3c8988c2d90a6/" + segmentData.latitude + "," + segmentData.longitude + "," + effort.start_date_iso + "?units=ca";
-            requestify.get(darkskyrequest).then(windData => {
-              effort.windSpeed = windData.hourly.data[12].windSpeed;
-              effort.windBearing = windData.hourly.data[12].windBearing;
+            console.log(darkskyrequest);
+
+
+            requestify.get(darkskyrequest).then(windDataResponse => {
+              let windData = JSON.parse(windDataResponse.body);
+              effort.wind_speed = windData.hourly.data[12].windSpeed;
+              effort.wind_speed_str = effort.wind_speed.toFixed(2);
+              effort.wind_bearing = windData.hourly.data[12].windBearing;
+              count++;
+              console.log(count + " " + segmentData.leaderboard.length);
+              if (count == segmentData.leaderboard.length){
+                res.render('details', segmentData);
+              }
+              console.log(effort.wind_speed);
+              console.log(effort.wind_bearing);
+            }).fail(err => {
+              console.log(err);
             });
           });
 
-          res.render('details', segmentData);
+         // res.render('details', segmentData);
 
         }).fail(errorResponse => {
           let errorMessage = JSON.parse(errorResponse.body);
