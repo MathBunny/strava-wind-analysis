@@ -6,6 +6,7 @@ var StravaStrategy = require('passport-strava').Strategy;
 
 router.get('/', passport.authenticate('strava', { scope: ['public'] }),
   function(req, res){
+    console.log("Redirect site");
     // The request will be redirected to Strava for authentication, so this
     // function will not be called.
   });
