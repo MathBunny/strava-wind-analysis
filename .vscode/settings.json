@@ -1,0 +1,494 @@
+
+
+  // Controls auto save of dirty files. Accepted values:  'off', 'afterDelay', 'onFocusChange' (editor loses focus), 'onWindowChange' (window loses focus). If set to 'afterDelay', you can configure the delay in 'files.autoSaveDelay'.
+  "files.autoSave": "off",
+
+  // Controls the font size in pixels.
+  "editor.fontSize": 12,
+
+  // Controls the font family.
+  "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+
+  // The number of spaces a tab is equal to. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+  "editor.tabSize": 4,
+
+  // Controls how the editor should render whitespace characters, possibilities are 'none', 'boundary', and 'all'. The 'boundary' option does not render single spaces between words.
+  "editor.renderWhitespace": "none",
+
+  // Controls the cursor style, accepted values are 'block', 'block-outline', 'line', 'line-thin', 'underline' and 'underline-thin'
+  "editor.cursorStyle": "line",
+
+  // The modifier to be used to add multiple cursors with the mouse. `ctrlCmd` maps to `Control` on Windows and Linux and to `Command` on OSX. The Go To Definition and Open Link mouse gestures will adapt such that they do not conflict with the multicursor modifier.
+  "editor.multiCursorModifier": "alt",
+
+  // Insert spaces when pressing Tab. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+  "editor.insertSpaces": true,
+
+  // Controls how lines should wrap. Can be:
+  //  - 'off' (disable wrapping),
+  //  - 'on' (viewport wrapping),
+  //  - 'wordWrapColumn' (wrap at `editor.wordWrapColumn`) or
+  //  - 'bounded' (wrap at minimum of viewport and `editor.wordWrapColumn`).
+  "editor.wordWrap": "off",
+
+  // Configure glob patterns for excluding files and folders.
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
+  },
+
+  // Configure file associations to languages (e.g. "*.extension": "html"). These have precedence over the default associations of the languages installed.
+  "files.associations": {}
+
+}
+,
+{
+
+
+  // Insert snippets when their prefix matches. Works best when 'quickSuggestions' aren't enabled.
+  "editor.tabCompletion": false,
+
+  // Controls the font family.
+  "editor.fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+
+  // Controls the font weight.
+  "editor.fontWeight": "normal",
+
+  // Controls the font size in pixels.
+  "editor.fontSize": 12,
+
+  // Controls the line height. Use 0 to compute the lineHeight from the fontSize.
+  "editor.lineHeight": 0,
+
+  // Controls the letter spacing in pixels.
+  "editor.letterSpacing": 0,
+
+  // Controls the display of line numbers. Possible values are 'on', 'off', and 'relative'. 'relative' shows the line count from the current cursor position.
+  "editor.lineNumbers": "on",
+
+  // Columns at which to show vertical rulers
+  "editor.rulers": [],
+
+  // Characters that will be used as word separators when doing word related navigations or operations
+  "editor.wordSeparators": "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?",
+
+  // The number of spaces a tab is equal to. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+  "editor.tabSize": 4,
+
+  // Insert spaces when pressing Tab. This setting is overriden based on the file contents when `editor.detectIndentation` is on.
+  "editor.insertSpaces": true,
+
+  // When opening a file, `editor.tabSize` and `editor.insertSpaces` will be detected based on the file contents.
+  "editor.detectIndentation": true,
+
+  // Controls if selections have rounded corners
+  "editor.roundedSelection": true,
+
+  // Controls if the editor will scroll beyond the last line
+  "editor.scrollBeyondLastLine": true,
+
+  // Controls if the minimap is shown
+  "editor.minimap.enabled": true,
+
+  // Controls whether the minimap slider is automatically hidden.
+  "editor.minimap.showSlider": "mouseover",
+
+  // Render the actual characters on a line (as opposed to color blocks)
+  "editor.minimap.renderCharacters": true,
+
+  // Limit the width of the minimap to render at most a certain number of columns
+  "editor.minimap.maxColumn": 120,
+
+  // Controls if we seed the search string in Find Widget from editor selection
+  "editor.find.seedSearchStringFromSelection": true,
+
+  // Controls if Find in Selection flag is turned on when multiple characters or lines of text are selected in the editor
+  "editor.find.autoFindInSelection": false,
+
+  // Controls how lines should wrap. Can be:
+  //  - 'off' (disable wrapping),
+  //  - 'on' (viewport wrapping),
+  //  - 'wordWrapColumn' (wrap at `editor.wordWrapColumn`) or
+  //  - 'bounded' (wrap at minimum of viewport and `editor.wordWrapColumn`).
+  "editor.wordWrap": "off",
+
+  // Controls the wrapping column of the editor when `editor.wordWrap` is 'wordWrapColumn' or 'bounded'.
+  "editor.wordWrapColumn": 80,
+
+  // Controls the indentation of wrapped lines. Can be one of 'none', 'same' or 'indent'.
+  "editor.wrappingIndent": "same",
+
+  // A multiplier to be used on the `deltaX` and `deltaY` of mouse wheel scroll events
+  "editor.mouseWheelScrollSensitivity": 1,
+
+  // The modifier to be used to add multiple cursors with the mouse. `ctrlCmd` maps to `Control` on Windows and Linux and to `Command` on OSX. The Go To Definition and Open Link mouse gestures will adapt such that they do not conflict with the multicursor modifier.
+  "editor.multiCursorModifier": "alt",
+
+  // Controls if suggestions should automatically show up while typing
+  "editor.quickSuggestions": {
+    "other": true,
+    "comments": false,
+    "strings": false
+  },
+
+  // Controls the delay in ms after which quick suggestions will show up
+  "editor.quickSuggestionsDelay": 10,
+
+  // Enables pop-up that shows parameter documentation and type information as you type
+  "editor.parameterHints": true,
+
+  // Controls if the editor should automatically close brackets after opening them
+  "editor.autoClosingBrackets": true,
+
+  // Controls if the editor should automatically format the line after typing
+  "editor.formatOnType": false,
+
+  // Controls if the editor should automatically format the pasted content. A formatter must be available and the formatter should be able to format a range in a document.
+  "editor.formatOnPaste": false,
+
+  // Controls if the editor should automatically adjust the indentation when users type, paste or move lines. Indentation rules of the language must be available. 
+  "editor.autoIndent": false,
+
+  // Controls if suggestions should automatically show up when typing trigger characters
+  "editor.suggestOnTriggerCharacters": true,
+
+  // Controls if suggestions should be accepted on 'Enter' - in addition to 'Tab'. Helps to avoid ambiguity between inserting new lines or accepting suggestions. The value 'smart' means only accept a suggestion with Enter when it makes a textual change
+  "editor.acceptSuggestionOnEnter": "on",
+
+  // Controls if suggestions should be accepted on commit characters. For instance in JavaScript the semi-colon (';') can be a commit character that accepts a suggestion and types that character.
+  "editor.acceptSuggestionOnCommitCharacter": true,
+
+  // Controls whether snippets are shown with other suggestions and how they are sorted.
+  "editor.snippetSuggestions": "inline",
+
+  // Controls whether copying without a selection copies the current line.
+  "editor.emptySelectionClipboard": true,
+
+  // Controls whether completions should be computed based on words in the document.
+  "editor.wordBasedSuggestions": true,
+
+  // Font size for the suggest widget
+  "editor.suggestFontSize": 0,
+
+  // Line height for the suggest widget
+  "editor.suggestLineHeight": 0,
+
+  // Controls whether the editor should highlight similar matches to the selection
+  "editor.selectionHighlight": true,
+
+  // Controls whether the editor should highlight semantic symbol occurrences
+  "editor.occurrencesHighlight": true,
+
+  // Controls the number of decorations that can show up at the same position in the overview ruler
+  "editor.overviewRulerLanes": 3,
+
+  // Controls if a border should be drawn around the overview ruler.
+  "editor.overviewRulerBorder": true,
+
+  // Control the cursor animation style, possible values are 'blink', 'smooth', 'phase', 'expand' and 'solid'
+  "editor.cursorBlinking": "blink",
+
+  // Zoom the font of the editor when using mouse wheel and holding Ctrl
+  "editor.mouseWheelZoom": false,
+
+  // Controls the cursor style, accepted values are 'block', 'block-outline', 'line', 'line-thin', 'underline' and 'underline-thin'
+  "editor.cursorStyle": "line",
+
+  // Enables font ligatures
+  "editor.fontLigatures": false,
+
+  // Controls if the cursor should be hidden in the overview ruler.
+  "editor.hideCursorInOverviewRuler": false,
+
+  // Controls how the editor should render whitespace characters, possibilities are 'none', 'boundary', and 'all'. The 'boundary' option does not render single spaces between words.
+  "editor.renderWhitespace": "none",
+
+  // Controls whether the editor should render control characters
+  "editor.renderControlCharacters": false,
+
+  // Controls whether the editor should render indent guides
+  "editor.renderIndentGuides": true,
+
+  // Controls how the editor should render the current line highlight, possibilities are 'none', 'gutter', 'line', and 'all'.
+  "editor.renderLineHighlight": "line",
+
+  // Controls if the editor shows code lenses
+  "editor.codeLens": true,
+
+  // Controls whether the editor has code folding enabled
+  "editor.folding": true,
+
+  // Controls whether the fold controls on the gutter are automatically hidden.
+  "editor.showFoldingControls": "mouseover",
+
+  // Highlight matching brackets when one of them is selected.
+  "editor.matchBrackets": true,
+
+  // Controls whether the editor should render the vertical glyph margin. Glyph margin is mostly used for debugging.
+  "editor.glyphMargin": true,
+
+  // Inserting and deleting whitespace follows tab stops
+  "editor.useTabStops": true,
+
+  // Remove trailing auto inserted whitespace
+  "editor.trimAutoWhitespace": true,
+
+  // Keep peek editors open even when double clicking their content or when hitting Escape.
+  "editor.stablePeek": false,
+
+  // Controls if the editor should allow to move selections via drag and drop.
+  "editor.dragAndDrop": true,
+
+  // Controls whether the editor should run in a mode where it is optimized for screen readers.
+  "editor.accessibilitySupport": "auto",
+
+  // Controls whether the editor should detect links and make them clickable
+  "editor.links": true,
+
+  // Controls if the diff editor shows the diff side by side or inline
+  "diffEditor.renderSideBySide": true,
+
+  // Controls if the diff editor shows changes in leading or trailing whitespace as diffs
+  "diffEditor.ignoreTrimWhitespace": true,
+
+  // Controls if the diff editor shows +/- indicators for added/removed changes
+  "diffEditor.renderIndicators": true,
+
+  // Format a file on save. A formatter must be available, the file must not be auto-saved, and editor must not be shutting down.
+  "editor.formatOnSave": false,
+
+
+  // When enabled, emmet abbreviations are expanded when pressing TAB. Not applicable when emmet.useNewemmet is set to true.
+  "emmet.triggerExpansionOnTab": true,
+
+  // Preferences used to modify behavior of some actions and resolvers of Emmet. Not applicable when emmet.useNewemmet is set to true.
+  "emmet.preferences": {},
+
+  // Define profile for specified syntax or use your own profile with specific rules.
+  "emmet.syntaxProfiles": {},
+
+  // An array of languages where emmet abbreviations should not be expanded.
+  "emmet.excludeLanguages": [
+    "markdown"
+  ],
+
+  // Path to a folder containing emmet profiles, snippets and preferences. Only profiles are honored from extensions path when emmet.useNewEmmet is set to true.
+  "emmet.extensionsPath": null,
+
+  // Try out the new emmet modules (which will eventually replace the old single emmet library) for all emmet features.
+  "emmet.useNewEmmet": false,
+
+  // Applicable only when emmet.useNewEmmet is set to true.
+  // Shows expanded emmet abbreviations as suggestions.
+  // The option "inMarkupAndStylesheetFilesOnly" applies to html, haml, jade, slim, xml, xsl, css, scss, sass, less and stylus.
+  // The option "always" applies to all parts of the file regardless of markup/css.
+  "emmet.showExpandedAbbreviation": "inMarkupAndStylesheetFilesOnly",
+
+  // Applicable only when emmet.useNewEmmet is set to true.
+  // Shows possible emmet abbreviations as suggestions. Not applicable in stylesheets or when emmet.showExpandedAbbreviation is set to "never".
+  "emmet.showAbbreviationSuggestions": true,
+
+  // Applicable only when emmet.useNewEmmet is set to true.
+  // Enable emmet abbreviations in languages that are not supported by default. Add a mapping here between the language and emmet supported language.
+  //  Eg: {"vue-html": "html", "javascript": "javascriptreact"}
+  "emmet.includeLanguages": {},
+
+  // Applicable only when emmet.useNewEmmet is set to true.
+  // Variables to be used in emmet snippets
+  "emmet.variables": {},
+
+
+  // Controls if opened editors should show in tabs or not.
+  "workbench.editor.showTabs": true,
+
+  // Controls the position of the editor's tabs close buttons or disables them when set to 'off'.
+  "workbench.editor.tabCloseButton": "right",
+
+  // Controls if opened editors should show with an icon or not. This requires an icon theme to be enabled as well.
+  "workbench.editor.showIcons": true,
+
+  // Controls if opened editors show as preview. Preview editors are reused until they are kept (e.g. via double click or editing).
+  "workbench.editor.enablePreview": true,
+
+  // Controls if opened editors from Quick Open show as preview. Preview editors are reused until they are kept (e.g. via double click or editing).
+  "workbench.editor.enablePreviewFromQuickOpen": true,
+
+  // Controls where editors open. Select 'left' or 'right' to open editors to the left or right of the current active one. Select 'first' or 'last' to open editors independently from the currently active one.
+  "workbench.editor.openPositioning": "right",
+
+  // Controls if an editor is revealed in any of the visible groups if opened. If disabled, an editor will prefer to open in the currently active editor group. If enabled, an already opened editor will be revealed instead of opened again in the currently active editor group. Note that there are some cases where this setting is ignored, e.g. when forcing an editor to open in a specific group or to the side of the currently active group.
+  "workbench.editor.revealIfOpen": false,
+
+  // Controls if the number of recently used commands to keep in history for the command palette. Set to 0 to disable command history.
+  "workbench.commandPalette.history": 50,
+
+  // Controls if the last typed input to the command palette should be restored when opening it the next time.
+  "workbench.commandPalette.preserveInput": false,
+
+  // Controls if Quick Open should close automatically once it loses focus.
+  "workbench.quickOpen.closeOnFocusLost": true,
+
+  // Controls if opening settings also opens an editor showing all default settings.
+  "workbench.settings.openDefaultSettings": true,
+
+  // Controls the location of the sidebar. It can either show on the left or right of the workbench.
+  "workbench.sideBar.location": "left",
+
+  // Controls the visibility of the status bar at the bottom of the workbench.
+  "workbench.statusBar.visible": true,
+
+  // Controls the visibility of the activity bar in the workbench.
+  "workbench.activityBar.visible": true,
+
+  // Controls if editors showing a file should close automatically when the file is deleted or renamed by some other process. Disabling this will keep the editor open as dirty on such an event. Note that deleting from within the application will always close the editor and that dirty files will never close to preserve your data.
+  "workbench.editor.closeOnFileDelete": true,
+
+  // Navigate between open files using three-finger swipe horizontally.
+  "workbench.editor.swipeToNavigate": false,
+
+  // When enabled, will show the watermark tips when no editor is open.
+  "workbench.tips.enabled": true,
+
+  // Controls which editor is shown at startup, if none is restored from the previous session. Select 'none' to start without an editor, 'welcomePage' to open the Welcome page (default), 'newUntitledFile' to open a new untitled file (only when not opening a folder).
+  "workbench.startupEditor": "welcomePage",
+
+  // Specifies the color theme used in the workbench.
+  "workbench.colorTheme": "Default Dark+",
+
+  // Specifies the icon theme used in the workbench or 'null' to not show any file icons.
+  "workbench.iconTheme": "vs-seti",
+
+  // Overrides colors from the currently selected color theme.
+  "workbench.colorCustomizations": {},
+
+
+  // Controls if files should open in a new window.
+  // - default: files will open in the window with the files' folder open or the last active window unless opened via the dock or from finder (macOS only)
+  // - on: files will open in a new window
+  // - off: files will open in the window with the files' folder open or the last active window
+  // Note that there can still be cases where this setting is ignored (e.g. when using the -new-window or -reuse-window command line option).
+  "window.openFilesInNewWindow": "off",
+
+  // Controls if folders should open in a new window or replace the last active window.
+  // - default: folders will open in a new window unless a folder is picked from within the application (e.g. via the File menu)
+  // - on: folders will open in a new window
+  // - off: folders will replace the last active window
+  // Note that there can still be cases where this setting is ignored (e.g. when using the -new-window or -reuse-window command line option).
+  "window.openFoldersInNewWindow": "default",
+
+  // Controls how windows are being reopened after a restart. Select 'none' to always start with an empty window, 'one' to reopen the last window you worked on, 'folders' to reopen all folders you had opened or 'all' to reopen all windows of your last session.
+  "window.restoreWindows": "one",
+
+  // Controls if a window should restore to full screen mode if it was exited in full screen mode.
+  "window.restoreFullscreen": false,
+
+  // Adjust the zoom level of the window. The original size is 0 and each increment above (e.g. 1) or below (e.g. -1) represents zooming 20% larger or smaller. You can also enter decimals to adjust the zoom level with a finer granularity.
+  "window.zoomLevel": 0,
+
+  // Controls the window title based on the active editor. Variables are substituted based on the context:
+  // ${activeEditorShort}: e.g. myFile.txt
+  // ${activeEditorMedium}: e.g. myFolder/myFile.txt
+  // ${activeEditorLong}: e.g. /Users/Development/myProject/myFolder/myFile.txt
+  // ${folderName}: e.g. myFolder
+  // ${folderPath}: e.g. /Users/Development/myFolder
+  // ${rootName}: e.g. myFolder1, myFolder2, myFolder3
+  // ${rootPath}: e.g. /Users/Development/myWorkspace
+  // ${appName}: e.g. VS Code
+  // ${dirty}: a dirty indicator if the active editor is dirty
+  // ${separator}: a conditional separator (" - ") that only shows when surrounded by variables with values
+  "window.title": "${activeEditorShort}${separator}${folderName}",
+
+  // Controls the dimensions of opening a new window when at least one window is already opened. By default, a new window will open in the center of the screen with small dimensions. When set to 'inherit', the window will get the same dimensions as the last window that was active. When set to 'maximized', the window will open maximized and fullscreen if configured to 'fullscreen'. Note that this setting does not have an impact on the first window that is opened. The first window will always restore the size and location as you left it before closing.
+  "window.newWindowDimensions": "default",
+
+  // Adjust the appearance of the window title bar. Changes require a full restart to apply.
+  "window.titleBarStyle": "custom",
+
+
+  // Configure glob patterns for excluding files and folders.
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true
+  },
+
+  // Configure file associations to languages (e.g. "*.extension": "html"). These have precedence over the default associations of the languages installed.
+  "files.associations": {},
+
+  // The default character set encoding to use when reading and writing files.
+  "files.encoding": "utf8",
+
+  // When enabled, will attempt to guess the character set encoding when opening files
+  "files.autoGuessEncoding": false,
+
+  // The default end of line character. Use \n for LF and \r\n for CRLF.
+  "files.eol": "\n",
+
+  // When enabled, will trim trailing whitespace when saving a file.
+  "files.trimTrailingWhitespace": false,
+
+  // When enabled, insert a final new line at the end of the file when saving it.
+  "files.insertFinalNewline": false,
+
+  // Controls auto save of dirty files. Accepted values:  'off', 'afterDelay', 'onFocusChange' (editor loses focus), 'onWindowChange' (window loses focus). If set to 'afterDelay', you can configure the delay in 'files.autoSaveDelay'.
+  "files.autoSave": "off",
+
+  // Controls the delay in ms after which a dirty file is saved automatically. Only applies when 'files.autoSave' is set to 'afterDelay'
+  "files.autoSaveDelay": 1000,
+
+  // Configure glob patterns of file paths to exclude from file watching. Patterns must match on absolute paths (i.e. prefix with ** or the full path to match properly). Changing this setting requires a restart. When you experience Code consuming lots of cpu time on startup, you can exclude large folders to reduce the initial load.
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true
+  },
+
+  // Controls whether unsaved files are remembered between sessions, allowing the save prompt when exiting the editor to be skipped.
+  "files.hotExit": "onExit",
+
+  // Use the new experimental file watcher.
+  "files.useExperimentalFileWatcher": false,
+
+  // The default language mode that is assigned to new files.
+  "files.defaultLanguage": "",
+
+
+  // Controls if turning on Zen Mode also puts the workbench into full screen mode.
+  "zenMode.fullScreen": true,
+
+  // Controls if turning on Zen Mode also hides workbench tabs.
+  "zenMode.hideTabs": true,
+
+  // Controls if turning on Zen Mode also hides the status bar at the bottom of the workbench.
+  "zenMode.hideStatusBar": true,
+
+  // Controls if turning on Zen Mode also hides the activity bar at the left of the workbench.
+  "zenMode.hideActivityBar": true,
+
+  // Controls if a window should restore to zen mode if it was exited in zen mode.
+  "zenMode.restore": false,
+
+
+  // Number of editors shown in the Open Editors pane. Set it to 0 to hide the pane.
+  "explorer.openEditors.visible": 9,
+
+  // Controls if the height of the open editors section should adapt dynamically to the number of elements or not.
+  "explorer.openEditors.dynamicHeight": true,
+
+  // Controls if the explorer should automatically reveal and select files when opening them.
+  "explorer.autoReveal": true,
+
+  // Controls if the explorer should allow to move files and folders via drag and drop.
+  "explorer.enableDragAndDrop": true,
+
+
+  // Configure glob patterns for excluding files and folders in searches. Inherits all glob patterns from the files.exclude setting.
+  "search.exclude": {
+    "**/node_modules": false,
+    "**/bower_components": true
+  },
