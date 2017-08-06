@@ -45,7 +45,7 @@ app.use(passport.session());
 passport.use(new StravaStrategy({
         clientID: config.clientID || process.env.CLIENT_ID,
         clientSecret: config.clientSecret || process.env.CLIENT_SECRET,
-        callbackURL: process.env.CALLBACK_URL || "http://localhost:3000/login/callback"
+        callbackURL: config.callbackURL || process.env.CALLBACK_URL || "http://localhost:3000/login/callback"
     },
     function(accessToken, refreshToken, profile, done) {
         // asynchronous verification, for effect...
