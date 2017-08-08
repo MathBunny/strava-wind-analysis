@@ -98,11 +98,13 @@ router.get('/details', (req, res, next) => {
             var darkskyrequest = "https://api.forecast.io/forecast/81c978e8db7b136e4bf3c8988c2d90a6/" + segmentData.latitude + "," + segmentData.longitude + "," + effort.start_date_iso + "?units=ca";
             requestify.get(darkskyrequest).then(windDataResponse => {
               let windData = JSON.parse(windDataResponse.body);
-              effort.wind_speed = windData.hourly.data[12].windSpeed;
+              let date = new Date(effort.start_date_iso);
+              effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
               effort.wind_speed_str = effort.wind_speed.toFixed(2);
               effort.wind_bearing = windData.hourly.data[12].windBearing;
               effort.wind_bearing_str = convertToCardinal(effort.wind_bearing);
               effort.ride_bearing_str = longLatToCardinal(segmentData.start_latlng[0], segmentData.start_latlng[1], segmentData.end_latlng[0], segmentData.end_latlng[1]);
+              
 
               count++;
               if (count == segmentData.leaderboard.length){

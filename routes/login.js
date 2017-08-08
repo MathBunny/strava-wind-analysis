@@ -5,9 +5,7 @@ const passport = require('passport');
 var StravaStrategy = require('passport-strava').Strategy;
 
 router.get('/', passport.authenticate('strava', { scope: ['public'] }),
-  function(req, res){
-    // The request will be redirected to Strava for authentication, so this
-    // function will not be called.
+    function(req, res){
   });
 
 router.get('/callback', 
