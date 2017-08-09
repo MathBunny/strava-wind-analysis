@@ -3,6 +3,7 @@ var router = express.Router();
 const passport = require('passport');
 const requestify = require('requestify');
 const handlebars = require('handlebars');
+const Vector = require('../utilities/vector').Vector;
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -35,7 +36,7 @@ router.get('/', function(req, res, next) {
                 segmentIDs.add(segment.id);
                 segmentIDs.add(segment.name);
                 
-                segments.push({name: segment.name, id: segment.id, distance: (segment.distance/1000).toFixed(2), average_grade: segment.average_grade, maximum_grade: segment.maximum_grade, ranking: pr_rank, city: segment.city, province: segment.state, country: segment.country});
+                segments.push({name: segment.name, id: segment.id, distance: (segment.distance / 1000).toFixed(2), average_grade: segment.average_grade, maximum_grade: segment.maximum_grade, ranking: pr_rank, city: segment.city, province: segment.state, country: segment.country});
               }
             });
             count++;
@@ -101,10 +102,12 @@ router.get('/details', (req, res, next) => {
               let date = new Date(effort.start_date_iso);
               effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
               effort.wind_speed_str = effort.wind_speed.toFixed(2);
-              effort.wind_bearing = windData.hourly.data[12].windBearing;
+              effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
               effort.wind_bearing_str = convertToCardinal(effort.wind_bearing);
               effort.ride_bearing_str = longLatToCardinal(segmentData.start_latlng[0], segmentData.start_latlng[1], segmentData.end_latlng[0], segmentData.end_latlng[1]);
               
+              let windVector = Vector(Vector.getLatitudeFromBearing(effort.wind_bearing), Vector.getLongitudeFromBearing(effort.wind_bearing));
+              let segmentVector = Vector(segment.latitude, segment.longitude);
 
               count++;
               if (count == segmentData.leaderboard.length){
