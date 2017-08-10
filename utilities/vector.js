@@ -5,8 +5,8 @@ class Vector{
         this.longitude = longitude;
         this.speed = speed;
 
-        this.unitLatitude = getUnitValue(latitude);
-        this.unitLongitude = getUnitValue(longitude);
+        this.unitLatitude = this.getUnitValue(latitude, longitude);
+        this.unitLongitude = this.getUnitValue(longitude, latitude);
     }
 
     // Returns the unit value of primary
@@ -14,8 +14,12 @@ class Vector{
         return primary / (Math.sqrt(Math.pow(primary, 2) + Math.pow(secondary, 2)));
     }
 
-    static addVectors(){
+    static resultantSpeed(speed){
+        return 31 - (0.004 * Math.pow(speed, 2) - 0.616 * speed + 30.137);
+    }
 
+    static getDistance(vectorA, vectorB){
+        return Math.sqrt(Math.pow(vectorA.unitLatitude - vectorB.unitLatitude, 2) + Math.pow(vectorA.unitLatitude - vectorB.unitLatitude, 2));
     }
 
     static getLatitudeFromBearing(bearing){
