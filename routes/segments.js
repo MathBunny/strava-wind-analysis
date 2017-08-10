@@ -106,16 +106,13 @@ router.get('/details', (req, res, next) => {
               effort.wind_bearing_str = convertToCardinal(effort.wind_bearing);
               effort.ride_bearing_str = longLatToCardinal(segmentData.start_latlng[0], segmentData.start_latlng[1], segmentData.end_latlng[0], segmentData.end_latlng[1]);
               
-              console.log("OK");
               try{
                 let windVector = new Vector(Vector.getLatitudeFromBearing(effort.wind_bearing), Vector.getLongitudeFromBearing(effort.wind_bearing));
-                console.log(Vector.getLatitudeFromBearing(effort.wind_bearing) + " " + Vector.getLongitudeFromBearing(effort.wind_bearing));
                 let segmentVector = new Vector(parseFloat(segmentData.latitude), parseFloat(segmentData.longitude));
-                console.log(parseFloat(segmentData.latitude));
                 let roundoffValue = 1 - Vector.getDistance(windVector, segmentVector);
                 let speed = Vector.resultantSpeed(parseInt(effort.wind_speed));
                 effort.coefficient = speed * roundoffValue;
-                effort.coefficient_str = (-effort.coefficient).toFixed(2);
+                effort.coefficient_str = (effort.coefficient).toFixed(2);
 
               }
               catch(e){
