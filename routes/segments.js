@@ -105,7 +105,7 @@ router.get('/details', (req, res, next) => {
               effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
               effort.wind_bearing_str = convertToCardinal(effort.wind_bearing);
               effort.ride_bearing_str = longLatToCardinal(segmentData.start_latlng[0], segmentData.start_latlng[1], segmentData.end_latlng[0], segmentData.end_latlng[1]);
-              
+
               try{
                 let windVector = new Vector(Vector.getLatitudeFromBearing(effort.wind_bearing), Vector.getLongitudeFromBearing(effort.wind_bearing));
                 let segmentVector = new Vector(parseFloat(segmentData.latitude), parseFloat(segmentData.longitude));
@@ -113,7 +113,6 @@ router.get('/details', (req, res, next) => {
                 let speed = Vector.resultantSpeed(parseInt(effort.wind_speed));
                 effort.coefficient = speed * roundoffValue;
                 effort.coefficient_str = (effort.coefficient).toFixed(2);
-
               }
               catch(e){
                 console.log(e);
@@ -121,7 +120,6 @@ router.get('/details', (req, res, next) => {
               
               count++;
               if (count == segmentData.leaderboard.length){
-                console.log("HERE");
                 res.render('details', segmentData);
               }
             }).fail(err => {
