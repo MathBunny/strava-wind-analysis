@@ -42,19 +42,17 @@
                                         <th class="align-left">Segment Name</th>
                                         <th class="align-left">Location</th>
                                         <th class="align-left">Distance</th>
-                                        <th class="align-left">ID</th>
                                     </tr>
                                 </div>
                             </thead>
                             <tbody>
                                 {{#each segments}}
                                     {{#with this}}
-                                            <tr class="fw-100">
+                                            <tr class="fw-100" onclick="window.document.location='/segments/details?id={{id}}'">
                                                 <td>{{name}} ({{average_grade}}%)</td>
                                                 <td>{{city}}, {{country}}</td>
                                                 <td>{{distance}}km</td>
-                                                <td><a href="/segments/details?id={{id}}">{{id}}</a></td>
-                                            </tr>
+                                            </tr> 
                                     {{/with}}
                                 {{/each}}
                             </tbody>
