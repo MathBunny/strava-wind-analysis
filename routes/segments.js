@@ -35,6 +35,9 @@ router.get('/', function(req, res, next) {
               if (!segmentIDs.has(segment.id) && !segmentIDs.has(segment.name)){
                 segmentIDs.add(segment.id);
                 segmentIDs.add(segment.name);
+                if (segment.name.length > 35){
+                  segment.name = segment.name.substring(0, 32) + "...";
+                }
                 
                 segments.push({name: segment.name, id: segment.id, distance: (segment.distance / 1000).toFixed(2), average_grade: segment.average_grade, maximum_grade: segment.maximum_grade, ranking: pr_rank, city: segment.city, province: segment.state, country: segment.country});
               }

@@ -42,6 +42,8 @@
                                         <th class="align-left">Segment Name</th>
                                         <th class="align-left">Location</th>
                                         <th class="align-left">Distance</th>
+                                        <th class="align-left">Average Grade</th>
+                                        <th class="align-left">Maximum Grade</th>
                                     </tr>
                                 </div>
                             </thead>
@@ -49,9 +51,11 @@
                                 {{#each segments}}
                                     {{#with this}}
                                             <tr class="fw-100" onclick="window.document.location='/segments/details?id={{id}}'">
-                                                <td>{{name}} ({{average_grade}}%)</td>
+                                                <td>{{name}}</td>
                                                 <td>{{city}}, {{country}}</td>
                                                 <td>{{distance}}km</td>
+                                                <td>{{average_grade}}%</td>
+                                                <td>{{maximum_grade}}%</td>
                                             </tr> 
                                     {{/with}}
                                 {{/each}}
