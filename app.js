@@ -48,11 +48,9 @@ passport.use(new StravaStrategy({
         callbackURL: config.callbackURL || process.env.CALLBACK_URL || "http://localhost:3000/login/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-        
-        // asynchronous verification, for effect...
         process.nextTick(function () {
             profile.accessToken = accessToken;
-            return done(null, profile); // add it here
+            return done(null, profile);
     });
 }));
 

@@ -11,7 +11,6 @@ router.get('/', function(req, res, next) {
     res.redirect('/');
   }
   else{
-    //console.log(req.user);
     //requestify.get("https://www.strava.com/api/v3/segments/" + 10112025 + "/leaderboard?&access_token=" + req.user.accessToken + "")
     //requestify.get("https://www.strava.com/api/v3/athletes/" + req.user.id + "/koms?access_token=" + req.user.accessToken)
 
