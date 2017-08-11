@@ -63,7 +63,7 @@
         <div class="ink-grid">
             <div class="column-group push-center">
                 <div class="all-90">
-                     <div class="ink-alert block error" role="alert" style="top: -15px; margin-bottom:-50px">
+                     <div id="ink-alert" class="ink-alert block error" role="alert" style="top: -15px; margin-bottom:-50px">
                         <button class="ink-dismiss">&times;</button>
                         <h4>Legacy website down</h4>
                         <p class="fw-300" style="text-align: center">Due to the recent migration to Amazon AWS, the legacy site is no longer supported. Support will be added on August 12, 2017 at 10:00am EST.</p>
@@ -79,6 +79,13 @@
                 <a href="http://strava-weather-analysis.paperplane.io/" target="_blank"> <button class="ink-button grey" id="content">Legacy</button></a>
             </div>
         </div>
+
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script>
+            $('.ink-dismiss').click(() => {
+                $('#ink-alert').remove();
+            });
+        </script>
 
         <script>
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

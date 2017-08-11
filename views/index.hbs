@@ -55,7 +55,7 @@
                 </div>
                 <div class="all-80">
                     <div style="margin-left:20px">
-                        <div id="prelease-warning" class="ink-alert block" role="alert">
+                        <div id="ink-alert" class="ink-alert block" role="alert">
                             <button class="ink-dismiss">&times;</button>
                             <h4>Curent system status: Pre-release</h4>
                             <p class="fw-300">Please note that this site can go down at any time as it is in beta until September 1, 2017.</p>
@@ -108,22 +108,10 @@
             </div>
         </div>
 
-        <!-- <div class="push"> </div>
-        <footer class="clearfix">
-            <div class="ink-grid">
-                <ul class="unstyled inline half-vertical-space">
-                    <li class="active"><a href="#">About</a></li>
-                    <li><a href="#">Sitemap</a></li>
-                    <li><a href="#">Contacts</a></li>
-                </ul>
-                <p class="note">Identification of the owner of the copyright, either by name, abbreviation, or other designation by which it is generally known.</p>
-            </div>
-        </footer> -->
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
         <script>
             $('.ink-dismiss').click(() => {
-                console.log('ok");')
-                $('#prelease-warning').remove();
+                $('#ink-alert').remove();
             });
         </script>
 
