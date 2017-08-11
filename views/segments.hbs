@@ -81,7 +81,6 @@
                             </form>
                         </div>
                         <hr>
-
                         <ul class="menu vertical">
                             <li class="heading"> Distance </li>
                             <div class="fw-300">
@@ -95,41 +94,20 @@
                             </ul>
                             </div>
                         </ul>
-
                         <hr>
-
                         <ul class="menu vertical">
                             <li class="heading"> Rank </li>
                             <div class="fw-300">
-                            <ul class="control unstyled">
-                                <li><input type="checkbox" id="r1" checked="checked"><label for="cb5"> KOM / QOM</label></li>
-                                <li><input type="checkbox" id="r2" checked="checked"><label for="cb4"> 2nd - 5th</label></li>
-                                <li><input type="checkbox" id="r3" checked="checked"><label for="cb3"> 5th - 10th</label></li>
-                                <li><input type="checkbox" id="r4" checked="checked"><label for="cb2"> 10th - 25th</label></li>
-                                <li><input type="checkbox" id="r5" checked="checked"><label for="cb1"> 25th+</label></li>
-                                <li><input type="checkbox" id="r6" checked="checked"><label for="cb1"> Select All</label></li>
-                            </ul>
+                                <ul class="control unstyled">
+                                    <li><input type="checkbox" id="r1" checked="checked"><label for="cb5"> KOM / QOM</label></li>
+                                    <li><input type="checkbox" id="r2" checked="checked"><label for="cb4"> 2nd - 5th</label></li>
+                                    <li><input type="checkbox" id="r3" checked="checked"><label for="cb3"> 5th - 10th</label></li>
+                                    <li><input type="checkbox" id="r4" checked="checked"><label for="cb2"> 10th - 25th</label></li>
+                                    <li><input type="checkbox" id="r5" checked="checked"><label for="cb1"> 25th+</label></li>
+                                    <li><input type="checkbox" id="r6" checked="checked"><label for="cb1"> Select All</label></li>
+                                </ul>
                             </div>
                         </ul>
-
-                        <hr>
-
-                        <ul class="menu vertical">
-                            <li class="heading"> Average Speed </li>
-                            <div class="fw-300">
-                            <ul class="control unstyled">
-                                <li><input type="checkbox" id="s1" checked="checked"><label for="cb5"> 0 - 15km/h</label></li>
-                                <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 23km/h</label></li>
-                                <li><input type="checkbox" id="s3" checked="checked"><label for="cb3"> 23km/h - 33km/h</label></li>
-                                <li><input type="checkbox" id="s4" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
-                                <li><input type="checkbox" id="s5" checked="checked"><label for="cb1"> 37km/h - 45km/h</label></li>
-                                <li><input type="checkbox" id="s6" checked="checked"><label for="cb1"> 45km/h - 57km/h </label></li>
-                                <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 57km/h+ </label></li>
-                                <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All </label></li>
-                            </ul>
-                            </div>
-                        </ul>
-
                     </nav>
                     <hr>
                     <button class="ink-button" id="filter">Filter Results</button>
@@ -140,7 +118,7 @@
             let filteringGroups = new Map();
             filteringGroups.set('d', 6);
             filteringGroups.set('r', 6);
-            filteringGroups.set('s', 8);
+            //filteringGroups.set('s', 8);
 
             Array.from(filteringGroups.keys()).forEach(key => {
                 let count = filteringGroups.get(key);

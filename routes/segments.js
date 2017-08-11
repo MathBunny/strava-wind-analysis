@@ -30,6 +30,8 @@ router.get('/', function(req, res, next) {
             let activityDetails = JSON.parse(activityDetailsResponse.body);
             activityDetails.segment_efforts.forEach(segment => {
               let pr_rank = segment.pr_rank;
+              if (pr_rank == 1)
+                pr_rank = (req.user._json.sex == "M" ? "KOM" : "QOM");
               segment = segment.segment;
               if (!segmentIDs.has(segment.id) && !segmentIDs.has(segment.name)){
                 segmentIDs.add(segment.id);
