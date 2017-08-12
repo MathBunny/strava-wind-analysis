@@ -66,7 +66,7 @@ function getLocation(){
             output[x].elevation = data.average_grade;
         }
         $('.determinate').css('width', '30%');
-        //getWeatherInformation();
+        getWeatherInformation();
     });
 }
 
@@ -97,13 +97,13 @@ function calculateInfluenceRating(){
 function ajaxWeatherInformation(num){
      //var old = "https://crossorigin.me/https://api.forecast.io/forecast/" + weatherKey + "/" + output[num].startCoordinate[0] + "," + output[num].startCoordinate[1] + "," + output[num].formattedTime + "?units=ca";
      //var standard = "https://api.forecast.io/forecast/" + weatherKey + "/" + output[num].startCoordinate[0] + "," + output[num].startCoordinate[1] + "," + output[num].formattedTime + "?units=ca";
-     const standard = "/get/wind-data?lat=" + output[num].startCoordinate[0] + "&long=" + output[num].startCoordinate[1] + "&time=" + output[num].formattedTime;
+     const standard = "./get/wind-data?lat=" + output[num].startCoordinate[0] + "&long=" + output[num].startCoordinate[1] + "&time=" + output[num].formattedTime;
      number = num;
      $.ajax({
         url: standard,
         dataType: "jsonp",
         error: function(xhr, status, error) {
-            alert(error.message);
+            console.log(error.message);
         },
         success: jsonpCallback
       });
