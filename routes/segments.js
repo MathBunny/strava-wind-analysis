@@ -4,19 +4,55 @@ const passport = require('passport');
 const requestify = require('requestify');
 const handlebars = require('handlebars');
 const Vector = require('../utilities/vector').Vector;
+let segmentIDs = new Set();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/get/activity', (req, res) => {
   if (!req.isAuthenticated()){
     res.redirect('/');
   }
   else{
-    //requestify.get("https://www.strava.com/api/v3/segments/" + 10112025 + "/leaderboard?&access_token=" + req.user.accessToken + "")
-    //requestify.get("https://www.strava.com/api/v3/athletes/" + req.user.id + "/koms?access_token=" + req.user.accessToken)
+    let activityID = req.query.activityID;
+    requestify.get("https://www.strava.com/api/v3/activities/" + activityID + "?access_token=" + req.user.accessToken).then(activityDetailsResponse => {
+      let activityDetails = JSON.parse(activityDetailsResponse.body);
+      let segments = [];
+      activityDetails.segment_efforts.forEach(segment => {
+        let pr_rank = segment.pr_rank;
+        if (pr_rank == 1){
+          pr_rank = (req.user._json.sex == "M" ? "KOM" : "QOM");
+        }
+        segment = segment.segment;
+        if (!segmentIDs.has(segment.id) && !segmentIDs.has(segment.name)){
+          segmentIDs.add(segment.id);
+          segmentIDs.add(segment.name);
+          if (segment.name.length > 35){
+            segment.name = segment.name.substring(0, 32) + "...";
+          }
+          segments.push({name: segment.name, id: segment.id, distance: (segment.distance / 1000).toFixed(2), average_grade: segment.average_grade, maximum_grade: segment.maximum_grade, ranking: pr_rank, city: segment.city, province: segment.state, country: segment.country});
+        }
+      });
+      res.send(segments);
+    });
+  }
+});
 
-    // step #1: Get the list of activities
-    // step #2: Get the list of segments within each activity (https://www.strava.com/api/v3/activities/:id)
+router.get('/get/activities', (req, res) => {
+  if (!req.isAuthenticated()){
+    res.redirect('/');
+  }
+  else{
+    segmentIDs = new Set();
+    requestify.get("https://www.strava.com/api/v3/athlete/activities?access_token=" + req.user.accessToken).then(response => {
+      let activities = JSON.parse(response.body);
+      res.send(activities);
+    });
+  }
+});
 
+router.get('/legacy/', (req, res) => {
+  if (!req.isAuthenticated()){
+    res.redirect('/');
+  }
+  else{
     let segmentIDs = new Set();
     let segments = [];
     let target = undefined;
@@ -39,7 +75,6 @@ router.get('/', function(req, res, next) {
                 if (segment.name.length > 35){
                   segment.name = segment.name.substring(0, 32) + "...";
                 }
-                
                 segments.push({name: segment.name, id: segment.id, distance: (segment.distance / 1000).toFixed(2), average_grade: segment.average_grade, maximum_grade: segment.maximum_grade, ranking: pr_rank, city: segment.city, province: segment.state, country: segment.country});
               }
             });
@@ -52,7 +87,16 @@ router.get('/', function(req, res, next) {
           });
         })
     });
-    // Async
+  }
+});
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  if (!req.isAuthenticated()){
+    res.redirect('/');
+  }
+  else{
+    res.render('segments', {});
   }
 });
 
@@ -140,6 +184,10 @@ router.get('/details', (req, res, next) => {
       res.render('error', {message: errorMessage.message});
     });
   }
+});
+
+router.get('/test', (req, res) => {
+  res.send(req.isAuthenticated());
 });
 
 function longLatToCardinal(lat1, long1, lat2, long2){

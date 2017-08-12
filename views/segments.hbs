@@ -17,8 +17,7 @@
         <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
         <script type="text/javascript" src="/javascripts/autoload.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
-        
-        <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -40,7 +39,7 @@
             <div class="column-group">
                 <div class="all-80">
                     <div style="margin: 10px">
-                        <table class="ink-table hover alternating">
+                        <table id="segment-list" class="ink-table hover alternating">
                             <thead>
                                 <div class="fw-500">
                                     <tr>
@@ -53,6 +52,7 @@
                                 </div>
                             </thead>
                             <tbody>
+                                {{!-- 
                                 {{#each segments}}
                                     {{#with this}}
                                             <tr class="fw-100" onclick="window.document.location='/segments/details?id={{id}}'">
@@ -64,6 +64,7 @@
                                             </tr> 
                                     {{/with}}
                                 {{/each}}
+                                ---}}
                             </tbody>
                         </table>    
                     </div>            
@@ -155,6 +156,23 @@
               })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
               ga('create', 'UA-85289613-1', 'auto');
               ga('send', 'pageview');
+
+            $.ajax( {url: "segments/get/activities", success: activities => {
+              activities.forEach(activity => {
+                $.ajax( {url: "segments/get/activity?activityID=" + activity.id, success: segmentDetails => {
+                    segmentDetails.forEach(segment => {
+                        let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
+                        segmentRow += "<td>" + segment.name + "</td>";
+                        segmentRow += "<td>" + segment.city + ", " + segment.country + "</td>";
+                        segmentRow += "<td>" + segment.distance + "km </td>";
+                        segmentRow += "<td>" + segment.average_grade + "% </td>";
+                        segmentRow += "<td>" + segment.maximum_grade + "% </td>";
+                        segmentRow += "</tr>";
+                        $("#segment-list tbody").append(segmentRow);
+                    });
+                }});
+              });
+            }});
         </script>
     </body>
 </html>
