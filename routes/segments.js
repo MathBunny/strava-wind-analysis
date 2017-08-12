@@ -152,7 +152,7 @@ router.get('/details', (req, res, next) => {
               effort.wind_speed_str = effort.wind_speed.toFixed(2);
               effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
               effort.wind_bearing_str = convertToCardinal(effort.wind_bearing);
-              effort.ride_bearing_str = longLatToCardinal(segmentData.start_latlng[0], segmentData.start_latlng[1], segmentData.end_latlng[0], segmentData.end_latlng[1]);
+              effort.ride_bearing_str = longLatToCardinal(segmentData.end_latlng[0], segmentData.end_latlng[1], segmentData.start_latlng[0], segmentData.start_latlng[1]);
 
               try{
                 let windVector = new Vector(Vector.getLatitudeFromBearing(effort.wind_bearing), Vector.getLongitudeFromBearing(effort.wind_bearing));
