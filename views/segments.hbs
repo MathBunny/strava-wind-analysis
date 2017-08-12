@@ -17,8 +17,7 @@
         <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
         <script type="text/javascript" src="/javascripts/autoload.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
-        
-        <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -155,6 +154,10 @@
               })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
               ga('create', 'UA-85289613-1', 'auto');
               ga('send', 'pageview');
+
+            $.ajax( {url: "segments/test", success: (data) => {
+              console.log(data);
+            }});
         </script>
     </body>
 </html>
