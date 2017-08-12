@@ -161,25 +161,15 @@
               activities.forEach(activity => {
                 $.ajax( {url: "segments/get/activity?activityID=" + activity.id, success: segmentDetails => {
                     segmentDetails.forEach(segment => {
-                        let segmentRow = "";
-                        segmentRow += "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
+                        let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
                         segmentRow += "<td>" + segment.name + "</td>";
                         segmentRow += "<td>" + segment.city + ", " + segment.country + "</td>";
                         segmentRow += "<td>" + segment.distance + "km </td>";
                         segmentRow += "<td>" + segment.average_grade + "% </td>";
                         segmentRow += "<td>" + segment.maximum_grade + "% </td>";
                         segmentRow += "</tr>";
-
-                        /*$("#segment-list").append("<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'>");
-                        $("#segment-list").append("<td>" + segment.city + ", " + segment.country + "</td>");
-                        $("#segment-list").append("<td>" + segment.distance + "km </td>");
-                        $("#segment-list").append("<td>" + segment.average_grade + "% </td>");
-                        $("#segment-list").append("<td>" + segment.max_grade + "% </td>");
-                        $("#segment-list").append("</tr>");*/
                         $("#segment-list tbody").append(segmentRow);
                     });
-                  // do whatever .. 
-                  
                 }});
               });
             }});

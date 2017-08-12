@@ -7,45 +7,53 @@ const Vector = require('../utilities/vector').Vector;
 let segmentIDs = new Set();
 
 router.get('/get/activity', (req, res) => {
-  let activityID = req.query.activityID;
-  requestify.get("https://www.strava.com/api/v3/activities/" + activityID + "?access_token=" + req.user.accessToken).then(activityDetailsResponse => {
-    let activityDetails = JSON.parse(activityDetailsResponse.body);
-    let segments = [];
-    activityDetails.segment_efforts.forEach(segment => {
-      let pr_rank = segment.pr_rank;
-      if (pr_rank == 1){
-        pr_rank = (req.user._json.sex == "M" ? "KOM" : "QOM");
-      }
-      segment = segment.segment;
-      if (!segmentIDs.has(segment.id) && !segmentIDs.has(segment.name)){
-        segmentIDs.add(segment.id);
-        segmentIDs.add(segment.name);
-        if (segment.name.length > 35){
-          segment.name = segment.name.substring(0, 32) + "...";
-        }
-        segments.push({name: segment.name, id: segment.id, distance: (segment.distance / 1000).toFixed(2), average_grade: segment.average_grade, maximum_grade: segment.maximum_grade, ranking: pr_rank, city: segment.city, province: segment.state, country: segment.country});
-      }
-    });
-    res.send(segments);
-  });
-});
-
-router.get('/get/activities', (req, res) => {
-  segmentIDs = new Set();
-  requestify.get("https://www.strava.com/api/v3/athlete/activities?access_token=" + req.user.accessToken).then(response => {
-    let activities = JSON.parse(response.body);
-    res.send(activities);
-  });
-});
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
   if (!req.isAuthenticated()){
     res.redirect('/');
   }
   else{
-    res.render('segments', {});
-    /*let segmentIDs = new Set();
+    let activityID = req.query.activityID;
+    requestify.get("https://www.strava.com/api/v3/activities/" + activityID + "?access_token=" + req.user.accessToken).then(activityDetailsResponse => {
+      let activityDetails = JSON.parse(activityDetailsResponse.body);
+      let segments = [];
+      activityDetails.segment_efforts.forEach(segment => {
+        let pr_rank = segment.pr_rank;
+        if (pr_rank == 1){
+          pr_rank = (req.user._json.sex == "M" ? "KOM" : "QOM");
+        }
+        segment = segment.segment;
+        if (!segmentIDs.has(segment.id) && !segmentIDs.has(segment.name)){
+          segmentIDs.add(segment.id);
+          segmentIDs.add(segment.name);
+          if (segment.name.length > 35){
+            segment.name = segment.name.substring(0, 32) + "...";
+          }
+          segments.push({name: segment.name, id: segment.id, distance: (segment.distance / 1000).toFixed(2), average_grade: segment.average_grade, maximum_grade: segment.maximum_grade, ranking: pr_rank, city: segment.city, province: segment.state, country: segment.country});
+        }
+      });
+      res.send(segments);
+    });
+  }
+});
+
+router.get('/get/activities', (req, res) => {
+  if (!req.isAuthenticated()){
+    res.redirect('/');
+  }
+  else{
+    segmentIDs = new Set();
+    requestify.get("https://www.strava.com/api/v3/athlete/activities?access_token=" + req.user.accessToken).then(response => {
+      let activities = JSON.parse(response.body);
+      res.send(activities);
+    });
+  }
+});
+
+router.get('/legacy/', (req, res) => {
+  if (!req.isAuthenticated()){
+    res.redirect('/');
+  }
+  else{
+    let segmentIDs = new Set();
     let segments = [];
     let target = undefined;
     let count = 0;
@@ -67,7 +75,6 @@ router.get('/', function(req, res, next) {
                 if (segment.name.length > 35){
                   segment.name = segment.name.substring(0, 32) + "...";
                 }
-                
                 segments.push({name: segment.name, id: segment.id, distance: (segment.distance / 1000).toFixed(2), average_grade: segment.average_grade, maximum_grade: segment.maximum_grade, ranking: pr_rank, city: segment.city, province: segment.state, country: segment.country});
               }
             });
@@ -80,7 +87,16 @@ router.get('/', function(req, res, next) {
           });
         })
     });
-    // Async*/
+  }
+});
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  if (!req.isAuthenticated()){
+    res.redirect('/');
+  }
+  else{
+    res.render('segments', {});
   }
 });
 
