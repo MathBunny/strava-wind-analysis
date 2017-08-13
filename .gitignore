@@ -33,3 +33,4 @@ npm-debug.log
 config.js
 
 .DS_Store
+package-lock.json
