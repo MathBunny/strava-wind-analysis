@@ -99,17 +99,9 @@ function ajaxWeatherInformation(num){
      //var standard = "https://api.forecast.io/forecast/" + weatherKey + "/" + output[num].startCoordinate[0] + "," + output[num].startCoordinate[1] + "," + output[num].formattedTime + "?units=ca";
      const standard = "./get/wind-data?lat=" + output[num].startCoordinate[0] + "&long=" + output[num].startCoordinate[1] + "&time=" + output[num].formattedTime;
      number = num;
-     $.ajax({
-        url: standard,
-        dataType: "jsonp",
-        error: function(xhr, status, error) {
-            console.log(error.message);
-        },
-        success: jsonpCallback
-      });
-
-     function jsonpCallback(info){
-        output[num].windSpeed = info.hourly.data[12].windSpeed; //fix so that you get the right hour!
+     
+     $.getJSON(standard, function (info) {
+        output[num].windSpeed = info.hourly.data[12].windSpeed;
         output[num].windBearing = info.hourly.data[12].windBearing;
         done++;
         if (done == output.length){
@@ -117,7 +109,7 @@ function ajaxWeatherInformation(num){
             calculateInfluenceRating();
             updateTable();
         }
-    }
+    });
 }
 
 /* This method calls in sequential order the get weather information */

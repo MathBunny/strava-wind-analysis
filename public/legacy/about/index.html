@@ -16,16 +16,14 @@
     <body>
         <nav class="cyan darken-1">
             <div class="navbar-wrapped container">
-                <a href="http://horatiulazu.ca" class="brand-logo"> Segment Analysis </a>
+                <a href="../../" class="brand-logo"> Segment Analysis </a>
                 <a href="#" data-activates="mobile" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class = "right hide-on-med-and-down">
                     <li> <a href="../index.html"> Home </a> </li>
-                    <li> <a href="../legacy/index.html"> Legacy </a> </li>
                     <li class="active"> <a href="index.html"> About </a> </li>
                 </ul>
                 <ul class="side-nav" id = "mobile">
                     <li> <a href="../index.html"> Home </a> </li>
-                    <li> <a href="../legacy/index.html"> Legacy </a> </li>
                     <li class="active"> <a href="index.html"> About </a> </li>
                 </ul>
             </div>
@@ -36,16 +34,15 @@
                 <div class="col s12">
                     <div class="card-panel">
                         <h5 class="cyan-text"> About Strava Segment Wind Analysis </h5>
-                        This website was created with the idea of cracking down on actual effort outputted by athletes during competitions. Wind plays a significant factor in competitions, and Strava segments do not take into consideration time, place and weather. 
-                        <br> <br>
-                        The website uses Strava V3 APIs to receive information about segments through AJAX (JSONP) requests. Likewise, AJAX requests are sent to OpenWeather API to receive information about weather. Knowing the wind direction and strength, it is possible to generate a vector that relates to the strength and direction of wind. Given the start/end longtiude/latitude, it is then solvable to find the correlation. The site also makes use of Google Maps API to display the map on the site.
+                        This is the deprecated Strava Wind Analysis website. The purpose of this website is to compare and benchmark different segment efforts and determine if wind was a major factor in the distribution of KOMs.
+                        It accomplishes this by using vector manipulation and reading data from external APIs.
                         <br><br>
-                        The only known issue could be if it is a loop, then the data is exaggerated depending on the GPS inconsistencies. This may be fixed in future updates.
+                        The new website features an improved user interface, and a better algorithm for determining wind's impact on performance. Check it out <a href="../../"> here</a>.
                     </div>
                     <div class="card-panel">
-                        <h5 class="cyan-text"> Contact/Contribute </h5>
+                        <h5 class="cyan-text"> Contact and Contribute </h5>
                         You can email me at horatiulazu@gmail.com, or contact me on <a href="https://www.strava.com/athletes/6214103">Strava</a>.
-                         <br><br>Feel free to contribute to this project on <a href="https://github.com/MathBunny/segment-weather-analyzer" target="_blank">GitHub</a>.
+                         <br><br>Feel free to contribute to this project or file bugs on <a href="https://github.com/MathBunny/segment-weather-analyzer" target="_blank">GitHub</a>.
                     </div>
                 </div>
             </div>

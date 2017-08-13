@@ -8,16 +8,15 @@ router.get('', (req, res) => {
   res.send('../public/legacy/index.html');
 });
 
-
 router.get('/get/leaderboard', (req, res) => {
-    let accessToken = req.query.accessToken || config.accessToken;
-    let segmentID = req.query.segmentID;
-    requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "/leaderboard?&access_token=" + accessToken + "").then(response => {
-        res.send(JSON.parse(response.body));
-    }).fail(err => {
-        console.log(err);
-        res.send({});
-    });
+  let accessToken = req.query.accessToken || config.accessToken;
+  let segmentID = req.query.segmentID;
+  requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "/leaderboard?&access_token=" + accessToken + "").then(response => {
+    res.send(JSON.parse(response.body));
+  }).fail(err => {
+    console.log(err);
+    res.send({});
+  });
 });
 
 router.get('/get/location', (req, res) => {
@@ -26,11 +25,9 @@ router.get('/get/location', (req, res) => {
   requestify.get("https://www.strava.com/api/v3/segments/" + segmentID + "?access_token=" + accessToken).then(response => {
     res.send(JSON.parse(response.body));
   }).fail(err => {
-      console.log(err);
       res.send({});
   });
 });
-
 
 router.get('/get/wind-data', (req, res) => {
   let lat = req.query.lat;
@@ -40,6 +37,7 @@ router.get('/get/wind-data', (req, res) => {
   requestify.get('https://api.forecast.io/forecast/' + weatherKey + '/' + lat + ',' + long + ',' + time + '?units=ca').then(response => {
     res.send(JSON.parse(response.body));
   }).fail(err => {
+    console.log(err);
     res.send({error: 'Weather API Limits Exceeded'});  
   });
 });
