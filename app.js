@@ -20,14 +20,14 @@ var StravaStrategy = require('passport-strava').Strategy;
 var app = express();
 let config = {};
 
-try{ 
+try {
   config = require('./config.js');
-} catch(e){console.log("Configuration not found, resorting to ENV variables")}
+} catch (e) { console.log("Configuration not found, resorting to ENV variables") }
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-app.set('view options', { layout: false});
+app.set('view options', { layout: false });
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 //app.use(logger('dev'));
@@ -44,16 +44,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new StravaStrategy({
-        clientID: config.clientID || process.env.CLIENT_ID,
-        clientSecret: config.clientSecret || process.env.CLIENT_SECRET,
-        callbackURL: config.callbackURL || process.env.CALLBACK_URL || "http://localhost:3000/login/callback"
-    },
-    function(accessToken, refreshToken, profile, done) {
-        process.nextTick(function () {
-            profile.accessToken = accessToken;
-            return done(null, profile);
+  clientID: config.clientID || process.env.CLIENT_ID,
+  clientSecret: config.clientSecret || process.env.CLIENT_SECRET,
+  callbackURL: config.callbackURL || process.env.CALLBACK_URL || "http://localhost:3000/login/callback"
+},
+  function (accessToken, refreshToken, profile, done) {
+    process.nextTick(function () {
+      profile.accessToken = accessToken;
+      return done(null, profile);
     });
-}));
+  }));
 
 app.use('/', index);
 app.use('/users', users);
@@ -65,14 +65,14 @@ app.use('/settings', settings);
 app.use('/legacy', legacy);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
@@ -80,11 +80,11 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(obj, done) {
+passport.deserializeUser(function (obj, done) {
   done(null, obj);
 });
 
