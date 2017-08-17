@@ -24,7 +24,13 @@ exports.weatherKey = weatherKey;
 exports.accessToken = accessToken;
 ```
 
-## Run
+## Run the Server
+Simply run the following command in root:
 ```
 num start
 ```
+
+## Features
+* Login using Strava OAuth
+* Integrated legacy website with hidden API keys
+* Improved algorithm for segment effort correlation factor generation
