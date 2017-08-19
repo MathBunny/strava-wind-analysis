@@ -1,18 +1,15 @@
-var express = require('express');
-var router = express.Router();
-
+const express = require('express');
 const passport = require('passport');
-var StravaStrategy = require('passport-strava').Strategy;
 
-router.get('/', passport.authenticate('strava', { scope: ['public'] }),
-    function(req, res){
+const router = express.Router();
+
+router.get('/', passport.authenticate('strava', { scope: ['public'] }), () => { });
+
+router.get('/callback',
+  passport.authenticate('strava', { failureRedirect: '/login' }),
+  (req, res) => {
+    console.log(req.user.accessToken); // eslint-disable-line no-console
+    res.redirect('/');
   });
-
-router.get('/callback', 
-    passport.authenticate('strava', { failureRedirect: '/login' }),
-    function(req, res) {
-        console.log(req.user.accessToken);
-        res.redirect('/');
-});
 
 module.exports = router;
