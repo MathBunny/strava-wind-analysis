@@ -1,14 +1,12 @@
-var express = require('express');
-var router = express.Router();
-const passport = require('passport');
+const express = require('express');
+
+const router = express.Router();
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  //console.log(req.user);
+router.get('/', (req, res) => {
   if (!req.isAuthenticated()) {
     res.render('login', { title: 'Wind Analysis - Login' });
-  }
-  else {
+  } else {
     res.render('index', { title: 'Wind Analysis - Home' });
   }
 });

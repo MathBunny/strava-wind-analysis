@@ -1,10 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-const passport = require('passport');
-var StravaStrategy = require('passport-strava').Strategy;
+const router = express.Router();
 
-router.get('/', function (req, res, next) {
+router.get('/', (req, res) => {
   req.logOut();
   res.redirect('../');
 });
