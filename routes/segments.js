@@ -11,7 +11,7 @@ router.get('/get/activity', (req, res) => {
     res.redirect('/');
   } else {
     const activityID = req.query.activityID;
-    requestify.get(`https://www.strava.com/api/v3/activities/${activityID}?access_token=${req.user.accessToken}`.then((activityDetailsResponse) => {
+    requestify.get(`https://www.strava.com/api/v3/activities/${activityID}?access_token=${req.user.accessToken}`).then((activityDetailsResponse) => {
       const activityDetails = JSON.parse(activityDetailsResponse.body);
       const segments = [];
       activityDetails.segment_efforts.forEach((segment) => {
@@ -38,7 +38,7 @@ router.get('/get/activity', (req, res) => {
         }
       });
       res.send(segments);
-    }));
+    });
   }
 });
 
@@ -170,7 +170,7 @@ router.get('/details', (req, res) => {
             effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
             effort.wind_speed_str = effort.wind_speed.toFixed(2);
             effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
-            effort.wind_bearing_str = geographyHelper.convertToCardinal(effort.wind_bearing);
+            effort.wind_bearing_str = geographyHelper.degreesToCardinal(effort.wind_bearing);
             effort.ride_bearing_str = geographyHelper.longLatToCardinal(segmentData.end_latlng[0],
               segmentData.end_latlng[1], segmentData.start_latlng[0], segmentData.start_latlng[1]);
 

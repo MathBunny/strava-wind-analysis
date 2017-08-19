@@ -5,7 +5,6 @@ const favicon = require('serve-favicon');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const index = require('./routes/index');
-const users = require('./routes/users');
 const login = require('./routes/login');
 const logout = require('./routes/logout');
 const segments = require('./routes/segments');
@@ -56,7 +55,6 @@ passport.use(new StravaStrategy({
 }));
 
 app.use('/', index);
-app.use('/users', users);
 app.use('/login', login);
 app.use('/logout', logout);
 app.use('/segments', segments);
