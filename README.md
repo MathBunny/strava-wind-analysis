@@ -31,6 +31,10 @@ num start
 ```
 
 ## Features
-* Login using Strava OAuth
+* Login using Strava OAuth, preloads a selection of segments for users
 * Integrated legacy website with hidden API keys
 * Improved algorithm for segment effort correlation factor generation
+* Legacy website for historical purposes
+
+## Contributing
+Feel free to submit a pull request. The coding conventions of this app follow the AirBnB base style guide.
