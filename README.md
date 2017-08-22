@@ -8,7 +8,7 @@ npm install
 ```
 
 Now setup the configuration file in the root folder as follows:
-```
+```javascript
 const clientID = 0;
 const clientSecret = "0";
 const callbackURL = "http://localhost:3000/login/callback";
@@ -28,6 +28,12 @@ exports.accessToken = accessToken;
 Simply run the following command in root:
 ```
 num start
+```
+
+## Running Tests
+You can run tests using Mocha and Chai:
+```
+npm test
 ```
 
 ## Features
