@@ -31,4 +31,4 @@ class Vector {
   }
 }
 
-exports.Vector = Vector;
+module.exports = Vector;

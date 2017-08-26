@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const Vector = require('../utilities/vector').Vector;
+const Vector = require('../utilities/vector');
 /* global it describe */
 
 describe('Vector Class', () => {

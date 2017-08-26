@@ -1,7 +1,7 @@
 const express = require('express');
 const requestify = require('requestify');
 const geographyHelper = require('../utilities/geographyHelper');
-const Vector = require('../utilities/vector').Vector;
+const Vector = require('../utilities/vector');
 
 const router = express.Router();
 let segmentIDs = new Set();
