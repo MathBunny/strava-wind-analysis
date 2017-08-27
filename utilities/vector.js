@@ -10,6 +10,9 @@ class Vector {
   }
 
   static getUnitValue(primary, secondary) {
+    if (primary === 0 && secondary === 0) {
+      return 0;
+    }
     return primary / (Math.sqrt(Math.pow(primary, 2) + (Math.pow(secondary, 2)))); // eslint-disable-line
   }
 
@@ -19,7 +22,7 @@ class Vector {
 
   static getDistance(vectorA, vectorB) {
     return Math.sqrt(Math.pow(vectorA.unitLatitude - vectorB.unitLatitude, 2) // eslint-disable-line
-    + Math.pow(vectorA.unitLatitude - vectorB.unitLatitude, 2)); // eslint-disable-line
+    + Math.pow(vectorA.unitLongitude - vectorB.unitLongitude, 2)); // eslint-disable-line
   }
 
   static getLatitudeFromBearing(bearing) {
