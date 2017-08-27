@@ -32,11 +32,23 @@ describe('Vector Class', () => {
     it('0 => 0', () => {
       expect(Vector.getLatitudeFromBearing(0)).to.lessThan(ERROR_THRESHOLD);
     });
+    it('45 => √2/2', () => {
+      expect(Vector.getLatitudeFromBearing(45) - (Math.sqrt(2) / 2)).to.lessThan(ERROR_THRESHOLD);
+    });
     it('360 => 0', () => {
       expect(Vector.getLatitudeFromBearing(360)).to.lessThan(ERROR_THRESHOLD);
     });
+  });
+
+  describe('Get Longitude from Bearing', () => {
+    it('90 => 0', () => {
+      expect(Vector.getLongitudeFromBearing(90)).to.lessThan(ERROR_THRESHOLD);
+    });
     it('45 => √2/2', () => {
-      expect(Vector.getLatitudeFromBearing(45) - (Math.sqrt(2) / 2)).to.lessThan(ERROR_THRESHOLD);
+      expect(Vector.getLongitudeFromBearing(270)).to.lessThan(ERROR_THRESHOLD);
+    });
+    it('270 => 0', () => {
+      expect(Vector.getLongitudeFromBearing(45) - (Math.sqrt(2) / 2)).to.lessThan(ERROR_THRESHOLD);
     });
   });
 });
