@@ -36,7 +36,7 @@ router.get('/get/wind-data', (req, res) => {
   requestify.get(`https://api.forecast.io/forecast/${weatherKey}/${lat},${long},${time}?units=ca`).then((response) => {
     res.send(JSON.parse(response.body));
   }).fail((err) => {
-    console.log(err); // eslint-disable-line no-console
+    console.log(err);
     res.send({ error: 'Weather API Limits Exceeded' });
   });
 });

@@ -5,7 +5,7 @@ const http = require('http');
 let config = {};
 try {
   config = require('../config.js'); // eslint-disable-line
-} catch (e) { console.log(e); } // eslint-disable-line no-console
+} catch (e) { console.log(e); }
 
 const port = parseInt((process.env.PORT || config.port || '3000'), 10);
 const server = http.createServer(app);
@@ -19,11 +19,11 @@ function onError(error) {
 
   switch (error.code) {
     case 'EACCES':
-      console.error(`${bind} requires elevated privileges`); // eslint-disable-line no-console
+      console.error(`${bind} requires elevated privileges`);
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error(`${bind} is already in use`); // eslint-disable-line no-console
+      console.error(`${bind} is already in use`);
       process.exit(1);
       break;
     default:
@@ -34,7 +34,7 @@ function onError(error) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string' ? `pipe ${addr}` : `port ${addr.port}`;
-  console.log(`Listening on ${bind}`); // eslint-disable-line no-console
+  console.log(`Listening on ${bind}`);
 }
 
 app.set('port', port);

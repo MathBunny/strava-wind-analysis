@@ -1,3 +1,7 @@
 module.exports = {
-    "extends": "airbnb-base"
+    "extends": "airbnb-base",
+    "rules": {
+        "no-restricted-properties": 0,
+        "no-console": 0
+    }
 };
