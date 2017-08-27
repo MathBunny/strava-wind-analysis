@@ -8,7 +8,7 @@ router.get('/', passport.authenticate('strava', { scope: ['public'] }), () => { 
 router.get('/callback',
   passport.authenticate('strava', { failureRedirect: '/login' }),
   (req, res) => {
-    console.log(req.user.accessToken); // eslint-disable-line no-console
+    console.log(req.user.accessToken);
     res.redirect('/');
   });
 

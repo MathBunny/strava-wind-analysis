@@ -13,16 +13,16 @@ class Vector {
     if (primary === 0 && secondary === 0) {
       return 0;
     }
-    return primary / (Math.sqrt(Math.pow(primary, 2) + (Math.pow(secondary, 2)))); // eslint-disable-line
+    return primary / (Math.sqrt(Math.pow(primary, 2) + (Math.pow(secondary, 2))));
   }
 
   static resultantSpeed(speed) {
-    return 31 - ((0.004 * Math.pow(speed, 2)) - ((0.616 * speed) - 30.137)); // eslint-disable-line
+    return 31 - ((0.004 * Math.pow(speed, 2)) - ((0.616 * speed) - 30.137));
   }
 
   static getDistance(vectorA, vectorB) {
-    return Math.sqrt(Math.pow(vectorA.unitLatitude - vectorB.unitLatitude, 2) // eslint-disable-line
-    + Math.pow(vectorA.unitLongitude - vectorB.unitLongitude, 2)); // eslint-disable-line
+    return Math.sqrt(Math.pow(vectorA.unitLatitude - vectorB.unitLatitude, 2)
+    + Math.pow(vectorA.unitLongitude - vectorB.unitLongitude, 2));
   }
 
   static getLatitudeFromBearing(bearing) {

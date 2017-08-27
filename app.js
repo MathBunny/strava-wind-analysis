@@ -19,7 +19,7 @@ let config = {};
 
 try {
   config = require('./config.js'); // eslint-disable-line
-} catch (e) { console.log('Configuration not found, resorting to ENV variables'); } // eslint-disable-line no-console
+} catch (e) { console.log('Configuration not found, resorting to ENV variables'); }
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
