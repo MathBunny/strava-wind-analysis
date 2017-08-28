@@ -1,103 +1,87 @@
 <html>
-<head>
-    <meta name="description" content="Strava Wind Segment Analysis takes segment efforts and compares how much wind helped athletes on the leaderboard for Strava segments.">
-    <meta name="author" content="Horatiu Lazu">
-    <meta name="keywords" content="Strava,Weather,Analysis,Wind,Segment,KOM">
+    <head>
+        <meta name="description" content="Strava Wind Segment Analysis takes segment efforts and compares how much wind helped athletes on the leaderboard for Strava segments.">
+        <meta name="author" content="Horatiu Lazu">
+        <meta name="keywords" content="Strava,Weather,Analysis,Wind,Segment,KOM">
 
-    <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
-    <link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.1.10/css/ink-flex.min.css">
-    <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
-    <title> Strava Wind Segment Analysis </title>
+        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
+        <link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.1.10/css/ink-flex.min.css">
+        <title> Strava Wind Segment Analysis </title>
 
-    <style>
-        html,
-        body,
-        #a {
-            margin: 0;
-            padding: 0;
-            height: 95%;
-            width: 100%;
-        }
+        <style>
+            html,
+            body,
+            #a {
+                margin: 0;
+                padding: 0;
+                height: 95%;
+                width: 100%;
+            }
 
-        html {
-            background: url('/images/home-wallpaper.jpg') no-repeat center center fixed;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            -o-background-size: cover;
-            background-size: cover;
-        }
+            html {
+                background: url('/images/home-wallpaper.jpg') no-repeat center center fixed;
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+            }
 
-        #a {
-            display: table;
-        }
+            #a {
+                display: table;
+            }
 
-        #b {
-            display: table-cell;
-            margin: 0;
-            padding: 0;
+            #b {
+                display: table-cell;
+                margin: 0;
+                padding: 0;
 
-            text-align: center;
-            vertical-align: middle;
-        }
+                text-align: center;
+                vertical-align: middle;
+            }
 
-        #content {
-            margin: auto;
-            margin-top: 150px;
-        }
-    </style>
-</head>
+            #content {
+                margin: auto;
+                margin-top: 150px;
+            }
+        </style>
+    </head>
 
-<body>
-    <div class="fw-300">
-        <nav class="ink-navigation">
-            <ul class="menu horizontal black">
-                <div class="ink-grid">
-                    <li class="heading active"><a href="">Home </a> </li>
-                    <li class="disabled"><a href="">Segments</a></li>
-                    <li class="disabled"><a href="">Rides</a></li>
-                    <li class="disabled"><a href="">Settings</a></li>
-                    <li><a href="/login">Login</a></li>
-                </div>
-            </ul>
-        </nav>
-    </div>
+    <body>
+        <div class="fw-300">
+            <nav class="ink-navigation">
+                <ul class="menu horizontal black">
+                    <div class="ink-grid">
+                        <li class="heading active"><a href="">Home </a> </li>
+                        <li class="disabled"><a href="">Segments</a></li>
+                        <li class="disabled"><a href="">Rides</a></li>
+                        <li class="disabled"><a href="">Settings</a></li>
+                        <li><a href="/login">Login</a></li>
+                    </div>
+                </ul>
+            </nav>
+        </div>
 
-    <div class="ink-grid">
-        <div class="column-group push-center">
-            <div class="all-90">
-                <!-- <div id="ink-alert" class="ink-alert block error" role="alert" style="top: -15px; margin-bottom:-75px">
-                    <button class="ink-dismiss">&times;</button>
-                    <h4>System Downtime Incident</h4>
-                    <p class="fw-300" style="text-align: center">Both the main website and legacy website experienced downtime between 12:49pm - 5:00pm EST on August
-                        12, 2017 due to excessive strain on the Weather API from a surge of 1000 users in under 24 hours.
-                        Capacity has since been lifted to account for such events.</p>
-                </div> -->
+        <div id="a">
+            <div id="b">
+                <div id="content"></div>
+                <a href="/login"> <button class="ink-button grey" id="content" href="/login">Login </button> </a>
+                <a href="/legacy"> <button class="ink-button grey" id="content" href="/legacy">Legacy </button> </a>
             </div>
         </div>
-    </div>
 
-
-    <div id="a">
-        <div id="b">
-            <div id="content"></div>
-            <a href="/login"> <button class="ink-button grey" id="content" href="/login">Login </button> </a>
-            <a href="/legacy"> <button class="ink-button grey" id="content" href="/legacy">Legacy </button> </a>
-        </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-        crossorigin="anonymous"></script>
-    <script>
-        $('.ink-dismiss').click(() => {
-            $('#ink-alert').remove();
-        });
-
-        (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date(); a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-85289613-1', 'auto');
-        ga('send', 'pageview');
-    </script>
-</body>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+            crossorigin="anonymous"></script>
+        <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
+        <script>
+            $('.ink-dismiss').click(() => {
+                $('#ink-alert').remove();
+            });
+            (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+            ga('create', 'UA-85289613-1', 'auto');
+            ga('send', 'pageview');
+        </script>
+    </body>
 </html>
