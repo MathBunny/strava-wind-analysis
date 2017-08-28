@@ -175,8 +175,8 @@ router.get('/details', (req, res) => {
               segmentData.end_latlng[1], segmentData.start_latlng[0], segmentData.start_latlng[1]);
 
             try {
-              const windVector = new Vector(Vector.getLatitudeFromBearing(effort.wind_bearing),
-                Vector.getLongitudeFromBearing(effort.wind_bearing));
+              const windVector = new Vector(-Vector.getLatitudeFromBearing(effort.wind_bearing),
+                -Vector.getLongitudeFromBearing(effort.wind_bearing));
               const segmentVector = new Vector(parseFloat(segmentData.latitude),
                 parseFloat(segmentData.longitude));
               const roundoffValue = 1 - Vector.getDistance(windVector, segmentVector);
@@ -184,7 +184,7 @@ router.get('/details', (req, res) => {
               effort.coefficient = speed * roundoffValue;
               effort.coefficient_str = (effort.coefficient).toFixed(2);
             } catch (e) {
-              console.log(e); // eslint-disable-line no-console
+              console.log(e);
             }
 
             count += 1;
@@ -193,7 +193,7 @@ router.get('/details', (req, res) => {
             }
           }).fail((err) => {
             res.render('error', { message: err });
-            console.log(err); // eslint-disable-line no-console
+            console.log(err);
           });
         });
       }).fail((errorResponse) => {
