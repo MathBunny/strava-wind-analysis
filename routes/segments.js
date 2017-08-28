@@ -171,7 +171,7 @@ router.get('/details', (req, res) => {
             effort.wind_speed_str = effort.wind_speed.toFixed(2);
             effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
             effort.wind_bearing_str = geographyHelper.degreesToCardinal(effort.wind_bearing);
-            effort.ride_bearing_str = geographyHelper.longLatToCardinal(segmentData.end_latlng[0],
+            effort.ride_bearing_str = geographyHelper.convertLatLongToCardinal(segmentData.end_latlng[0], // longLatToCardinal
               segmentData.end_latlng[1], segmentData.start_latlng[0], segmentData.start_latlng[1]);
 
             try {
