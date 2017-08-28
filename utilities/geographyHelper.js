@@ -30,5 +30,39 @@ function degreesToCardinal(num) {
   return arr[(val % 16)];
 }
 
+function getPolarAngleLongLat(lat1, long1, lat2, long2) {
+  const dLat = lat1 - lat2;
+  const dLong = long1 - long2;
+  const rad = Math.atan2(dLat, dLong);
+  if (rad < 0) {
+    return Math.PI + (Math.PI + rad);
+  }
+  return rad;
+}
+
+function convertPolarAngleToBearing(polarAngle) {
+  const degAngle = (((polarAngle * 360) / (2 * Math.PI)) + 360) % 360;
+  if (degAngle < 0) {
+    throw Error('Angle should be non-negative');
+  } else if (degAngle <= 90) {
+    return 90 - degAngle;
+  } else if (degAngle <= 180) {
+    return 270 + (180 - degAngle);
+  } else if (degAngle <= 270) {
+    return 180 + (270 - degAngle);
+  } else {
+    return 90 + (360 - degAngle);
+  }
+}
+
+function convertLatLongToCardinal(lat1, long1, lat2, long2) {
+  const polarAngle = getPolarAngleLongLat(lat1, long1, lat2, long2);
+  const bearing = convertPolarAngleToBearing(polarAngle);
+  return degreesToCardinal(bearing);
+}
+
 exports.longLatToCardinal = longLatToCardinal;
 exports.degreesToCardinal = degreesToCardinal;
+exports.getPolarAngleLongLat = getPolarAngleLongLat;
+exports.convertPolarAngleToBearing = convertPolarAngleToBearing;
+exports.convertLatLongToCardinal = convertLatLongToCardinal;
