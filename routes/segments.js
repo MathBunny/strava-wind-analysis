@@ -1,6 +1,6 @@
 const express = require('express');
 const requestify = require('requestify');
-const geographyHelper = require('../utilities/geographyHelper');
+const geography = require('../utilities/geography');
 const Vector = require('../utilities/vector');
 
 const router = express.Router();
@@ -167,11 +167,22 @@ router.get('/details', (req, res) => {
           requestify.get(darkskyrequest).then((windDataResponse) => {
             const windData = JSON.parse(windDataResponse.body);
             const date = new Date(effort.start_date_iso);
+            
             effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
             effort.wind_speed_str = effort.wind_speed.toFixed(2);
+
+            if (effort.wind_speed_str === '0.00') {
+              console.log(effort.wind_speed);
+              console.log(effort.wind_speed_str);
+              console.log(windData.hourly.data);
+              console.log(date.getHours());
+              console.log(windData.hourly.data[date.getHours()].windSpeed);
+            }
+
+
             effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
-            effort.wind_bearing_str = geographyHelper.degreesToCardinal(effort.wind_bearing);
-            effort.ride_bearing_str = geographyHelper.convertLatLongToCardinal(segmentData.end_latlng[0], // longLatToCardinal
+            effort.wind_bearing_str = geography.degreesToCardinal(effort.wind_bearing);
+            effort.ride_bearing_str = geography.convertLatLongToCardinal(segmentData.end_latlng[0], // longLatToCardinal
               segmentData.end_latlng[1], segmentData.start_latlng[0], segmentData.start_latlng[1]);
 
             try {
