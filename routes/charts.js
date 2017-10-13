@@ -14,7 +14,9 @@ router.get('/get/data/all-segment-efforts', (req, res) => {
     for (let x = 0; x < 7; x += 1) {
       dataArr.push(0);
     }
-    function getData(page, dataArr) { // eslint-disable-line
+
+    let pagesComplete = 0;
+    for (let page = 0; page < 10; page += 1) {
       requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}/all_efforts?&access_token=${req.user.accessToken}&per_page=200&page=${page}`).then((segmentEffortResponse) => { // eslint-disable-line
         const responseData = JSON.parse(segmentEffortResponse.body);
         responseData.forEach((effort) => {
@@ -22,7 +24,8 @@ router.get('/get/data/all-segment-efforts', (req, res) => {
           const arrIndex = Math.min(speed / 10, 6);
           dataArr[Math.floor(arrIndex)] += 1;
         });
-        if (page === 9) {
+        pagesComplete += 1;
+        if (pagesComplete === 9) {
           const data = {
             labels: ['0-10km/h', '10km/h-20km/h', '20km/h-30m/h', '30km/h-40km/h', '40km/h-50km/h', '50km/h-60km/h', '60km/h+'],
             datasets:
@@ -37,10 +40,6 @@ router.get('/get/data/all-segment-efforts', (req, res) => {
           res.send(data);
         }
       });
-    }
-
-    for (let page = 0; page < 10; page += 1) {
-      getData(page, dataArr);
     }
   }
 });
