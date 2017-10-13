@@ -84,6 +84,7 @@
                                 {{/each}}
                             </tbody>
                         </table>
+                        <canvas id="allEffortsSpeedChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -127,9 +128,10 @@
         <script type="text/javascript" src="/javascripts/autoload.js"></script>
         <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
-        <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="/javascripts/nokey.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
         <script>
             longitude = parseFloat({{longitude}}).toFixed(6);
@@ -144,9 +146,42 @@
             initialize();
 
             function showModal(id){
-                console.log(id);
                 $("#showModal")[0].click();
             }
+
+            $.getJSON('../../charts/get/data/all-segment-efforts?segmentID={{id}}', (chartDataResponse) => {
+                const data = chartDataResponse;
+                const ctxAllEffortsSpeedChart = document.getElementById('allEffortsSpeedChart').getContext('2d');
+                const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
+
+                const allEffortsBarChart = new Chart(ctxAllEffortsSpeedChart, {
+                    type: 'bar',
+                    data: data,
+                    options: options
+                });
+            });
+
+            
+            /*const ctxAllEffortsSpeedChart = document.getElementById('allEffortsSpeedChart').getContext('2d');
+            const data = JSON.parse()
+            const data = {
+                "labels":["0-10km/h","10km/h-20km/h","20km/h-30m/h","30km/h-40km/h","40km/h-50km/h","50km/h-60km/h","60km/h+"],
+                "datasets":
+                    [{"label":"All Segment Efforts",
+                    "data":[2,12,30,43,5,1,0],
+                    "fill":false,
+                    "backgroundColor":["rgba(255, 99, 132, 0.2)","rgba(255, 159, 64, 0.2)","rgba(255, 205, 86, 0.2)","rgba(75, 192, 192, 0.2)","rgba(54, 162, 235, 0.2)","rgba(153, 102, 255, 0.2)","rgba(201, 203, 207, 0.2)"],
+                    "borderColor":
+                    ["rgb(255, 99, 132)", "rgb(255, 159, 64)","rgb(255, 205, 86)","rgb(75, 192, 192)","rgb(54, 162, 235)","rgb(153, 102, 255)", "rgb(201, 203, 207)"],
+                "borderWidth":1}]};
+            const options = {"scales":{"yAxes":[{"ticks":{"beginAtZero":true}}]}};
+
+            const allEffortsBarChart = new Chart(ctxAllEffortsSpeedChart, {
+                type: 'bar',
+                data: data,
+                options: options
+            });*/
+
 
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

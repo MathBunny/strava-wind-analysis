@@ -8,6 +8,7 @@ const index = require('./routes/index');
 const login = require('./routes/login');
 const logout = require('./routes/logout');
 const segments = require('./routes/segments');
+const charts = require('./routes/charts');
 const rides = require('./routes/rides');
 const settings = require('./routes/settings');
 const legacy = require('./routes/legacy');
@@ -50,6 +51,7 @@ passport.use(new StravaStrategy({
   process.nextTick(() => {
     const userProfile = profile;
     userProfile.accessToken = accessToken;
+    console.log(accessToken);
     return done(null, profile);
   });
 }));
@@ -61,6 +63,7 @@ app.use('/segments', segments);
 app.use('/rides', rides);
 app.use('/settings', settings);
 app.use('/legacy', legacy);
+app.use('/charts', charts);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
