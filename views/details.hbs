@@ -70,7 +70,7 @@
                             <tbody class="fw-300">
                                 {{#each leaderboard}}
                                     {{#with this}}
-                                            <tr class="fw-100">
+                                            <tr class="fw-100" onclick="showModal({{athlete_id}});">
                                                 <td>{{rank}}</td>
                                                 <td>{{athlete_name}}</td>
                                                 <td>{{start_date}}</td>
@@ -88,6 +88,39 @@
                 </div>
             </div>
         </div>
+
+        <div class="modal-container">
+            <div class="ink-shade fade">
+                <div id="myModal" class="ink-modal fade" data-trigger="#showModal" data-width="80%" data-height="80%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
+                    <div class="modal-header">
+                        <button class="modal-close ink-dismiss"></button>
+                        <h2 id="modal-title" class="fw-500">Segment Name | Horatiu Lazu's Data</h2>
+                    </div>
+                    <div class="modal-body" id="modalContent">
+                        <h3 class="fw-200">Historical Speed Data</h3>
+                        <figure class="ink-image">
+                            <img src="http://olivernash.org/2014/05/25/mining-the-strava-data/histogram_and_scatter.665229.png" alt="" class="ink-image">
+                        </figure>
+                        <h3 class="fw-200">Historical Wind Data</h3>
+                        <figure class="ink-image">
+                            <img src="http://olivernash.org/2014/05/25/mining-the-strava-data/histogram_and_scatter.665229.png" alt="" class="ink-image">
+                        </figure>
+                        <h3 class="fw-200">Heart Rate</h3>
+                        <figure class="ink-image">
+                            <img src="http://olivernash.org/2014/05/25/mining-the-strava-data/histogram_and_scatter.665229.png" alt="" class="ink-image">
+                        </figure>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="push-right">
+                            <button class="ink-button caution ink-dismiss">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="#" style="display:none;" id="showModal" class="ink-button">Open example modal</a>
+
 
         <script type="text/javascript" src="/javascripts/holder.js"></script>
         <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
@@ -109,6 +142,11 @@
                 path["resource_state"] = {{resource_state}};
             {{/with}}
             initialize();
+
+            function showModal(id){
+                console.log(id);
+                $("#showModal")[0].click();
+            }
 
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
