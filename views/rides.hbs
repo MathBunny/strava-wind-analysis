@@ -31,7 +31,23 @@
         <div class="ink-grid">
             <div class="column-group">
                 <div class="all-80">
-                    Coming soon!
+                    <div style="margin: 10px">
+                        <table id="activity-list" class="ink-table hover alternating">
+                            <thead>
+                                <div class="fw-500">
+                                    <tr>
+                                        <th class="align-left">Activity Name</th>
+                                        <th class="align-left">Date</th>
+                                        <th class="align-left">Distance</th>
+                                        <th class="align-left">Average Speed</th>
+                                        <th class="align-left">Average Wattage</th>
+                                    </tr>
+                                </div>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>    
+                    </div>          
                 </div>
                 <div class="all-20">
                     <nav class="ink-navigation sidebar">
@@ -91,7 +107,7 @@
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/autoload.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/modernizr-all.js"></script>
-        <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         
         <script>
             let filteringGroups = new Map();
@@ -111,6 +127,24 @@
                     }
                 });
             });
+
+            $.ajax( {url: "rides/get/activities", success: activities => {
+              activities.forEach(activity => {
+                let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/rides/details?id=" + activity.id + "'\">";
+                let activityName = activity.name;
+                if (activityName.length > 45) {
+                    activityName = activityName.substring(0, 43) + '...';
+                }
+                segmentRow += "<td>" + activityName + "</td>";
+                segmentRow += "<td>" + activity.start_date.substring(0, 10) + "</td>";
+                segmentRow += "<td>" + (activity.distance / 1000).toFixed(2) + "km </td>";
+                segmentRow += "<td>" + ((activity.distance * 3.6) / activity.moving_time).toFixed(2) + " km/h </td>";
+                segmentRow += "<td>" + (activity.average_watts === undefined ? ('Zero') : (activity.average_watts)) + " watts </td>";
+                segmentRow += "</tr>";
+                $("#activity-list tbody").append(segmentRow);
+              });
+            }});
+
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
               m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
