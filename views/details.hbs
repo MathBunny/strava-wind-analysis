@@ -52,7 +52,7 @@
                 </div>
                 <div class="all-70">
                     <div style="margin: 10px">
-                        <center> <h4 class="fw-400"> Segment Leaderboard</h4> </center>
+                        <center> <h3 class="fw-400"> Segment Leaderboard</h3> </center>
                         <hr>
                         <table class="ink-table hover alternating">
                             <thead>
@@ -95,7 +95,7 @@
                 <div id="myModal" class="ink-modal fade" data-trigger="#showModal" data-width="60%" data-height="80%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
                     <div class="modal-header">
                         <button class="modal-close ink-dismiss"></button>
-                        <h3 id="modal-title" class="fw-200">Athlete's Individual Performance</h3>
+                        <h3 id="modal-title" class="fw-200">Individual Athlete Performance</h3>
                     </div>
                     <div class="modal-body" id="modalContent">
                         <h4 class="fw-100">Historical Efforts</h4>
@@ -105,14 +105,11 @@
                             </div>
                         </figure>
                         <br>
-                        <h4 class="fw-100">Historical Wind Data</h4>
+                        <h4 class="fw-100">Historical Performance</h4>
                         <figure class="ink-image">
-                            <img src="http://olivernash.org/2014/05/25/mining-the-strava-data/histogram_and_scatter.665229.png" alt="" class="ink-image">
-                        </figure>
-                        <br>
-                        <h4 class="fw-100">Heart Rate</h4>
-                        <figure class="ink-image">
-                            <img src="http://olivernash.org/2014/05/25/mining-the-strava-data/histogram_and_scatter.665229.png" alt="" class="ink-image">
+                            <div id="historicalSpeedDataContainer">
+                                <canvas id="historicalSpeedDataChart"></canvas>
+                            </div>
                         </figure>
                     </div>
                     <div class="modal-footer">
@@ -152,21 +149,39 @@
             function showModal(id){
                 $("#showModal")[0].click();
                 
+                // Individual Efforts Bar Graph
                 $('#individualEffortsSpeedChart').remove();
-                $('#individualEffortsSpeedChartContainer').append('<canvas id="individualEffortsSpeedChart"><canvas>');
+                $('#individualEffortsSpeedChartContainer').append('<canvas id="individualEffortsSpeedChart"></canvas>');
 
                 $.getJSON('../../charts/get/data/athlete-segment-efforts?segmentID={{id}}&athleteID=' + id, (chartDataResponse) => {
-                const data = chartDataResponse;
-                const ctxIndividualEffortsSpeedChart = document.getElementById('individualEffortsSpeedChart').getContext('2d');
-                ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
-                const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
+                    const data = chartDataResponse;
+                    const ctxIndividualEffortsSpeedChart = document.getElementById('individualEffortsSpeedChart').getContext('2d');
+                    ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
+                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
 
-                const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
-                    type: 'bar',
-                    data: data,
-                    options: options
+                    const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
+                        type: 'bar',
+                        data: data,
+                        options: options
+                    });
                 });
-            });
+
+                // Line graph for historical performance
+                $('#historicalSpeedDataChart').remove();
+                $('#historicalSpeedDataContainer').append('<canvas id="historicalSpeedDataChart"></canvas>');
+
+                $.getJSON('../../charts/get/data/athlete-segment-history?segmentID={{id}}&athleteID=' + id, (chartDataResponse) => {
+                    const data = chartDataResponse;
+                    const ctxhistoricalSpeedDataChart = document.getElementById('historicalSpeedDataChart').getContext('2d');
+                    ctxhistoricalSpeedDataChart.clearRect(0, 0, ctxhistoricalSpeedDataChart.width, ctxhistoricalSpeedDataChart.height);
+                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
+
+                    const allEffortsBarChart = new Chart(ctxhistoricalSpeedDataChart, {
+                        type: 'line',
+                        data: data,
+                        options: options
+                    });
+                });
             }
 
             $.getJSON('../../charts/get/data/all-segment-efforts?segmentID={{id}}', (chartDataResponse) => {

@@ -51,7 +51,6 @@ passport.use(new StravaStrategy({
   process.nextTick(() => {
     const userProfile = profile;
     userProfile.accessToken = accessToken;
-    console.log(accessToken);
     return done(null, profile);
   });
 }));
