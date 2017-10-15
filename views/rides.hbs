@@ -29,77 +29,93 @@
         <br>
 
         <div class="ink-grid">
-            <div class="column-group">
-                <div class="all-80">
-                    <div style="margin: 10px">
-                        <table id="activity-list" class="ink-table hover alternating">
-                            <thead>
-                                <div class="fw-500">
-                                    <tr>
-                                        <th class="align-left">Activity Name</th>
-                                        <th class="align-left">Date</th>
-                                        <th class="align-left">Distance</th>
-                                        <th class="align-left">Average Speed</th>
-                                        <th class="align-left">Average Wattage</th>
-                                    </tr>
-                                </div>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>    
-                    </div>          
-                </div>
-                <div class="all-20">
-                    <nav class="ink-navigation sidebar">
-                        <div class="fw-300">
-                            <form class="ink-form">
-                                <div class="control-group all-100 small-100 tiny-100">
-                                    <div class="control append-button" role="search">
-                                        <span><input type="text" name="name" id="name" placeholder="ride id"></span>
-                                        <button class="ink-button">Search</button>
-                                    </div>
-                                </div>
-                            </form>
+            <div class="ink-tabs top" data-prevent-url-change="true">
+                <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
+                <ul class="tabs-nav" style="margin-top: -20px">
+                    <li><a class="tabs-tab" href="#list">Rides List</a></li>
+                    <li><a class="tabs-tab" href="#aggregate">Aggregate Statistics</a></li>
+                </ul>
+                <div id="list" class="tabs-content">
+                    <div class="column-group">
+                        <div class="all-80">
+                            <div style="margin: 10px">
+                                <table id="activity-list" class="ink-table hover alternating">
+                                    <thead>
+                                        <div class="fw-500">
+                                            <tr>
+                                                <th class="align-left">Activity Name</th>
+                                                <th class="align-left">Date</th>
+                                                <th class="align-left">Distance</th>
+                                                <th class="align-left">Average Speed</th>
+                                                <th class="align-left">Average Wattage</th>
+                                            </tr>
+                                        </div>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>    
+                            </div>          
                         </div>
+                        <div class="all-20">
+                            <nav class="ink-navigation sidebar">
+                                <div class="fw-300">
+                                    <form class="ink-form">
+                                        <div class="control-group all-100 small-100 tiny-100">
+                                            <div class="control append-button" role="search">
+                                                <span><input type="text" name="name" id="name" placeholder="ride id"></span>
+                                                <button class="ink-button">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
 
-                        <hr>
+                                <hr>
 
-                        <ul class="menu vertical">
-                            <li class="heading"> Distance </li>
-                            <div class="fw-300">
-                            <ul class="control unstyled">
-                                <li><input type="checkbox" id="d1" checked="checked"><label for="cb5">  0km - 20km</label></li>
-                                <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
-                                <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
-                                <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
-                                <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 200km+</label></li>
-                                <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
-                            </ul>
-                            </div>
-                        </ul>
+                                <ul class="menu vertical">
+                                    <li class="heading"> Distance </li>
+                                    <div class="fw-300">
+                                    <ul class="control unstyled">
+                                        <li><input type="checkbox" id="d1" checked="checked"><label for="cb5">  0km - 20km</label></li>
+                                        <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
+                                        <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
+                                        <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
+                                        <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 200km+</label></li>
+                                        <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
+                                    </ul>
+                                    </div>
+                                </ul>
 
-                        <hr>
+                                <hr>
 
-                        <ul class="menu vertical">
-                            <li class="heading"> Average Speed </li>
-                            <div class="fw-300">
-                            <ul class="control unstyled">
-                                <li><input type="checkbox" id="s1" checked="checked"><label for="cb5">  0km/h - 15km/h</label></li>
-                                <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
-                                <li><input type="checkbox" id="s3" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
-                                <li><input type="checkbox" id="s4" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
-                                <li><input type="checkbox" id="s5" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
-                                <li><input type="checkbox" id="s6" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
-                                <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 37km/h+</label></li>
-                                <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All</label></li>
-                            </ul>
-                            </div>
-                        </ul>
+                                <ul class="menu vertical">
+                                    <li class="heading"> Average Speed </li>
+                                    <div class="fw-300">
+                                    <ul class="control unstyled">
+                                        <li><input type="checkbox" id="s1" checked="checked"><label for="cb5">  0km/h - 15km/h</label></li>
+                                        <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
+                                        <li><input type="checkbox" id="s3" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
+                                        <li><input type="checkbox" id="s4" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
+                                        <li><input type="checkbox" id="s5" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
+                                        <li><input type="checkbox" id="s6" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
+                                        <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 37km/h+</label></li>
+                                        <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All</label></li>
+                                    </ul>
+                                    </div>
+                                </ul>
 
-                    </nav>
-                    <hr>
-                    <button class="ink-button">Filter Results</button>
+                            </nav>
+                            <hr>
+                            <button class="ink-button">Filter Results</button>
+                        </div>
                 </div>
+                <div id="aggregate" class="tabs-content">
+                    <h1 class="fw-300">News</h1>
+                    <p>
+                        News is the communication of selected[1] information on current events. It is shared in various ways: among individuals and small groups (such as by word of mouth or newsletters); with wider audiences (such as by publishing, either in print or online, or broadcasting, such as on television or radio); or in ways that blend those traits (such as when social media sharing starts among individuals but goes viral).
+                    </p>
+                </div>
+            </div>
+            
             </div>
         </div>
 
