@@ -4,6 +4,7 @@
         <meta name="author" content="Horatiu Lazu">
         <meta name="keywords" content="Strava,Weather,Analysis,Wind,Segment,KOM">
         
+        <link rel="stylesheet" type="text/css" href="/stylesheets/map.css">
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink-flex.min.css">
@@ -33,7 +34,7 @@
                 <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
                 <ul class="tabs-nav" style="margin-top: -20px">
                     <li><a class="tabs-tab" href="#list">Rides List</a></li>
-                    <li><a class="tabs-tab" href="#aggregate">Aggregate Statistics</a></li>
+                    <li><a class="tabs-tab" href="#aggregate">Aggregate Visualization</a></li>
                 </ul>
                 <div id="list" class="tabs-content">
                     <div class="column-group">
@@ -107,11 +108,12 @@
                             <hr>
                             <button class="ink-button">Filter Results</button>
                         </div>
+                    </div>
                 </div>
                 <div id="aggregate" class="tabs-content">
-                    <h1 class="fw-300">News</h1>
+                    <h1 class="fw-100">Visualizations</h1>
                     <p>
-                        News is the communication of selected[1] information on current events. It is shared in various ways: among individuals and small groups (such as by word of mouth or newsletters); with wider audiences (such as by publishing, either in print or online, or broadcasting, such as on television or radio); or in ways that blend those traits (such as when social media sharing starts among individuals but goes viral).
+                        Coming soon!
                     </p>
                 </div>
             </div>
@@ -119,11 +121,32 @@
             </div>
         </div>
 
+        <div class="ink-shade fade">
+            <div id="activityDetails" class="ink-modal fade" data-trigger="#activityTrigger" data-width="80%" data-height="80%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
+                <div class="modal-header">
+                    <button class="modal-close ink-dismiss"></button>
+                    <h3 id="modal-title" class="fw-200">Activity Details</h3>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <p> Coming soon! </p>
+                    <div id="map"></div>
+                </div>
+                <div class="modal-footer">
+                    <div class="push-right">
+                        <button class="ink-button caution ink-dismiss">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a href="#" id="activityTrigger" class="ink-button" style="display:none">Open example modal</a>
+
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/holder.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/autoload.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/modernizr-all.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
         
         <script>
             let filteringGroups = new Map();
@@ -144,9 +167,26 @@
                 });
             });
 
+            function loadActivityDetails(id) {
+                $("#activityTrigger")[0].click();
+                $.ajax( {url: "rides/get/activity?id=" + id, success: activityDetails => {
+                    if (activityDetails.start_latlng !== null) {
+                        longitude = parseFloat(activityDetails.start_latlng[1]).toFixed(6);
+                        latitude = parseFloat(activityDetails.start_latlng[0]).toFixed(6);
+                        console.log(longitude + " " + latitude);
+
+                        path = [];
+                        path["id"] = activityDetails.map.id;
+                        path["polyline"] = activityDetails.map.polyline;
+                        path["resource_state"] = activityDetails.map.resource_state;
+                        initialize();    
+                    }
+                }});
+            }
+
             $.ajax( {url: "rides/get/activities", success: activities => {
               activities.forEach(activity => {
-                let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/rides/details?id=" + activity.id + "'\">";
+                let segmentRow = "<tr class=\"fw-100\" onclick=\"loadActivityDetails(" + activity.id + ");\">";
                 let activityName = activity.name;
                 if (activityName.length > 45) {
                     activityName = activityName.substring(0, 43) + '...';

@@ -11,6 +11,19 @@ router.get('/details', (req, res) => {
   }
 });
 
+router.get('/get/activity', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/');
+  } else if (!req.query.id) {
+    res.send({ error: 'error: did not provide id for activity' });
+  } else {
+    requestify.get(`https://www.strava.com/api/v3/activities/${req.query.id}?access_token=${req.user.accessToken}`).then((response) => {
+      const activityDetails = JSON.parse(response.body);
+      res.send(activityDetails);
+    });
+  }
+});
+
 router.get('/get/activities', (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
