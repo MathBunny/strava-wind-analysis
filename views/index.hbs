@@ -5,7 +5,14 @@
         <meta name="keywords" content="Strava,Weather,Analysis,Wind,Segment,KOM">
         
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
+        
         <title> Wind Analysis - Home </title>
+
+        <style>
+            footer {
+                background: #ccc;
+            }
+        </style>
     </head>
 
     <body>
@@ -23,97 +30,139 @@
             </nav>
         </div>
 
+        <br>
+        <br>
+
         <div class="ink-grid">
-            <br>
-            <div class= "column-group">
-                <div class= "all-20">
-                    <nav class= "ink-navigation sidebar">
-                        <ul>
-                            <li class="fw-200"> Post History </li>
-                            <hr>
-                            <li class="slab-100"> <a href="#2017-10-13"> 2017-10-13 </a></li>
-                            <li class="slab-100"> <a href="#2017-08-12"> 2017-08-12 </a></li>
-                            <li class="slab-100"> <a href="#2017-07-30"> 2017-07-30 </a></li>
-                            
-                        </ul>
-                    </nav>
+            <div class="ink-tabs top" data-prevent-url-change="true">
+                <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
+                <ul class="tabs-nav" style="margin-top: -20px">
+                    <li><a class="tabs-tab" href="#feed">Feed</a></li>
+                    <li><a class="tabs-tab" href="#blog">Blog</a></li>
+                </ul>
+
+                <div id="feed" class="tabs-content">
+                    <p> Coming soon! </p>
                 </div>
-                <div class="all-80">
-                    <div style="margin-left:20px">
-                        <div id="ink-alert" class="ink-alert block" role="alert">
-                            <button class="ink-dismiss">&times;</button>
-                            <h4>Curent system status: Pre-release</h4>
-                            <p class="fw-300">Please note that this site can go down at any time as it is in beta until January 1, 2018.</p>
-                        </div>
 
-                        <div id="2017-10-13">
-                            <h2 style="display: inline-block"> Charts & Modals <small>| October 13, 2017 </small></h2>
-                            <div class= "column-group">
-                            <div class="all-60">
-                                <p class="fw-300"> Charts and modals were added to the site, adding ability to visually compare the athletes' performance. 
-                                <br><br>
-                                There are currently two charts supported on the segment detail page. The first is the bar graph, which denotes the distributions of speed used by segment efforts
-                                clumped into buckets in increments of 10km/h. The second type of chart, found after clicking on an athlete name, contains the improvement in speed of segments, going from most recent to more historic performance.
-                                </p>
-                            </div>
-                            <div class="all-40">
-                                <img src="https://i.imgur.com/VK8F8dg.png">
-                            </div>
-                            </div>
+                <div id="blog" class="tabs-content">
+                    <div class= "column-group">
+                        <div class= "all-20">
+                            <nav class= "ink-navigation sidebar">
+                                <ul>
+                                    <li class="fw-200"> Post History </li>
+                                    <hr>
+                                    <li class="slab-100"> <a href="#2017-10-13"> 2017-10-13 </a></li>
+                                    <li class="slab-100"> <a href="#2017-08-12"> 2017-08-12 </a></li>
+                                    <li class="slab-100"> <a href="#2017-07-30"> 2017-07-30 </a></li>
+                                    
+                                </ul>
+                            </nav>
                         </div>
-                        <hr>
-                        <div id="2017-08-12">
-                            <h2 style="display: inline-block"> Initial Release <small>| August 12, 2017 </small></h2>
-                            <p class="fw-300"> Today marks the initial release of the new Strava Wind Analysis website. The purpose of this website is to compute how wind influenced riders in segment leaderboards. 
-                                Unlike the previous version, this version is easier to use and doesn't require users to find segment IDs by themselves. Moreover, it features a newly designed user interface.
-                                <br><br>
-                                You can find the legacy website <a href="http://strava-weather-analysis.paperplane.io/" target="_blank"> here</a>.
-                                </p>
-                        </div>
-                        <hr>
-                        <div id="2017-07-30">
-                            <h2 style="display: inline-block"> About Developer <small>| July 30, 2017 </small></h2>
-                            <p class="fw-300"> This website was created by <a href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>, an 18 year old
-                            studying Computer Science at the University of Waterloo in Canada. Feel free to reach out to me via email at <a href="mailto:horatiulazu@gmail.com">horatiulazu@gmail.com</a>.
-                        </div>
+                        <div class="all-80">
+                            <div style="margin-left:20px">
+                                <div id="ink-alert" class="ink-alert block" role="alert">
+                                    <button class="ink-dismiss">&times;</button>
+                                    <h4>Curent system status: Pre-release</h4>
+                                    <p class="fw-300">Please note that this site can go down at any time as it is in beta until January 1, 2018.</p>
+                                </div>
 
-                        {{!-- 
-                        <hr>
-                        <div id="2017-07-30">
-                            <h2 style="display: inline-block"> Correlation Scoring <small>| July 30, 2017 </small></h2>
-                            <p class="fw-300"> The correlation scoring algorithm is the core of this site. The objective of the scoring is to provide a larger score if the user was assisted by wind more than other users.
-                                <br><br>The first step in the algorithm is to generate a vector $\vec{u}$ for the user's direction and a vector $\vec{w}$ for the wind's direction. 
-                                Now, take the two vectors and make them unit vectors, that is $\left \| \vec{u} \right \| = 1, \left \| \vec{w} \right \| = 1$.
-                                To account for speed, multiply $\vec{w}$ by the speed in km/h. To keep proportions the same, multiply $\vec{u}$ by $50$ as well.
-                                After, add the two vectors (tip to tail). Letting $\vec{z} = \vec{u} + \vec{w}$, the correlation score can be found as the following relation. Since $\vec{z}, \vec{u}, \vec{w} \in \mathbb{R}^{2}$, then
-                                let $\vec{z}_{x}$ be the first index and $\vec{z}_{y}$ be the second. The score is $\vec{z}$'s translation in a favourable shift ($\Delta y$ + $\Delta x$), more formally:
+                                <div id="2017-10-13">
+                                    <h2 style="display: inline-block"> Charts & Modals <small>| October 13, 2017 </small></h2>
+                                    <div class= "column-group">
+                                    <div class="all-60">
+                                        <p class="fw-300"> Charts and modals were added to the site, adding ability to visually compare the athletes' performance. 
+                                        <br><br>
+                                        There are currently two charts supported on the segment detail page. The first is the bar graph, which denotes the distributions of speed used by segment efforts
+                                        clumped into buckets in increments of 10km/h. The second type of chart, found after clicking on an athlete name, contains the improvement in speed of segments, going from most recent to more historic performance.
+                                        </p>
+                                    </div>
+                                    <div class="all-40">
+                                        <img src="https://i.imgur.com/VK8F8dg.png">
+                                    </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div id="2017-08-12">
+                                    <h2 style="display: inline-block"> Initial Release <small>| August 12, 2017 </small></h2>
+                                    <p class="fw-300"> Today marks the initial release of the new Strava Wind Analysis website. The purpose of this website is to compute how wind influenced riders in segment leaderboards. 
+                                        Unlike the previous version, this version is easier to use and doesn't require users to find segment IDs by themselves. Moreover, it features a newly designed user interface.
+                                        <br><br>
+                                        You can find the legacy website <a href="http://strava-weather-analysis.paperplane.io/" target="_blank"> here</a>.
+                                        </p>
+                                </div>
+                                <hr>
+                                <div id="2017-07-30">
+                                    <h2 style="display: inline-block"> About Developer <small>| July 30, 2017 </small></h2>
+                                    <p class="fw-300"> This website was created by <a href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>, an 18 year old
+                                    studying Computer Science at the University of Waterloo in Canada. Feel free to reach out to me via email at <a href="mailto:horatiulazu@gmail.com">horatiulazu@gmail.com</a>.
+                                </div>
+
+                                {{!-- 
+                                <hr>
+                                <div id="2017-07-30">
+                                    <h2 style="display: inline-block"> Correlation Scoring <small>| July 30, 2017 </small></h2>
+                                    <p class="fw-300"> The correlation scoring algorithm is the core of this site. The objective of the scoring is to provide a larger score if the user was assisted by wind more than other users.
+                                        <br><br>The first step in the algorithm is to generate a vector $\vec{u}$ for the user's direction and a vector $\vec{w}$ for the wind's direction. 
+                                        Now, take the two vectors and make them unit vectors, that is $\left \| \vec{u} \right \| = 1, \left \| \vec{w} \right \| = 1$.
+                                        To account for speed, multiply $\vec{w}$ by the speed in km/h. To keep proportions the same, multiply $\vec{u}$ by $50$ as well.
+                                        After, add the two vectors (tip to tail). Letting $\vec{z} = \vec{u} + \vec{w}$, the correlation score can be found as the following relation. Since $\vec{z}, \vec{u}, \vec{w} \in \mathbb{R}^{2}$, then
+                                        let $\vec{z}_{x}$ be the first index and $\vec{z}_{y}$ be the second. The score is $\vec{z}$'s translation in a favourable shift ($\Delta y$ + $\Delta x$), more formally:
+                                        
+                                        <br><br>
+                                        Correlation score = $\left\{\begin{matrix}
+                                        \vec{z}_{x} - \vec{u}_{x} \mid  \vec{u}_x \geq 0
+                                        \\ -\vec{z}_{x} - \vec{u}_x \mid \vec{u}_x < 0
+
+                                        \end{matrix}\right. $ + 
+                                        $\left\{\begin{matrix}
+                                        \vec{z}_{y} - \vec{u}_{y} \mid  \vec{u}_y \geq 0
+                                        \\ -\vec{z}_{y} - \vec{u}_y \mid \vec{u}_y < 0
+
+                                        \end{matrix}\right. $
+                                    </p>
+                                </div>
+                                --}}
                                 
-                                <br><br>
-                                Correlation score = $\left\{\begin{matrix}
-                                \vec{z}_{x} - \vec{u}_{x} \mid  \vec{u}_x \geq 0
-                                \\ -\vec{z}_{x} - \vec{u}_x \mid \vec{u}_x < 0
-
-                                \end{matrix}\right. $ + 
-                                $\left\{\begin{matrix}
-                                \vec{z}_{y} - \vec{u}_{y} \mid  \vec{u}_y \geq 0
-                                \\ -\vec{z}_{y} - \vec{u}_y \mid \vec{u}_y < 0
-
-                                \end{matrix}\right. $
-                            </p>
+                            </div>
                         </div>
-                        --}}
-                        
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="push"></div>
+
+        <footer class="clearfix" id="footer">
+            <div class="ink-grid">
+                <div class="fw-300">
+                    <p class="note">
+                        <br>
+                        Copyright © 2018 <a style="text-decorations:none; color:inherit" href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>.
+                    </p>    
+                </div>
+            </div>
+        </footer>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/autoload.js"></script>
+
         <script>
             $('.ink-dismiss').click(() => {
                 $('#ink-alert').remove();
+            });
+            $(window).bind("load", function () {
+                var footer = $("#footer");
+                var pos = footer.position();
+                var height = $(window).height();
+                height = height - pos.top;
+                height = height - footer.height();
+                if (height > 0) {
+                    footer.css({
+                        'margin-top': height + 'px'
+                    });
+                }
             });
         </script>
 

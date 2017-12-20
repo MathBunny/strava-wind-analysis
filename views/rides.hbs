@@ -9,6 +9,12 @@
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink-flex.min.css">
         <title> Wind Analysis - Rides </title>
+
+        <style>
+            footer {
+                background: #ccc;
+            }
+        </style>
     </head>
 
     <body>
@@ -163,6 +169,17 @@
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
         
+        <footer class="clearfix" id="footer">
+            <div class="ink-grid">
+                <div class="fw-300">
+                    <p class="note">
+                        <br>
+                        Copyright © 2018 <a style="text-decorations:none; color:inherit" href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>.
+                    </p>    
+                </div>
+            </div>
+        </footer>
+
         <script>
             let filteringGroups = new Map();
             filteringGroups.set('d', 6);
@@ -226,6 +243,19 @@
                     }
                 }});
             }
+
+            $(window).bind("load", function () {
+                var footer = $("#footer");
+                var pos = footer.position();
+                var height = $(window).height();
+                height = height - pos.top;
+                height = height - footer.height();
+                if (height > 0) {
+                    footer.css({
+                        'margin-top': height + 'px'
+                    });
+                }
+            });
 
             $.ajax( {url: "rides/get/activities", success: activities => {
               activities.forEach(activity => {
