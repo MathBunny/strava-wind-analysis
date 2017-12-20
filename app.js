@@ -10,6 +10,7 @@ const logout = require('./routes/logout');
 const segments = require('./routes/segments');
 const charts = require('./routes/charts');
 const rides = require('./routes/rides');
+const wind = require('./routes/wind');
 const settings = require('./routes/settings');
 const legacy = require('./routes/legacy');
 const passport = require('passport');
@@ -63,6 +64,7 @@ app.use('/rides', rides);
 app.use('/settings', settings);
 app.use('/legacy', legacy);
 app.use('/charts', charts);
+app.use('/wind', wind);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
