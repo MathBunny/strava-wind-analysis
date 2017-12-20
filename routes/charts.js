@@ -13,18 +13,18 @@ router.get('/get/data/athlete-segment-history', (req, res) => {
   } else {
     const segmentID = req.query.segmentID;
     const athleteID = req.query.athleteID;
-    const dataArr = [];
+    let dataArr = [];
 
     const maxPageCount = 49;
     let pagesComplete = 0;
     for (let page = 0; page < 50; page += 1) {
-      requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}/all_efforts?&access_token=${req.user.accessToken}&per_page=200&page=${page}`).then((segmentEffortResponse) => { // eslint-disable-line
+      requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}/all_efforts?&access_token=${req.user.accessToken}&per_page=200&page=${page}&athlete_id=${athleteID}`).then((segmentEffortResponse) => { // eslint-disable-line
         const responseData = JSON.parse(segmentEffortResponse.body);
         responseData.forEach((effort) => {
-          if (effort.athlete.id == athleteID) {
-            const speed = (effort.distance * 3.6) / effort.elapsed_time;
-            dataArr.push(speed);
-          }
+          const speed = (effort.distance * 3.6) / effort.elapsed_time;
+          const date = effort.start_date;
+          const effortObj = { speed, date };
+          dataArr.push(effortObj);
         });
         pagesComplete += 1;
         if (pagesComplete === maxPageCount) {
@@ -45,7 +45,8 @@ router.get('/get/data/athlete-segment-history', (req, res) => {
               labels.push(x);
             }
           }
-          dataArr.reverse();
+          dataArr = dataArr.sort((x, y) => (new Date(x.date) - new Date(y.date)));
+          dataArr = dataArr.map(effortObj => effortObj.speed);
           const data = {
             labels: labels, // eslint-disable-line
             datasets:
