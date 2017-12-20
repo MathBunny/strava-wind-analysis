@@ -45,6 +45,7 @@ router.get('/get/data/athlete-segment-history', (req, res) => {
               labels.push(x);
             }
           }
+          dataArr.reverse();
           const data = {
             labels: labels, // eslint-disable-line
             datasets:
