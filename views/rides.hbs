@@ -4,6 +4,7 @@
         <meta name="author" content="Horatiu Lazu">
         <meta name="keywords" content="Strava,Weather,Analysis,Wind,Segment,KOM">
         
+        <link rel="stylesheet" type="text/css" href="/stylesheets/map.css">
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink-flex.min.css">
@@ -29,69 +30,138 @@
         <br>
 
         <div class="ink-grid">
-            <div class="column-group">
-                <div class="all-80">
-                    Coming soon!
-                </div>
-                <div class="all-20">
-                    <nav class="ink-navigation sidebar">
-                        <div class="fw-300">
-                            <form class="ink-form">
-                                <div class="control-group all-100 small-100 tiny-100">
-                                    <div class="control append-button" role="search">
-                                        <span><input type="text" name="name" id="name" placeholder="ride id"></span>
-                                        <button class="ink-button">Search</button>
-                                    </div>
-                                </div>
-                            </form>
+            <div class="ink-tabs top" data-prevent-url-change="true">
+                <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
+                <ul class="tabs-nav" style="margin-top: -20px">
+                    <li><a class="tabs-tab" href="#list">Rides List</a></li>
+                    <li><a class="tabs-tab" href="#aggregate">Aggregate Visualization</a></li>
+                </ul>
+                <div id="list" class="tabs-content">
+                    <div class="column-group">
+                        <div class="all-80">
+                            <div style="margin: 10px">
+                                <table id="activity-list" class="ink-table hover alternating">
+                                    <thead>
+                                        <div class="fw-500">
+                                            <tr>
+                                                <th class="align-left">Activity Name</th>
+                                                <th class="align-left">Date</th>
+                                                <th class="align-left">Distance</th>
+                                                <th class="align-left">Average Speed</th>
+                                                <th class="align-left">Average Wattage</th>
+                                            </tr>
+                                        </div>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>    
+                            </div>          
                         </div>
+                        <div class="all-20">
+                            <nav class="ink-navigation sidebar">
+                                <div class="fw-300">
+                                    <form class="ink-form">
+                                        <div class="control-group all-100 small-100 tiny-100">
+                                            <div class="control append-button" role="search">
+                                                <span><input type="text" name="name" id="name" placeholder="ride id"></span>
+                                                <button class="ink-button">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
 
-                        <hr>
+                                <hr>
 
-                        <ul class="menu vertical">
-                            <li class="heading"> Distance </li>
-                            <div class="fw-300">
-                            <ul class="control unstyled">
-                                <li><input type="checkbox" id="d1" checked="checked"><label for="cb5">  0km - 20km</label></li>
-                                <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
-                                <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
-                                <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
-                                <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 200km+</label></li>
-                                <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
-                            </ul>
+                                <ul class="menu vertical">
+                                    <li class="heading"> Distance </li>
+                                    <div class="fw-300">
+                                    <ul class="control unstyled">
+                                        <li><input type="checkbox" id="d1" checked="checked"><label for="cb5">  0km - 20km</label></li>
+                                        <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
+                                        <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
+                                        <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
+                                        <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 200km+</label></li>
+                                        <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
+                                    </ul>
+                                    </div>
+                                </ul>
+
+                                <hr>
+
+                                <ul class="menu vertical">
+                                    <li class="heading"> Average Speed </li>
+                                    <div class="fw-300">
+                                    <ul class="control unstyled">
+                                        <li><input type="checkbox" id="s1" checked="checked"><label for="cb5">  0km/h - 15km/h</label></li>
+                                        <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
+                                        <li><input type="checkbox" id="s3" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
+                                        <li><input type="checkbox" id="s4" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
+                                        <li><input type="checkbox" id="s5" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
+                                        <li><input type="checkbox" id="s6" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
+                                        <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 37km/h+</label></li>
+                                        <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All</label></li>
+                                    </ul>
+                                    </div>
+                                </ul>
+
+                            </nav>
+                            <hr>
+                            <button class="ink-button">Filter Results</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="aggregate" class="tabs-content">
+                    <h1 class="fw-100">Coming soon!</h1>
+                </div>
+            </div>
+            
+            </div>
+        </div>
+
+        <div class="ink-shade fade">
+            <div id="activityDetails" class="ink-modal fade" data-trigger="#activityTrigger" data-width="60%" data-height="60%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
+                <div class="modal-header">
+                    <button class="modal-close ink-dismiss"></button>
+                    <h3 id="modal-title" class="fw-150" style="margin-bottom: -20px">Activity Details</h3>
+                </div>
+                <div class="modal-body" id="modalContent">
+                    <div class="column-group">
+                        <div class="all-50">
+                            <div id="map"></div>          
+                        </div>
+                        <div class="all-45" style="margin-left:5px">
+                            <div class="fw-100">
+                                <strong>Elevation Gained:</strong> <div class="slab-100" style="display: inline" id="modal-elevation">  </div>
+                                <br>
+                                <strong>Moving time:</strong> <div class="slab-100" style="display: inline" id="modal-moving-time">  </div>
+                                <br>
+                                <strong>Distance:</strong> <div class="slab-100" style="display: inline" id="modal-distance">  </div>
+                                <hr>
+                                <strong>Wind Direction:</strong> <div class="slab-100" style="display: inline" id="modal-wind-direction">  </div>
+                                <br>
+                                <strong>Wind Speed:</strong> <div class="slab-100" style="display: inline" id="modal-wind-speed">  </div>
+                                <br>
+                                <strong>Computed Wind Correlation:</strong> <div class="slab-100" style="display: inline" id="modal-wind-correlation">  </div>
                             </div>
-                        </ul>
-
-                        <hr>
-
-                        <ul class="menu vertical">
-                            <li class="heading"> Average Speed </li>
-                            <div class="fw-300">
-                            <ul class="control unstyled">
-                                <li><input type="checkbox" id="s1" checked="checked"><label for="cb5">  0km/h - 15km/h</label></li>
-                                <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
-                                <li><input type="checkbox" id="s3" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
-                                <li><input type="checkbox" id="s4" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
-                                <li><input type="checkbox" id="s5" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
-                                <li><input type="checkbox" id="s6" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
-                                <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 37km/h+</label></li>
-                                <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All</label></li>
-                            </ul>
-                            </div>
-                        </ul>
-
-                    </nav>
-                    <hr>
-                    <button class="ink-button">Filter Results</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="push-right">
+                        <button class="ink-button caution ink-dismiss">Close</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <a href="#" id="activityTrigger" class="ink-button" style="display:none">Open example modal</a>
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/holder.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/autoload.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/modernizr-all.js"></script>
-        <script src="http://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
         
         <script>
             let filteringGroups = new Map();
@@ -111,6 +181,69 @@
                     }
                 });
             });
+
+            function loadActivityDetails(id) {
+                $.ajax( {url: "rides/get/activity?id=" + id, success: activityDetails => {
+                    if (activityDetails.start_latlng !== null) {
+                        $("#activityTrigger")[0].click();
+                        
+                        const activityName = (activityDetails.name.length > 40) ? (activityDetails.name.substring(0, 37) + "...") : activityDetails.name;
+                        $("#modal-title").text("Activity Details: " + activityName);
+                        longitude = parseFloat(activityDetails.start_latlng[1]).toFixed(6);
+                        latitude = parseFloat(activityDetails.start_latlng[0]).toFixed(6);
+
+                        path = [];
+                        path["id"] = activityDetails.map.id;
+                        path["polyline"] = activityDetails.map.polyline;
+                        path["resource_state"] = activityDetails.map.resource_state;
+                        initialize();    
+
+                        $("#modal-elevation").text(activityDetails.total_elevation_gain + "m");
+                        const hours = ((activityDetails.elapsed_time / 60) / 60).toFixed(0);
+                        const minutes = ((activityDetails.elapsed_time / 60) % 60).toFixed(0);
+                        let hoursString = "";
+                        if (hours === 1)
+                            hoursString = "1 hour and ";
+                        else if (hours > 1)
+                            hoursString = hours + " hours and ";
+                        let minuteString = (minutes + " minutes");
+                        if (minutes == 1)
+                            minuteString = (minutes + " minute ");
+                        $("#modal-moving-time").text(hoursString + minuteString);
+                        $("#modal-distance").text((activityDetails.distance / 1000).toFixed(2) + " km");
+                        const windReq = `wind/get/wind-data?latitude=${activityDetails.start_latlng[0]}&longitude=${activityDetails.start_latlng[1]}&start_date_iso=${activityDetails.start_date}&start_long=${activityDetails.start_latlng[1]}&start_lat=${activityDetails.start_latlng[0]}&end_long=${activityDetails.end_latlng[1]}&end_lat=${activityDetails.end_latlng[0]}`;
+                        console.log(windReq);
+                        
+                        $.ajax( {url: windReq, success: windDetails => {
+                            $("#modal-wind-direction").text(windDetails.wind_bearing_str);
+                            $("#modal-wind-speed").text(windDetails.wind_speed_str);
+                            $("#modal-wind-correlation").text(windDetails.coefficient_str);
+                            console.log(windDetails);
+                            console.log("OK!");
+                        }});
+                    } else {
+                        alert('Error: This activity is a manual entry');
+                    }
+                }});
+            }
+
+            $.ajax( {url: "rides/get/activities", success: activities => {
+              activities.forEach(activity => {
+                let segmentRow = `<tr class="fw-100" onclick="loadActivityDetails(${activity.id});">`;
+                let activityName = activity.name;
+                if (activityName.length > 45) {
+                    activityName = activityName.substring(0, 43) + '...';
+                }
+                segmentRow += "<td>" + activityName + "</td>";
+                segmentRow += "<td>" + activity.start_date.substring(0, 10) + "</td>";
+                segmentRow += "<td>" + (activity.distance / 1000).toFixed(2) + "km </td>";
+                segmentRow += "<td>" + ((activity.distance * 3.6) / activity.moving_time).toFixed(2) + " km/h </td>";
+                segmentRow += "<td>" + (activity.average_watts === undefined ? ('Zero') : (activity.average_watts)) + " watts </td>";
+                segmentRow += "</tr>";
+                $("#activity-list tbody").append(segmentRow);
+              });
+            }});
+
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
               m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)

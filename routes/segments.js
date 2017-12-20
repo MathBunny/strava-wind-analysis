@@ -152,6 +152,7 @@ router.get('/details', (req, res) => {
           const effort = effortData;
           effort.start_date_iso = effort.start_date;
           effort.start_date = effort.start_date.substring(0, 10);
+          effort.athlete_name = (effort.athlete_name.length > 22) ? (`${effort.athlete_name.substring(0, 20)}...`) : (effort.athlete_name);
           if (effort.rank % 10 === 1) {
             effort.rank = `${effort.rank}st`;
           } else if (effort.rank % 10 === 2) {
@@ -203,7 +204,7 @@ router.get('/details', (req, res) => {
               res.render('details', segmentData);
             }
           }).fail((err) => {
-            res.render('error', { message: err });
+            res.render('error', { message: err.body, stack: ' Dark Sky API Error ', status: err.code });
             console.log(err);
           });
         });
