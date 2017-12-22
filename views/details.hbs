@@ -55,8 +55,8 @@
                                             <li>
                                                 <a href="#">Aggregate Speed</a>
                                                 <ul>
-                                                    <li><a href="#">Leaderboard</a></li>
-                                                    <li><a href="#">Cumulative Leaderboard Imposed</a></li>
+                                                    <li><a href="#">Individual</a></li>
+                                                    <li><a href="#" id="all-segment-efforts-imposed">Leaderboard</a></li>
                                                 </ul>
                                             </li>
                                             <li>
@@ -111,8 +111,12 @@
                         </div>
                         <div class="all-70">
                             <div style="margin: 10px">
-                                <center> <h3 class="fw-400"> Chart Visualization </h3> </center>
+                                <center> <h3 class="fw-400"> Chart Visualization - Leaderboard</h3> </center>
                                 <hr>
+                                <br>
+                                <div id="chart-container">
+                                    <canvas id="chart"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -176,7 +180,7 @@
                                         {{/each}}
                                     </tbody>
                                 </table>
-                                <canvas id="allEffortsSpeedChart"></canvas>
+                                
                             </div>
                         </div>
                     </div>
@@ -239,6 +243,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
         <script>
+            document.getElementById ("all-segment-efforts-imposed").addEventListener("click", () => getChart("all-segment-efforts-imposed"), false);
+
             longitude = parseFloat({{longitude}}).toFixed(6);
             latitude = parseFloat({{latitude}}).toFixed(6);
 
@@ -249,6 +255,28 @@
                 path["resource_state"] = {{resource_state}};
             {{/with}}
             initialize();
+
+
+            function getChart(chartType, id){
+
+                if (id == undefined){
+                    id = 0;//{{athleteID}};
+                }
+                $.getJSON(`../../charts/get/data/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
+                    $('#chart').remove();
+                    $('#chart-container').append('<canvas id="chart"></canvas>');
+                    const data = chartDataResponse;
+                    const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
+                    ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
+                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
+
+                    const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
+                        type: 'bar',
+                        data: data,
+                        options: options
+                    });
+                });
+            }
 
             function showModal(id){
                 $("#showModal")[0].click();
@@ -290,7 +318,7 @@
 
             $.getJSON('../../charts/get/data/all-segment-efforts?segmentID={{id}}', (chartDataResponse) => {
                 const data = chartDataResponse;
-                const ctxAllEffortsSpeedChart = document.getElementById('allEffortsSpeedChart').getContext('2d');
+                const ctxAllEffortsSpeedChart = document.getElementById('chart').getContext('2d');
                 const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
 
                 const allEffortsBarChart = new Chart(ctxAllEffortsSpeedChart, {
