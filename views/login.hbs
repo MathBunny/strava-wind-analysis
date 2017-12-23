@@ -1,87 +1,147 @@
-<html>
-    <head>
-        <meta name="description" content="Strava Wind Segment Analysis takes segment efforts and compares how much wind helped athletes on the leaderboard for Strava segments.">
-        <meta name="author" content="Horatiu Lazu">
-        <meta name="keywords" content="Strava,Weather,Analysis,Wind,Segment,KOM">
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Strava Wind Segment Analysis takes segment efforts and compares how much wind helped athletes on the leaderboard for Strava segments.">
+		<meta name="author" content="Horatiu Lazu">
+		<meta name="keywords" content="Strava,Weather,Analysis,Wind,Segment,KOM,Analytics,Stats,Statistics,MachineLearning">
+		<link rel="shortcut icon" href="/images/ThumbnailDesign_1.ico">
+		<title>Strava Analysis</title>
+		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="/stylesheets/font-awesome.min.css" rel="stylesheet" media="screen">
+		<link href="/stylesheets/simple-line-icons.css" rel="stylesheet" media="screen">
+		<link href="/stylesheets/animate.css" rel="stylesheet">
+		<link href="/stylesheets/login-style.css" rel="stylesheet" media="screen">
+		<script src="/javascripts/modernizr.custom.js"></script>
+	</head>
+	<body>
+		<section id="home" class="pfblock-image screen-height">
+			<div class="home-overlay"></div>
+			<div class="intro">
+				<div class="start"></div>
+				<h1>Strava Wind Analysis</h1>
+				<div class="start">Ride and segment analytics using wind data and machine learning.</div>
+				<a href="/login"> <img src="https://i.imgur.com/GLXiGGg.png"> </a>
+			</div>
+			<a href="#passions">
+				<div class="scroll-down">
+					<span>
+					<i class="fa fa-angle-down fa-2x"></i>
+					</span>
+				</div>
+			</a>
+		</section>
 
-        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
-        <link rel="stylesheet" href="http://cdn.ink.sapo.pt/3.1.10/css/ink-flex.min.css">
-        <title> Strava Wind Segment Analysis </title>
+		<header class="header">
+			<nav class="navbar navbar-custom" role="navigation">
+				<div class="container">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="index.html">Strava Wind Analysis</a>
+					</div>
+					<div class="collapse navbar-collapse" id="custom-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li><a href="#home">Home</a></li>
+							<li><a href="#description">Description</a></li>
+							<li><a href="#segments">Segments</a></li>
+							<li><a href="#rides">Rides</a></li>
+							<li><a href="#poweredby">Powered By</a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</header>
 
-        <style>
-            html,
-            body,
-            #a {
-                margin: 0;
-                padding: 0;
-                height: 95%;
-                width: 100%;
-            }
+		<section id="description" class="pfblock pfblock-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="pfblock-header wow fadeInUp">
+							<h2 class="pfblock-title">Strava Wind Analysis</h2>
+							<div class="pfblock-line"></div>
+							<div class="pfblock-subtitle">
+								Strava Segment Analysis provides machine learning analytics and data visualization to your rides and segments. Features include ability to compute winds' influence, aggregate statistics, regression, visualizations and more!
+							</div>
+						</div>
+					</div>
 
-            html {
-                background: url('/images/home-wallpaper.jpg') no-repeat center center fixed;
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover;
-            }
+					<div class="col-sm-9">
+						<img src="https://i.imgur.com/liLtQZr.png">
+					</div>
+				</div>
+			</div>
+		</section>
 
-            #a {
-                display: table;
-            }
-
-            #b {
-                display: table-cell;
-                margin: 0;
-                padding: 0;
-
-                text-align: center;
-                vertical-align: middle;
-            }
-
-            #content {
-                margin: auto;
-                margin-top: 150px;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="fw-300">
-            <nav class="ink-navigation">
-                <ul class="menu horizontal black">
-                    <div class="ink-grid">
-                        <li class="heading active"><a href="">Home </a> </li>
-                        <li class="disabled"><a href="">Segments</a></li>
-                        <li class="disabled"><a href="">Rides</a></li>
-                        <li class="disabled"><a href="">Settings</a></li>
-                        <li><a href="/login">Login</a></li>
-                    </div>
-                </ul>
-            </nav>
-        </div>
-
-        <div id="a">
-            <div id="b">
-                <div id="content"></div>
-                <a href="/login"> <button class="ink-button grey" id="content" href="/login">Login </button> </a>
-                <a href="/legacy"> <button class="ink-button grey" id="content" href="/legacy">Legacy </button> </a>
-            </div>
-        </div>
-
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-            crossorigin="anonymous"></script>
-        <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
-        <script>
-            $('.ink-dismiss').click(() => {
-                $('#ink-alert').remove();
-            });
-            (function (i, s, o, g, r, a, m) {i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-                (i[r].q = i[r].q || []).push(arguments)}, i[r].l = 1 * new Date(); a = s.createElement(o),
-                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
-            ga('create', 'UA-85289613-1', 'auto');
-            ga('send', 'pageview');
-        </script>
-    </body>
+		<section id="portfolio" class="pfblock">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2">
+						<div class="pfblock-header wow fadeInUp">
+							<h2 class="pfblock-title">Segment Analytics</h2>
+							<div class="pfblock-line"></div>
+							<div class="pfblock-subtitle">
+								This site provides the ability to analyze your segment efforts against other athletes and your own historical ride performance.</a>.
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<section class="pfblock pfblock-gray" id="skills">
+			<div class="container">
+				<div class="row skills">
+					<div class="row">
+						<div class="col-sm-12 col-sm-offset-0">
+							<div class="pfblock-header wow fadeInUp">
+								<h2 class="pfblock-title">Built Using / Powered By</h2>
+								<div class="pfblock-line"></div>
+								<div class="pfblock-subtitle">
+									<img src="https://i.imgur.com/LTCwdl8.png">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<footer id="footer">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<p class="copyright">
+							Copyright © 2018 Horatiu Lazu</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<div class="scroll-up">
+			<a href="#home"><i class="fa fa-angle-up"></i></a>
+		</div>
+		<script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+			
+			ga('create', 'UA-74979520-1', 'auto');
+			ga('send', 'pageview');
+		</script>
+		<script src="/javascripts/jquery-1.11.1.min.js"></script>
+		<script src="/bootstrap/js/bootstrap.min.js"></script>
+		<script src="/javascripts/jquery.parallax-1.1.3.js"></script>
+		<script src="/javascripts/imagesloaded.pkgd.js"></script>
+		<script src="/javascripts/jquery.sticky.js"></script>
+		<script src="/javascripts/smoothscroll.js"></script>
+		<script src="/javascripts/wow.min.js"></script>
+		<script src="/javascripts/waypoints.min.js"></script>
+		<script src="/javascripts/jquery.cbpQTRotator.js"></script>
+		<script src="/javascripts/custom.js"></script>
+	</body>
 </html>

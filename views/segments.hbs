@@ -11,6 +11,9 @@
             td:first-letter {
                 text-transform: capitalize;
             }
+            footer {
+                background: #ccc;
+            }
         </style>
     </head>
 
@@ -30,92 +33,112 @@
         </div>
         <br><br>
         <div class="ink-grid">
-            <div class="column-group">
-                <div class="all-80">
-                    <div style="margin: 10px">
-                        <table id="segment-list" class="ink-table hover alternating">
-                            <thead>
-                                <div class="fw-500">
-                                    <tr>
-                                        <th class="align-left">Segment Name</th>
-                                        <th class="align-left">Location</th>
-                                        <th class="align-left">Distance</th>
-                                        <th class="align-left">Average Grade</th>
-                                        <th class="align-left">Maximum Grade</th>
-                                    </tr>
-                                </div>
-                            </thead>
-                            <tbody>
-                                {{!-- 
-                                {{#each segments}}
-                                    {{#with this}}
-                                            <tr class="fw-100" onclick="window.document.location='/segments/details?id={{id}}'">
-                                                <td>{{name}}</td>
-                                                <td>{{city}}, {{country}}</td>
-                                                <td>{{distance}}km</td>
-                                                <td>{{average_grade}}%</td>
-                                                <td>{{maximum_grade}}%</td>
-                                            </tr> 
-                                    {{/with}}
-                                {{/each}}
-                                ---}}
-                            </tbody>
-                        </table>    
-                    </div>            
-                </div>
-                <div class="all-20">
-                    <nav class="ink-navigation sidebar">
-                        <div class="fw-300">
-                            <form class="ink-form">
-                                <div class="control-group all-100 small-100 tiny-100">
-                                    <div class="control append-button" role="search">
-                                        <span><input type="text" name="" id="segment-id" placeholder="segment id"></span>
-                                        <button class="ink-button" id="search-button">Search</button>
+            <div class="ink-tabs top" data-prevent-url-change="true">
+                <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
+                <ul class="tabs-nav" style="margin-top: -20px">
+                    <li><a class="tabs-tab" href="#list">Detailed Analysis</a></li>
+                    <li><a class="tabs-tab" href="#aggregate">Aggregate Visualization</a></li>
+                    <li><a class="tabs-tab" href="#aggregate">Athlete Comparison</a></li>
+                </ul>
+            <div id="list" class="tabs-content">
+                <div class="column-group">
+                    <div class="all-80">
+                        <div style="margin: 10px">
+                            <table id="segment-list" class="ink-table hover alternating">
+                                <thead>
+                                    <div class="fw-500">
+                                        <tr>
+                                            <th class="align-left">Segment Name</th>
+                                            <th class="align-left">Location</th>
+                                            <th class="align-left">Distance</th>
+                                            <th class="align-left">Average Grade</th>
+                                            <th class="align-left">Maximum Grade</th>
+                                        </tr>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <hr>
-                        <ul class="menu vertical">
-                            <li class="heading"> Distance </li>
+                                </thead>
+                                <tbody>
+                                    {{!-- 
+                                    {{#each segments}}
+                                        {{#with this}}
+                                                <tr class="fw-100" onclick="window.document.location='/segments/details?id={{id}}'">
+                                                    <td>{{name}}</td>
+                                                    <td>{{city}}, {{country}}</td>
+                                                    <td>{{distance}}km</td>
+                                                    <td>{{average_grade}}%</td>
+                                                    <td>{{maximum_grade}}%</td>
+                                                </tr> 
+                                        {{/with}}
+                                    {{/each}}
+                                    ---}}
+                                </tbody>
+                            </table>    
+                        </div>            
+                    </div>
+                    <div class="all-20">
+                        <nav class="ink-navigation sidebar">
                             <div class="fw-300">
-                            <ul class="control unstyled">
-                                <li><input type="checkbox" id="d1" checked="checked"><label for="cb5"> 0m - 250m</label></li>
-                                <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 250m - 1km</label></li>
-                                <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 1km - 2.5km</label></li>
-                                <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 2.5km - 5km</label></li>
-                                <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 5km+</label></li>
-                                <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
-                            </ul>
+                                <form class="ink-form">
+                                    <div class="control-group all-100 small-100 tiny-100">
+                                        <div class="control append-button" role="search">
+                                            <span><input type="text" name="" id="segment-id" placeholder="segment id"></span>
+                                            <button class="ink-button" id="search-button">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
-                        </ul>
-                        <hr>
-                        <ul class="menu vertical">
-                            <li class="heading"> Rank </li>
-                            <div class="fw-300">
+                            <hr>
+                            <ul class="menu vertical">
+                                <li class="heading"> Distance </li>
+                                <div class="fw-300">
                                 <ul class="control unstyled">
-                                    <li><input type="checkbox" id="r1" checked="checked"><label for="cb5"> KOM / QOM</label></li>
-                                    <li><input type="checkbox" id="r2" checked="checked"><label for="cb4"> 2nd - 5th</label></li>
-                                    <li><input type="checkbox" id="r3" checked="checked"><label for="cb3"> 5th - 10th</label></li>
-                                    <li><input type="checkbox" id="r4" checked="checked"><label for="cb2"> 10th - 25th</label></li>
-                                    <li><input type="checkbox" id="r5" checked="checked"><label for="cb1"> 25th+</label></li>
-                                    <li><input type="checkbox" id="r6" checked="checked"><label for="cb1"> Select All</label></li>
+                                    <li><input type="checkbox" id="d1" checked="checked"><label for="cb5"> 0m - 250m</label></li>
+                                    <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 250m - 1km</label></li>
+                                    <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 1km - 2.5km</label></li>
+                                    <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 2.5km - 5km</label></li>
+                                    <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 5km+</label></li>
+                                    <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
                                 </ul>
-                            </div>
-                        </ul>
-                    </nav>
-                    <hr>
-                    <button class="ink-button" id="filter">Filter Results</button>
+                                </div>
+                            </ul>
+                            <hr>
+                            <ul class="menu vertical">
+                                <li class="heading"> Rank </li>
+                                <div class="fw-300">
+                                    <ul class="control unstyled">
+                                        <li><input type="checkbox" id="r1" checked="checked"><label for="cb5"> KOM / QOM</label></li>
+                                        <li><input type="checkbox" id="r2" checked="checked"><label for="cb4"> 2nd - 5th</label></li>
+                                        <li><input type="checkbox" id="r3" checked="checked"><label for="cb3"> 5th - 10th</label></li>
+                                        <li><input type="checkbox" id="r4" checked="checked"><label for="cb2"> 10th - 25th</label></li>
+                                        <li><input type="checkbox" id="r5" checked="checked"><label for="cb1"> 25th+</label></li>
+                                        <li><input type="checkbox" id="r6" checked="checked"><label for="cb1"> Select All</label></li>
+                                    </ul>
+                                </div>
+                            </ul>
+                        </nav>
+                        <hr>
+                        <button class="ink-button" id="filter">Filter Results</button>
+                    </div>
                 </div>
             </div>
         </div>
+        </div>
+        <footer class="clearfix" id="footer" style="margin-top: -1000px">
+            <div class="ink-grid">
+                <div class="fw-300">
+                    <p class="note">
+                        <br>
+                        Copyright © 2018 <a style="text-decorations:none; color:inherit" href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>.
+                    </p>    
+                </div>
+            </div>
+        </footer>
 
         <script type="text/javascript" src="/javascripts/holder.js"></script>
         <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
         <script type="text/javascript" src="/javascripts/autoload.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-        
+
         <script>
             let filteringGroups = new Map();
             filteringGroups.set('d', 6);
@@ -148,8 +171,52 @@
             });
 
             $('#filter').click(() => {
-                alert("Sorry, feature is coming soon!");
+                const filtersArr = [];
+                Array.from(filteringGroups.keys()).forEach(key => {
+                    let count = filteringGroups.get(key);
+                    for(let x = 1; x < count; x++){
+                        if (!$('#' + key + '' + x).is(':checked')){
+                            filtersArr.push(`${key}${x}`);
+                        }
+                    }
+                });
+                const filter = filtersArr.join('|');
+                $('#segment-list tbody').empty();
+
+                $.ajax( {url: "segments/get/activities", success: activities => {
+                    console.log(filter);
+                    activities.forEach(activity => {
+                        $.ajax( {url: `segments/get/activity?activityID=${activity.id}&filtered=true&filters=${filter}`, success: segmentDetails => {
+                            segmentDetails.forEach(segment => {
+                                let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
+                                segmentRow += "<td>" + segment.name + "</td>";
+                                segmentRow += "<td>" + segment.city + ", " + segment.country + "</td>";
+                                segmentRow += "<td>" + segment.distance + "km </td>";
+                                segmentRow += "<td>" + segment.average_grade + "% </td>";
+                                segmentRow += "<td>" + segment.maximum_grade + "% </td>";
+                                segmentRow += "</tr>";
+                                $("#segment-list tbody").append(segmentRow);
+                                pushFooter();
+                            });
+                        }});
+                    });
+                }});
             });
+            function pushFooter(){
+                $(window).bind("load", function () {
+                    var footer = $("#footer");
+                    var pos = footer.position();
+                    var height = $(window).height();
+                    height = height - pos.top;
+                    height = height - footer.height();
+                    if (height > 0) {
+                        footer.css({
+                            'margin-top': height + 'px'
+                        });
+                    }
+                });
+            }
+            pushFooter();
 
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -170,6 +237,7 @@
                         segmentRow += "<td>" + segment.maximum_grade + "% </td>";
                         segmentRow += "</tr>";
                         $("#segment-list tbody").append(segmentRow);
+                        pushFooter();
                     });
                 }});
               });

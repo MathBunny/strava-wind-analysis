@@ -2,6 +2,12 @@
     <head>
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
         <title> Wind Analysis - Settings </title>
+
+        <style>
+            footer {
+                background: #ccc;
+            }
+        </style>
     </head>
 
     <body>
@@ -25,8 +31,33 @@
             Coming soon!
         </div>
 
+        <footer class="clearfix" id="footer">
+            <div class="ink-grid">
+                <div class="fw-300">
+                    <p class="note">
+                        <br>
+                        Copyright © 2018 <a style="text-decorations:none; color:inherit" href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>.
+                    </p>    
+                </div>
+            </div>
+        </footer>
+
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script>
+            $(window).bind("load", function () {
+                var footer = $("#footer");
+                var pos = footer.position();
+                var height = $(window).height();
+                height = height - pos.top;
+                height = height - footer.height();
+                if (height > 0) {
+                    footer.css({
+                        'margin-top': height + 'px'
+                    });
+                }
+            });
+
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
               m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)

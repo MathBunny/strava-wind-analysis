@@ -12,6 +12,9 @@
             td:first-letter {
                 text-transform: capitalize;
             }
+            footer {
+                background: #ccc;
+            }
         </style>
     </head>
 
@@ -31,90 +34,185 @@
         </div>
         <br><br>
         <div class="ink-grid">
-            <div class="column-group">
-                <div class="all-30">
-                    <div style="margin: 10px">
-                        <center> <h3 class="fw-400"> {{name}} </h3> </center>
-                        <hr>
-                        <nav class= "ink-navigation sidebar">
-                            <ul>
-                                <li> Average Slope: <div class="slab-100" style="display: inline"> {{average_grade}}% </div></li>
-                                <li> Maximum Slope: <div class="slab-100" style="display: inline"> {{maximum_grade}}% </div></li>
-                                <li> Distance: <div class="slab-100" style="display: inline"> {{distance}}km </div></li>
-                                <li> Location: <div class="slab-100" style="display: inline"> {{city}}, {{country}} </div></li>
-                                <li> Participants: <div class="slab-100" style="display: inline"> {{participants}} athletes</div></li>
-                                <li> Official Leaderboard: <div class="slab-100" style="display: inline"> <a href="{{leaderboardLink}}" target="_blank">View on Strava </a></div></li>
-                            </ul>
-                            <hr>
-                            <div id="map"></div>
-                        </nav>
-                    </div>            
-                </div>
-                <div class="all-70">
-                    <div style="margin: 10px">
-                        <center> <h3 class="fw-400"> Segment Leaderboard</h3> </center>
-                        <hr>
-                        <table class="ink-table hover alternating">
-                            <thead>
-                                <tr>
-                                    <th class="align-left">Rank</th>
-                                    <th class="align-left">Athlete Name</th>
-                                    <th class="align-left">Date</th>
-                                    <th class="align-left">Speed</th>
-                                    <th class="align-left">Wind Speed</th>
-                                    <th class="align-left">Wind Direction</th>
-                                    <th class="align-left">Ride Direction</th>
-                                    <th class="align-left">Influence </th>
-                                </tr>
-                            </thead>
-                            <tbody class="fw-300">
-                                {{#each leaderboard}}
-                                    {{#with this}}
-                                            <tr class="fw-100" onclick="showModal({{athlete_id}});">
-                                                <td>{{rank}}</td>
-                                                <td>{{athlete_name}}</td>
-                                                <td>{{start_date}}</td>
-                                                <td>{{speed}}</td>
-                                                <td>{{wind_speed_str}}km/h</td>
-                                                <td>{{wind_bearing_str}}&deg;</td>
-                                                <td>{{ride_bearing_str}}&deg;</td>
-                                                <td>{{coefficient_str}}</td>
-                                            </tr>
-                                    {{/with}}
-                                {{/each}}
-                            </tbody>
-                        </table>
-                        <canvas id="allEffortsSpeedChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <div class="ink-tabs top" data-prevent-url-change="true">
+                <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
+                <ul class="tabs-nav" style="margin-top: -20px">
+                    <li><a class="tabs-tab" href="#overview">Overview</a></li>
+                    <li><a class="tabs-tab" href="#charts">Charts Visualization</a></li>
+                    <li><a class="tabs-tab" href="#compare">Athlete Comparison</a></li>
+                </ul>
 
-        <div class="modal-container">
-            <div class="ink-shade fade">
-                <div id="myModal" class="ink-modal fade" data-trigger="#showModal" data-width="60%" data-height="80%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
-                    <div class="modal-header">
-                        <button class="modal-close ink-dismiss"></button>
-                        <h3 id="modal-title" class="fw-200">Individual Athlete Performance</h3>
-                    </div>
-                    <div class="modal-body" id="modalContent">
-                        <h4 class="fw-100">Historical Efforts</h4>
-                        <figure class="ink-image">
-                            <div id="individualEffortsSpeedChartContainer">
-                                <canvas id="individualEffortsSpeedChart"></canvas>
+                <div id="charts" class="tabs-content">
+                    <div class="column-group">
+                        <div class="all-30">
+                            <div style="margin: 10px">
+                                <center> <h3 class="fw-400"> Chart Selection </h3> </center>
+                                <hr>
+                                <ul class="ink-tree-view" style="margin: 20px">
+                                    <li>
+                                        <a href="#">Bar Graphs</a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Aggregate Speed</a>
+                                                <ul>
+                                                    <li><a href="#">Individual</a></li>
+                                                    <li><a href="#" id="all-segment-efforts-imposed">Leaderboard</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Wind Data</a>
+                                                <ul>
+                                                    <li><a href="#">Adjusted Leaderboard</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Line Graphs</a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Historical Performance</a>
+                                                <ul>
+                                                    <li><a href="#">Personal Performance</a></li>
+                                                    <li><a href="#">Leaderboard Performance</a></li>
+                                                </ul>
+                                            </li>
+                                            <li>
+                                                <a href="#">Wind Data</a>
+                                                <ul>
+                                                    <li><a href="#">Adjusted Personal Performance</a></li>
+                                                    <li><a href="#">Adjusted Leaderboard Performance</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Scatterplot</a>
+                                        <ul>
+                                            <li><a href="#">Ride Distance Scatterplot</a></li>
+                                            <li>
+                                                <a href="#">Wind Data</a>
+                                                <ul>
+                                                    <li><a href="#">Individual Speed Scatterplot</a></li>
+                                                    <li><a href="#">Leaderboard Speed Scatterplot</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#">Radar</a>
+                                        <ul>
+                                            <li><a href="#">Personal Radar</a></li>
+                                            <li><a href="#">Leaderboard Radar</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>            
+                        </div>
+                        <div class="all-70">
+                            <div style="margin: 10px">
+                                <center> <h3 class="fw-400"> Chart Visualization - Leaderboard</h3> </center>
+                                <hr>
+                                <br>
+                                <div id="chart-container">
+                                    <canvas id="chart"></canvas>
+                                </div>
                             </div>
-                        </figure>
-                        <br>
-                        <h4 class="fw-100">Historical Performance</h4>
-                        <figure class="ink-image">
-                            <div id="historicalSpeedDataContainer">
-                                <canvas id="historicalSpeedDataChart"></canvas>
-                            </div>
-                        </figure>
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <div class="push-right">
-                            <button class="ink-button caution ink-dismiss">Close</button>
+                </div>
+
+                <div id="compare" class="tabs-content">
+                    <p> Coming soon! </p>
+                </div>
+
+                <div id="overview" class="tabs-content">
+                    <div class="column-group">
+                        <div class="all-30">
+                            <div style="margin: 10px">
+                                <center> <h3 class="fw-400"> {{name}} </h3> </center>
+                                <hr>
+                                <nav class= "ink-navigation sidebar">
+                                    <ul>
+                                        <li> Average Slope: <div class="slab-100" style="display: inline"> {{average_grade}}% </div></li>
+                                        <li> Maximum Slope: <div class="slab-100" style="display: inline"> {{maximum_grade}}% </div></li>
+                                        <li> Distance: <div class="slab-100" style="display: inline"> {{distance}}km </div></li>
+                                        <li> Location: <div class="slab-100" style="display: inline"> {{city}}, {{country}} </div></li>
+                                        <li> Participants: <div class="slab-100" style="display: inline"> {{participants}} athletes</div></li>
+                                        <li> Official Leaderboard: <div class="slab-100" style="display: inline"> <a href="{{leaderboardLink}}" target="_blank">View on Strava </a></div></li>
+                                    </ul>
+                                    <hr>
+                                    <div id="map"></div>
+                                </nav>
+                            </div>            
+                        </div>
+                        <div class="all-70">
+                            <div style="margin: 10px">
+                                <center> <h3 class="fw-400"> Segment Leaderboard</h3> </center>
+                                <hr>
+                                <table class="ink-table hover alternating">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-left">Rank</th>
+                                            <th class="align-left">Athlete Name</th>
+                                            <th class="align-left">Date</th>
+                                            <th class="align-left">Speed</th>
+                                            <th class="align-left">Wind Speed</th>
+                                            <th class="align-left">Wind Direction</th>
+                                            <th class="align-left">Ride Direction</th>
+                                            <th class="align-left">Influence </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="fw-300">
+                                        {{#each leaderboard}}
+                                            {{#with this}}
+                                                    <tr class="fw-100" onclick="showModal({{athlete_id}});">
+                                                        <td>{{rank}}</td>
+                                                        <td>{{athlete_name}}</td>
+                                                        <td>{{start_date}}</td>
+                                                        <td>{{speed}}</td>
+                                                        <td>{{wind_speed_str}}km/h</td>
+                                                        <td>{{wind_bearing_str}}&deg;</td>
+                                                        <td>{{ride_bearing_str}}&deg;</td>
+                                                        <td>{{coefficient_str}}</td>
+                                                    </tr>
+                                            {{/with}}
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-container">
+                    <div class="ink-shade fade">
+                        <div id="myModal" class="ink-modal fade" data-trigger="#showModal" data-width="60%" data-height="80%" role="dialog" aria-hidden="true" aria-labelled-by="modal-title">
+                            <div class="modal-header">
+                                <button class="modal-close ink-dismiss"></button>
+                                <h3 id="modal-title" class="fw-200">Individual Athlete Performance</h3>
+                            </div>
+                            <div class="modal-body" id="modalContent">
+                                <h4 class="fw-100">Historical Efforts</h4>
+                                <figure class="ink-image">
+                                    <div id="individualEffortsSpeedChartContainer">
+                                        <canvas id="individualEffortsSpeedChart"></canvas>
+                                    </div>
+                                </figure>
+                                <br>
+                                <h4 class="fw-100">Historical Performance</h4>
+                                <figure class="ink-image">
+                                    <div id="historicalSpeedDataContainer">
+                                        <canvas id="historicalSpeedDataChart"></canvas>
+                                    </div>
+                                </figure>
+                            </div>
+                            <div class="modal-footer">
+                                <div class="push-right">
+                                    <button class="ink-button caution ink-dismiss">Close</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -122,19 +220,31 @@
         </div>
 
         <a href="#" style="display:none;" id="showModal" class="ink-button">Open example modal</a>
-
+        
+        <footer class="clearfix" id="footer">
+            <div class="ink-grid">
+                <div class="fw-300">
+                    <p class="note">
+                        <br>
+                        Copyright © 2018 <a style="text-decorations:none; color:inherit" href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>.
+                    </p>    
+                </div>
+            </div>
+        </footer>    
 
         <script type="text/javascript" src="/javascripts/holder.js"></script>
-        <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
-        <script type="text/javascript" src="/javascripts/autoload.js"></script>
         <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
+        <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
+        <script type="text/javascript" src="/javascripts/autoload.js"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="/javascripts/nokey.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
         <script>
+            document.getElementById ("all-segment-efforts-imposed").addEventListener("click", () => getChart("all-segment-efforts-imposed"), false);
+
             longitude = parseFloat({{longitude}}).toFixed(6);
             latitude = parseFloat({{latitude}}).toFixed(6);
 
@@ -145,6 +255,28 @@
                 path["resource_state"] = {{resource_state}};
             {{/with}}
             initialize();
+
+
+            function getChart(chartType, id){
+
+                if (id == undefined){
+                    id = 0;//{{athleteID}};
+                }
+                $.getJSON(`../../charts/get/data/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
+                    $('#chart').remove();
+                    $('#chart-container').append('<canvas id="chart"></canvas>');
+                    const data = chartDataResponse;
+                    const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
+                    ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
+                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
+
+                    const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
+                        type: 'bar',
+                        data: data,
+                        options: options
+                    });
+                });
+            }
 
             function showModal(id){
                 $("#showModal")[0].click();
@@ -186,7 +318,7 @@
 
             $.getJSON('../../charts/get/data/all-segment-efforts?segmentID={{id}}', (chartDataResponse) => {
                 const data = chartDataResponse;
-                const ctxAllEffortsSpeedChart = document.getElementById('allEffortsSpeedChart').getContext('2d');
+                const ctxAllEffortsSpeedChart = document.getElementById('chart').getContext('2d');
                 const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
 
                 const allEffortsBarChart = new Chart(ctxAllEffortsSpeedChart, {
@@ -194,6 +326,19 @@
                     data: data,
                     options: options
                 });
+            });
+
+            $(window).bind("load", function () {
+                var footer = $("#footer");
+                var pos = footer.position();
+                var height = $(window).height();
+                height = height - pos.top;
+                height = height - footer.height();
+                if (height > 0) {
+                    footer.css({
+                        'margin-top': height + 'px'
+                    });
+                }
             });
 
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

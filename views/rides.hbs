@@ -9,6 +9,12 @@
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink-flex.min.css">
         <title> Wind Analysis - Rides </title>
+
+        <style>
+            footer {
+                background: #ccc;
+            }
+        </style>
     </head>
 
     <body>
@@ -76,12 +82,12 @@
                                     <li class="heading"> Distance </li>
                                     <div class="fw-300">
                                     <ul class="control unstyled">
-                                        <li><input type="checkbox" id="d1" checked="checked"><label for="cb5">  0km - 20km</label></li>
-                                        <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
-                                        <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
-                                        <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
-                                        <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 200km+</label></li>
-                                        <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
+                                        <li><input type="checkbox" id="dr1" checked="checked"><label for="cb5">  0km - 20km</label></li>
+                                        <li><input type="checkbox" id="dr2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
+                                        <li><input type="checkbox" id="dr3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
+                                        <li><input type="checkbox" id="dr4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
+                                        <li><input type="checkbox" id="dr5" checked="checked"><label for="cb1"> 200km+</label></li>
+                                        <li><input type="checkbox" id="dr6" checked="checked"><label for="cb1"> Select All</label></li>
                                     </ul>
                                     </div>
                                 </ul>
@@ -106,7 +112,7 @@
 
                             </nav>
                             <hr>
-                            <button class="ink-button">Filter Results</button>
+                            <button class="ink-button" id="filter">Filter Results</button>
                         </div>
                     </div>
                 </div>
@@ -163,9 +169,20 @@
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
         
+        <footer class="clearfix" id="footer" style="margin-top:-1000px">
+            <div class="ink-grid">
+                <div class="fw-300">
+                    <p class="note">
+                        <br>
+                        Copyright © 2018 <a style="text-decorations:none; color:inherit" href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>.
+                    </p>    
+                </div>
+            </div>
+        </footer>
+
         <script>
             let filteringGroups = new Map();
-            filteringGroups.set('d', 6);
+            filteringGroups.set('dr', 6);
             filteringGroups.set('s', 8);
 
             Array.from(filteringGroups.keys()).forEach((key) => {
@@ -180,6 +197,38 @@
                         }
                     }
                 });
+            });
+
+            $("#filter").click(() => {
+                const filtersArr = [];
+                Array.from(filteringGroups.keys()).forEach(key => {
+                    let count = filteringGroups.get(key);
+                    for(let x = 1; x < count; x++){
+                        if (!$('#' + key + '' + x).is(':checked')){
+                            filtersArr.push(`${key}${x}`);
+                        }
+                    }
+                });
+                const filter = filtersArr.join('|');
+                $('#activity-list tbody').empty();
+
+                $.ajax( {url: `rides/get/activities?filtered=true&filters=${filter}`, success: activities => {
+                    activities.forEach(activity => {
+                        let segmentRow = `<tr class="fw-100" onclick="loadActivityDetails(${activity.id});">`;
+                        let activityName = activity.name;
+                        if (activityName.length > 45) {
+                            activityName = activityName.substring(0, 43) + '...';
+                        }
+                        segmentRow += "<td>" + activityName + "</td>";
+                        segmentRow += "<td>" + activity.start_date.substring(0, 10) + "</td>";
+                        segmentRow += "<td>" + (activity.distance / 1000).toFixed(2) + "km </td>";
+                        segmentRow += "<td>" + ((activity.distance * 3.6) / activity.moving_time).toFixed(2) + " km/h </td>";
+                        segmentRow += "<td>" + (activity.average_watts === undefined ? ('Zero') : (activity.average_watts)) + " watts </td>";
+                        segmentRow += "</tr>";
+                        $("#activity-list tbody").append(segmentRow);
+                        pushFooter();
+                    });
+                }});
             });
 
             function loadActivityDetails(id) {
@@ -202,7 +251,7 @@
                         const hours = ((activityDetails.elapsed_time / 60) / 60).toFixed(0);
                         const minutes = ((activityDetails.elapsed_time / 60) % 60).toFixed(0);
                         let hoursString = "";
-                        if (hours === 1)
+                        if (parseInt(hours) === 1)
                             hoursString = "1 hour and ";
                         else if (hours > 1)
                             hoursString = hours + " hours and ";
@@ -212,20 +261,34 @@
                         $("#modal-moving-time").text(hoursString + minuteString);
                         $("#modal-distance").text((activityDetails.distance / 1000).toFixed(2) + " km");
                         const windReq = `wind/get/wind-data?latitude=${activityDetails.start_latlng[0]}&longitude=${activityDetails.start_latlng[1]}&start_date_iso=${activityDetails.start_date}&start_long=${activityDetails.start_latlng[1]}&start_lat=${activityDetails.start_latlng[0]}&end_long=${activityDetails.end_latlng[1]}&end_lat=${activityDetails.end_latlng[0]}`;
-                        console.log(windReq);
                         
                         $.ajax( {url: windReq, success: windDetails => {
                             $("#modal-wind-direction").text(windDetails.wind_bearing_str);
                             $("#modal-wind-speed").text(windDetails.wind_speed_str);
                             $("#modal-wind-correlation").text(windDetails.coefficient_str);
-                            console.log(windDetails);
-                            console.log("OK!");
                         }});
                     } else {
                         alert('Error: This activity is a manual entry');
                     }
                 }});
             }
+
+            function pushFooter(){
+                $(window).bind("load", function () {
+                    var footer = $("#footer");
+                    var pos = footer.position();
+                    var height = $(window).height();
+                    height = height - pos.top;
+                    height = height - footer.height();
+                    if (height > 0) {
+                        footer.css({
+                            'margin-top': height + 'px'
+                        });
+                    }
+                });
+            }
+            pushFooter();
+            
 
             $.ajax( {url: "rides/get/activities", success: activities => {
               activities.forEach(activity => {
@@ -241,6 +304,7 @@
                 segmentRow += "<td>" + (activity.average_watts === undefined ? ('Zero') : (activity.average_watts)) + " watts </td>";
                 segmentRow += "</tr>";
                 $("#activity-list tbody").append(segmentRow);
+                pushFooter();
               });
             }});
 

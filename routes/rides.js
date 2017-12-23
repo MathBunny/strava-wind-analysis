@@ -1,5 +1,6 @@
 const express = require('express');
 const requestify = require('requestify');
+const filters = require('../utilities/filters');
 
 const router = express.Router();
 
@@ -29,7 +30,21 @@ router.get('/get/activities', (req, res) => {
     res.redirect('/');
   } else {
     requestify.get(`https://www.strava.com/api/v3/athlete/activities?access_token=${req.user.accessToken}&per_page=200`).then((response) => {
-      const activities = JSON.parse(response.body);
+      let activities = JSON.parse(response.body);
+      if (req.query.filtered === 'true') {
+        const filtersArr = req.query.filters.split('|');
+        const filterMap = filters.getFilterMap();
+        filtersArr.forEach((filter) => {
+          if (filterMap[filter] !== undefined) {
+            const f = filterMap[filter];
+            activities = activities.filter((x) => {
+              const activity = x;
+              activity.speed = (activity.distance * 3.6) / activity.moving_time;
+              return f(activity);
+            });
+          }
+        });
+      }
       res.send(activities);
     });
   }
