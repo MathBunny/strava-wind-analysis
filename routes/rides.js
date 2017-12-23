@@ -35,8 +35,14 @@ router.get('/get/activities', (req, res) => {
         const filtersArr = req.query.filters.split('|');
         const filterMap = filters.getFilterMap();
         filtersArr.forEach((filter) => {
-          const f = filterMap[filter];
-          activities = activities.filter(x => f(x));
+          if (filterMap[filter] !== undefined) {
+            const f = filterMap[filter];
+            activities = activities.filter((x) => {
+              const activity = x;
+              activity.speed = (activity.distance * 3.6) / activity.moving_time;
+              return f(activity);
+            });
+          }
         });
       }
       res.send(activities);
