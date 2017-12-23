@@ -1,6 +1,7 @@
 const express = require('express');
 const requestify = require('requestify');
 const geography = require('../utilities/geography');
+const filters = require('../utilities/filters');
 const Vector = require('../utilities/vector');
 
 const router = express.Router();
@@ -13,12 +14,12 @@ router.get('/get/activity', (req, res) => {
     const activityID = req.query.activityID;
     requestify.get(`https://www.strava.com/api/v3/activities/${activityID}?access_token=${req.user.accessToken}`).then((activityDetailsResponse) => {
       const activityDetails = JSON.parse(activityDetailsResponse.body);
-      const segments = [];
+      let segments = [];
       activityDetails.segment_efforts.forEach((segment) => {
-        let prRank = segment.pr_rank;
-        if (prRank === 1) {
-          prRank = (req.user._json.sex === 'M' ? 'KOM' : 'QOM'); // eslint-disable-line no-underscore-dangle
-        }
+        const prRank = segment.pr_rank;
+        // if (prRank === 1) {
+        //  prRank = (req.user._json.sex === 'M' ? 'KOM' : 'QOM'); // eslint-disable-line no-underscore-dangle
+        // }
         const segmentData = segment.segment;
         if (!segmentIDs.has(segmentData.id) && !segmentIDs.has(segmentData.name)) {
           segmentIDs.add(segmentData.id);
@@ -37,6 +38,17 @@ router.get('/get/activity', (req, res) => {
             country: segmentData.country });
         }
       });
+
+      if (req.query.filtered !== undefined && req.query.filtered === 'true') {
+        const unselectedFilters = req.query.filters.split('|');
+        const filterMap = filters.getFilterMap();
+        unselectedFilters.forEach((filter) => {
+          if (filterMap[filter] !== undefined) {
+            const f = filterMap[filter];
+            segments = segments.filter(x => f(x));
+          }
+        });
+      }
       res.send(segments);
     });
   }

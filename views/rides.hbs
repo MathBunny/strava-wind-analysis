@@ -229,14 +229,11 @@
                         $("#modal-moving-time").text(hoursString + minuteString);
                         $("#modal-distance").text((activityDetails.distance / 1000).toFixed(2) + " km");
                         const windReq = `wind/get/wind-data?latitude=${activityDetails.start_latlng[0]}&longitude=${activityDetails.start_latlng[1]}&start_date_iso=${activityDetails.start_date}&start_long=${activityDetails.start_latlng[1]}&start_lat=${activityDetails.start_latlng[0]}&end_long=${activityDetails.end_latlng[1]}&end_lat=${activityDetails.end_latlng[0]}`;
-                        console.log(windReq);
                         
                         $.ajax( {url: windReq, success: windDetails => {
                             $("#modal-wind-direction").text(windDetails.wind_bearing_str);
                             $("#modal-wind-speed").text(windDetails.wind_speed_str);
                             $("#modal-wind-correlation").text(windDetails.coefficient_str);
-                            console.log(windDetails);
-                            console.log("OK!");
                         }});
                     } else {
                         alert('Error: This activity is a manual entry');

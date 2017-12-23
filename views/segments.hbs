@@ -171,21 +171,52 @@
             });
 
             $('#filter').click(() => {
-                alert("Sorry, feature is coming soon!");
-            });
+                const filtersArr = [];
+                Array.from(filteringGroups.keys()).forEach(key => {
+                    let count = filteringGroups.get(key);
+                    for(let x = 1; x < count; x++){
+                        if (!$('#' + key + '' + x).is(':checked')){
+                            filtersArr.push(`${key}${x}`);
+                        }
+                    }
+                });
+                const filter = filtersArr.join('|');
+                $('#segment-list tbody').empty();
 
-            $(window).bind("load", function () {
-                var footer = $("#footer");
-                var pos = footer.position();
-                var height = $(window).height();
-                height = height - pos.top;
-                height = height - footer.height();
-                if (height > 0) {
-                    footer.css({
-                        'margin-top': height + 'px'
+                $.ajax( {url: "segments/get/activities", success: activities => {
+                    console.log(filter);
+                    activities.forEach(activity => {
+                        $.ajax( {url: `segments/get/activity?activityID=${activity.id}&filtered=true&filters=${filter}`, success: segmentDetails => {
+                            segmentDetails.forEach(segment => {
+                                let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
+                                segmentRow += "<td>" + segment.name + "</td>";
+                                segmentRow += "<td>" + segment.city + ", " + segment.country + "</td>";
+                                segmentRow += "<td>" + segment.distance + "km </td>";
+                                segmentRow += "<td>" + segment.average_grade + "% </td>";
+                                segmentRow += "<td>" + segment.maximum_grade + "% </td>";
+                                segmentRow += "</tr>";
+                                $("#segment-list tbody").append(segmentRow);
+                                pushFooter();
+                            });
+                        }});
                     });
-                }
+                }});
             });
+            function pushFooter(){
+                $(window).bind("load", function () {
+                    var footer = $("#footer");
+                    var pos = footer.position();
+                    var height = $(window).height();
+                    height = height - pos.top;
+                    height = height - footer.height();
+                    if (height > 0) {
+                        footer.css({
+                            'margin-top': height + 'px'
+                        });
+                    }
+                });
+            }
+            pushFooter();
 
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -206,6 +237,7 @@
                         segmentRow += "<td>" + segment.maximum_grade + "% </td>";
                         segmentRow += "</tr>";
                         $("#segment-list tbody").append(segmentRow);
+                        pushFooter();
                     });
                 }});
               });
