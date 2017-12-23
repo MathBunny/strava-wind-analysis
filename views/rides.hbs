@@ -219,7 +219,7 @@
                         const hours = ((activityDetails.elapsed_time / 60) / 60).toFixed(0);
                         const minutes = ((activityDetails.elapsed_time / 60) % 60).toFixed(0);
                         let hoursString = "";
-                        if (hours === 1)
+                        if (parseInt(hours) === 1)
                             hoursString = "1 hour and ";
                         else if (hours > 1)
                             hoursString = hours + " hours and ";
