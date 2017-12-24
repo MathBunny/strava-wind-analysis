@@ -66,11 +66,13 @@
 							<h2 class="pfblock-title">Strava Wind Analysis</h2>
 							<div class="pfblock-line"></div>
 							<div class="pfblock-subtitle">
-								Strava Segment Analysis provides machine learning analytics and data visualization to your rides and segments. <!-- Features include ability to compute winds' influence, aggregate statistics, regression, visualizations and more! -->
+								Strava Segment Analysis provides machine learning analytics and data visualization to your activities and segments. <!-- Features include ability to compute winds' influence, aggregate statistics, regression, visualizations and more! -->
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-5">
+				</div>
+				<div class="row">
+					<div class="col-lg-5">
 						<div class="pfblock-subtitle">Feature overview:
 							<ul>
 								<li>Leaderboard wind and influence statistics</li> 
@@ -80,11 +82,10 @@
 								<li>Activity clustering, performance anomaly detection, segment recommender system</li>  
 								<li>Time-series charts for overall activities</li> 
 							</ul>
-
 						</div>
 					</div>
-					<div class="col-sm-7">
-						<canvas id="chart"></canvas>
+					<div class="col-lg-7">
+						<canvas id="chart1"></canvas>
 					</div>
 				</div>
 			</div>
@@ -93,12 +94,20 @@
 		<section id="portfolio" class="pfblock">
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-8 col-sm-offset-2">
+					<div class="col-sm-10 col-sm-offset-1">
 						<div class="pfblock-header wow fadeInUp">
 							<h2 class="pfblock-title">Segment Analytics</h2>
 							<div class="pfblock-subtitle">
-								This site provides the ability to analyze your segment efforts against other athletes and your own historical ride performance.</a>.
+								Provides the ability to analyze your segment efforts against other athletes and your own historical ride performance.</a>
 							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 col-sm-offset-0">
+						<div class="pfblock-header wow fadeInLeft">
+							<canvas id="chart2"></canvas>
+							<br>
 						</div>
 					</div>
 				</div>
@@ -126,7 +135,7 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<p class="copyright">
-							Copyright © 2018 Horatiu Lazu</a>
+							Copyright © 2018 <a href="http://horatiulazu.ca" target="_blank" style="text-decorations: none; color: inherit;">Horatiu Lazu</a>
 						</p>
 					</div>
 				</div>
@@ -156,16 +165,16 @@
 		<script src="/javascripts/custom.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 		<script>
-			const data = {
-				labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // eslint-disable-line
+			const individualSegmentdata = {
+				labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
 				datasets:
 				[{ type: 'line',
 					label: 'Historical Segment Performance',
 					data: [27.9, 24.9, 29.9, 29.3, 34.9, 30.3, 29.3, 31.5, 35.3, 37, 33.4, 36.5, 38.6],
 					fill: false,
-					backgroundColor: ['rgb(75, 192, 192)'],
+					backgroundColor: ['rgb(33,150,243)'],
 					borderColor:
-					['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)', 'rgb(201, 203, 207)'],
+					['rgb(33,150,243)'],
 					borderWidth: 1,
 					lineTension: 0.2 },
 				{ type: 'line',
@@ -173,13 +182,13 @@
 					data: [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
 					fill: false,
 					backgroundColor: ['rgb(255, 87, 34)'],
-					borderColor:
-					['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)', 'rgb(201, 203, 207)'],
+					borderColor: 'rgb(239,83,80)',
 					borderWidth: 1,
+					pointRadius: 0,
 					lineTension: 0.2 }
 				],
 			};
-			const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
+			const ctxIndividualEffortsSpeedChart = document.getElementById('chart1').getContext('2d');
 			ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
 			const options = {
 				"title": {
@@ -198,7 +207,48 @@
 				}
 			};
 
-			let inView = false;
+			const radarData = {
+				labels: ['North', 'North East', 'East', 'South East', 'South', 'South West', 'West', 'North West'],
+				datasets:
+				[{ type: 'radar',
+					label: 'Neal Tayler',
+					data: [32, 32, 34, 26, 23, 23, 33, 42],
+					fill: true,
+					backgroundColor: ['rgba(54,162,235,0.2)'],
+					borderColor:
+					['rgb(33,150,243)'],
+					borderWidth: 3,
+					lineTension: 0.2 },
+				{ type: 'radar',
+					label: 'Keighley Goldie', 
+					data: [34, 22, 27, 24, 27, 26, 31, 39],
+					fill: true,
+					backgroundColor: ['rgba(255,99,132,0.2)'],
+					borderColor:
+					['rgb(255,99,132)'],
+					borderWidth: 3,
+					lineTension: 0.2 }],
+			};
+
+			const ctxIndividualEffortsRadarChart = document.getElementById('chart2').getContext('2d');
+			ctxIndividualEffortsRadarChart.clearRect(0, 0, ctxIndividualEffortsRadarChart.width, ctxIndividualEffortsRadarChart.height);
+			const optionsRadar = {
+				"title": {
+					display: true,
+					text: 'Banbury Road 5km - Wind Direction & Speed Overlay'
+				},
+				"scale": {
+					"ticks": {
+						"beginAtZero": true,
+						"callback": (value, index, values) => {
+							return value + 'km/h';
+						},
+					},
+				}
+			};
+
+			let inViewChart1 = false;
+			let inViewChart2 = false;
 
 			function isScrolledIntoView(elem){
 				const docViewTop = $(window).scrollTop();
@@ -209,18 +259,29 @@
 
 				return ((elemTop <= docViewBottom) && (elemBottom >= docViewTop));
 			}
-			
+
 			$(window).scroll(function() {
-				if (isScrolledIntoView('#chart')) {
-					if (inView) { return; }
-					inView = true;
+				if (isScrolledIntoView('#chart1')) {
+					if (inViewChart1) { return; }
+					inViewChart1 = true;
 					const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
 						type: 'bar',
-						data: data,
+						data: individualSegmentdata,
 						options: options
 					});
 				} else {
-					inView = false;  
+					inViewChart1 = false;  
+				}
+				if (isScrolledIntoView('#chart2')) {
+					if (inViewChart2) { return; }
+					inViewChart2 = true;
+					const allEffortsBarChart = new Chart(ctxIndividualEffortsRadarChart, {
+						type: 'radar',
+						data: radarData,
+						options: optionsRadar
+					});
+				} else {
+					inViewChart2 = false;  
 				}
 			});
 		</script>
