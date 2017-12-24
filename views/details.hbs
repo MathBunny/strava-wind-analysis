@@ -268,7 +268,7 @@
                     const data = chartDataResponse;
                     const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
                     ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
-                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
+                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero": true }}]}};
 
                     const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
                         type: 'bar',

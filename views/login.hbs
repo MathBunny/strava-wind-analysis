@@ -22,7 +22,7 @@
 				<div class="start"></div>
 				<h1>Strava Wind Analysis</h1>
 				<div class="start">Ride and segment analytics using wind data and machine learning.</div>
-				<a href="/login"> <img src="https://i.imgur.com/GLXiGGg.png"> </a>
+				<a href="/login"> <img src="/images/stravaconnect.png"> </a>
 			</div>
 			<a href="#passions">
 				<div class="scroll-down">
@@ -66,13 +66,25 @@
 							<h2 class="pfblock-title">Strava Wind Analysis</h2>
 							<div class="pfblock-line"></div>
 							<div class="pfblock-subtitle">
-								Strava Segment Analysis provides machine learning analytics and data visualization to your rides and segments. Features include ability to compute winds' influence, aggregate statistics, regression, visualizations and more!
+								Strava Segment Analysis provides machine learning analytics and data visualization to your rides and segments. <!-- Features include ability to compute winds' influence, aggregate statistics, regression, visualizations and more! -->
 							</div>
 						</div>
 					</div>
+					<div class="col-sm-5">
+						<div class="pfblock-subtitle">Feature overview:
+							<ul>
+								<li>Leaderboard wind and influence statistics</li> 
+								<li>Athlete comparison for segment performance</li> 
+								<li>Detailed charts for segment performance including historical data and leaderboard trends</li> 
+								<li>Segment performance regressions (ordinary linear, ridge, isotonic) and cubic interpolation</li>
+								<li>Activity clustering, performance anomaly detection, segment recommender system</li>  
+								<li>Time-series charts for overall activities</li> 
+							</ul>
 
-					<div class="col-sm-9">
-						<img src="https://i.imgur.com/liLtQZr.png">
+						</div>
+					</div>
+					<div class="col-sm-7">
+						<canvas id="chart"></canvas>
 					</div>
 				</div>
 			</div>
@@ -84,7 +96,6 @@
 					<div class="col-sm-8 col-sm-offset-2">
 						<div class="pfblock-header wow fadeInUp">
 							<h2 class="pfblock-title">Segment Analytics</h2>
-							<div class="pfblock-line"></div>
 							<div class="pfblock-subtitle">
 								This site provides the ability to analyze your segment efforts against other athletes and your own historical ride performance.</a>.
 							</div>
@@ -143,5 +154,75 @@
 		<script src="/javascripts/waypoints.min.js"></script>
 		<script src="/javascripts/jquery.cbpQTRotator.js"></script>
 		<script src="/javascripts/custom.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+		<script>
+			const data = {
+				labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // eslint-disable-line
+				datasets:
+				[{ type: 'line',
+					label: 'Historical Segment Performance',
+					data: [27.9, 24.9, 29.9, 29.3, 34.9, 30.3, 29.3, 31.5, 35.3, 37, 33.4, 36.5, 38.6],
+					fill: false,
+					backgroundColor: ['rgb(75, 192, 192)'],
+					borderColor:
+					['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)', 'rgb(201, 203, 207)'],
+					borderWidth: 1,
+					lineTension: 0.2 },
+				{ type: 'line',
+					label: 'Ordinary Linear Regression',
+					data: [27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40],
+					fill: false,
+					backgroundColor: ['rgb(255, 87, 34)'],
+					borderColor:
+					['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)', 'rgb(201, 203, 207)'],
+					borderWidth: 1,
+					lineTension: 0.2 }
+				],
+			};
+			const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
+			ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
+			const options = {
+				"title": {
+					display: true,
+					text: 'Banbury Road 5km - Individual Segment Performance'
+				},
+				"scales": {
+					"yAxes": [{
+						"ticks": {
+							"beginAtZero": true,
+							"callback": (value, index, values) => {
+								return value + 'km/h';
+							},
+						},
+					}],
+				}
+			};
+
+			let inView = false;
+
+			function isScrolledIntoView(elem){
+				const docViewTop = $(window).scrollTop();
+				const docViewBottom = docViewTop + $(window).height();
+
+				const elemTop = $(elem).offset().top;
+				const elemBottom = elemTop + $(elem).height();
+
+				return ((elemTop <= docViewBottom) && (elemBottom >= docViewTop));
+			}
+			
+			$(window).scroll(function() {
+				if (isScrolledIntoView('#chart')) {
+					if (inView) { return; }
+					inView = true;
+					const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
+						type: 'bar',
+						data: data,
+						options: options
+					});
+				} else {
+					inView = false;  
+				}
+			});
+		</script>
 	</body>
 </html>

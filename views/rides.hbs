@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
     <head>
         <meta name="description" content="Strava Wind Segment Analysis takes segment efforts and compares how much wind helped athletes on the leaderboard.">
@@ -14,10 +15,20 @@
             footer {
                 background: #ccc;
             }
+            .site {
+                display: flex;
+                min-height: 100vh;
+                flex-direction: column;
+            }
+
+            .site-content {
+                flex: 1;
+            }
         </style>
     </head>
 
-    <body>
+    <body class="site">
+        <main class="site-content">
         <div class="fw-300">
             <nav class="ink-navigation">
                 <ul class="menu horizontal black">
@@ -168,7 +179,7 @@
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
-        
+        </main>
         <footer class="clearfix" id="footer" style="margin-top:-1000px">
             <div class="ink-grid">
                 <div class="fw-300">
@@ -226,10 +237,47 @@
                         segmentRow += "<td>" + (activity.average_watts === undefined ? ('Zero') : (activity.average_watts)) + " watts </td>";
                         segmentRow += "</tr>";
                         $("#activity-list tbody").append(segmentRow);
-                        pushFooter();
                     });
+                    pushFooter();
                 }});
             });
+
+            function pushFooter(){
+                /*var footer = $("#footer");
+                var pos = footer.position();
+                var height = $("document").height();
+                height = height - pos.top;
+                height = height - footer.height();
+                if (height > 0) {
+                    footer.css({
+                        'margin-top': height + 'px'
+                    });
+                }*/
+            }
+
+           /* $(window).on("load", function () {
+                var footer = $("#footer");
+                var pos = footer.position();
+                var height = $(document).height();
+                height = height - pos.top;
+                height = height - footer.height();
+                if (height > 0) {
+                    footer.css({
+                        'margin-top': height + 'px'
+                    });
+                }
+            });*/
+            
+            var D = document;
+                var docHeight = Math.max(
+                Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+                Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+                Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+            );
+            console.log(docHeight);
+            console.log($(document).height());
+            setTimeout(() => console.log($(document).height()), 3000);
+            
 
             function loadActivityDetails(id) {
                 $.ajax( {url: "rides/get/activity?id=" + id, success: activityDetails => {
@@ -272,22 +320,6 @@
                     }
                 }});
             }
-
-            function pushFooter(){
-                $(window).bind("load", function () {
-                    var footer = $("#footer");
-                    var pos = footer.position();
-                    var height = $(window).height();
-                    height = height - pos.top;
-                    height = height - footer.height();
-                    if (height > 0) {
-                        footer.css({
-                            'margin-top': height + 'px'
-                        });
-                    }
-                });
-            }
-            pushFooter();
             
 
             $.ajax( {url: "rides/get/activities", success: activities => {
@@ -304,8 +336,8 @@
                 segmentRow += "<td>" + (activity.average_watts === undefined ? ('Zero') : (activity.average_watts)) + " watts </td>";
                 segmentRow += "</tr>";
                 $("#activity-list tbody").append(segmentRow);
-                pushFooter();
               });
+              pushFooter();
             }});
 
             (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

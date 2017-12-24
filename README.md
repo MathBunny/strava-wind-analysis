@@ -25,13 +25,13 @@ exports.accessToken = accessToken;
 ```
 
 To start the server use:
-```
+```shell
 npm start
 ```
 
 ## Running Tests
 You can run tests using Mocha and Chai:
-```
+```shell
 npm test
 ```
 
