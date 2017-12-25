@@ -55,7 +55,7 @@
                                             <li>
                                                 <a href="#">Aggregate Speed</a>
                                                 <ul>
-                                                    <li><a href="#">Individual</a></li>
+                                                    <li><a href="#" id="individual-segment-efforts-imposed">Individual</a></li>
                                                     <li><a href="#" id="all-segment-efforts-imposed">Leaderboard</a></li>
                                                 </ul>
                                             </li>
@@ -243,7 +243,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
         <script>
-            document.getElementById ("all-segment-efforts-imposed").addEventListener("click", () => getChart("all-segment-efforts-imposed"), false);
+            //document.getElementById ("all-segment-efforts-imposed").addEventListener("click", () => getChart("all-segment-efforts-imposed"), false);
+            document.getElementById ("all-segment-efforts-imposed").addEventListener("click", () => getChart("aggregate-leaderboard"), false);
+            document.getElementById ("individual-segment-efforts-imposed").addEventListener("click", () => getChart("aggregate-individual"), false);
+            //individual-segment-efforts-imposed
 
             longitude = parseFloat({{longitude}}).toFixed(6);
             latitude = parseFloat({{latitude}}).toFixed(6);
@@ -260,9 +263,22 @@
             function getChart(chartType, id){
 
                 if (id == undefined){
-                    id = 0;//{{athleteID}};
+                    id = "{{athleteID}}";
                 }
-                $.getJSON(`../../charts/get/data/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
+                $.getJSON(`../../charts/get/chart/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
+                    console.log(chartDataResponse);
+                    $('#chart').remove();
+                    $('#chart-container').append('<canvas id="chart"></canvas>');
+                    const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
+                    ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
+
+                    const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
+                        type: 'bar', // ??? 
+                        data: chartDataResponse.data,
+                        options: chartDataResponse.options,
+                    });
+                });
+                /*$.getJSON(`../../charts/get/data/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
                     $('#chart').remove();
                     $('#chart-container').append('<canvas id="chart"></canvas>');
                     const data = chartDataResponse;
@@ -275,7 +291,7 @@
                         data: data,
                         options: options
                     });
-                });
+                });*/
             }
 
             function showModal(id){

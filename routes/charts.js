@@ -1,8 +1,65 @@
 const express = require('express');
 const requestify = require('requestify');
 const stravadatahandler = require('../data/stravadatahandler');
+const ChartFactory = require('../charts/chartfactory');
 
 const router = express.Router();
+
+
+router.get('/get/chart/individual-historical-performance', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.send({ error: 'error: unauthenticated user' });
+  } else if (req.query.segmentID === undefined) {
+    res.send({ error: 'error: undefined segment ID' });
+  } else if (req.query.athleteID === undefined) {
+    res.send({ error: 'error: undefined athlete ID' });
+  } else {
+    stravadatahandler.getAthleteHistoricalSpeed(req.user.accessToken, req.query.segmentID, req.query.athleteID).then((data) => {
+      const chart = ChartFactory.getChart('performancelinechart', data, 'Individual Performance');
+      const chartData = {
+        data: chart.getData(),
+        options: chart.getOptions(),
+      };
+      res.send(chartData);
+    });
+  }
+});
+
+router.get('/get/chart/aggregate-individual', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.send({ error: 'error: unauthenticated user' });
+  } else if (req.query.segmentID === undefined) {
+    res.send({ error: 'error: undefined segment ID' });
+  } else if (req.query.athleteID === undefined) {
+    res.send({ error: 'error: undefined athlete ID' });
+  } else {
+    stravadatahandler.getAthleteSegmentEffortsSegmented(req.user.accessToken, req.query.segmentID, req.query.athleteID).then((data) => {
+      const chart = ChartFactory.getChart('aggregatebarchart', data, 'Individual Performance');
+      const chartData = {
+        data: chart.getData(),
+        options: chart.getOptions(),
+      };
+      res.send(chartData);
+    });
+  }
+});
+
+router.get('/get/chart/aggregate-leaderboard', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.send({ error: 'error: unauthenticated user' });
+  } else if (req.query.segmentID === undefined) {
+    res.send({ error: 'error: undefined segment ID' });
+  } else {
+    stravadatahandler.getAthleteSegmentEffortsSegmented(req.user.accessToken, req.query.segmentID).then((data) => {
+      const chart = ChartFactory.getChart('aggregatebarchart', data, 'All Segment Efforts');
+      const chartData = {
+        data: chart.getData(),
+        options: chart.getOptions(),
+      };
+      res.send(chartData);
+    });
+  }
+});
 
 router.get('/get/data/athlete-segment-history', (req, res) => {
   if (!req.isAuthenticated()) {
