@@ -1,5 +1,6 @@
 const express = require('express');
 const requestify = require('requestify');
+const stravadatahandler = require('../data/stravadatahandler');
 
 const router = express.Router();
 

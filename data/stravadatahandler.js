@@ -3,7 +3,7 @@ const requestify = require('requestify');
 class StravaDataHandler {
   // Returns array containing historical speeds on segment, sorted from oldest to most recent
   static getAthleteHistoricalSpeed(accessToken, segmentID, athleteID) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       let dataArr = [];
 
       const maxPageCount = 49;
@@ -38,10 +38,9 @@ class StravaDataHandler {
             }
             dataArr = dataArr.sort((x, y) => (new Date(x.date) - new Date(y.date)));
             dataArr = dataArr.map(effortObj => effortObj.speed);
+            console.log(dataArr);
             resolve(dataArr);
           }
-        }).fail((error) => {
-          reject(error);
         });
       }
     });
@@ -50,7 +49,7 @@ class StravaDataHandler {
   // Returns segmented array into 7 indexes (0-10km/h, 10-20km/h, etc.) for individual athlete
   // For individual results set athleteID to true, else it will segment all results
   static getAthleteSegmentEffortsSegmented(accessToken, segmentID, athleteID) {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const dataArr = [];
       for (let x = 0; x < 7; x += 1) {
         dataArr.push(0);
@@ -75,8 +74,6 @@ class StravaDataHandler {
           if (pagesComplete === maxPageCount) {
             resolve(dataArr);
           }
-        }).fail((error) => {
-          reject(error);
         });
       }
     });

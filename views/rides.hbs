@@ -243,7 +243,7 @@
             });
 
             function pushFooter(){
-                /*var footer = $("#footer");
+                var footer = $("#footer");
                 var pos = footer.position();
                 var height = $("document").height();
                 height = height - pos.top;
@@ -252,10 +252,10 @@
                     footer.css({
                         'margin-top': height + 'px'
                     });
-                }*/
+                }
             }
 
-           /* $(window).on("load", function () {
+           $(window).on("load", function () {
                 var footer = $("#footer");
                 var pos = footer.position();
                 var height = $(document).height();
@@ -266,18 +266,7 @@
                         'margin-top': height + 'px'
                     });
                 }
-            });*/
-            
-            var D = document;
-                var docHeight = Math.max(
-                Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
-                Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
-                Math.max(D.body.clientHeight, D.documentElement.clientHeight)
-            );
-            console.log(docHeight);
-            console.log($(document).height());
-            setTimeout(() => console.log($(document).height()), 3000);
-            
+            });
 
             function loadActivityDetails(id) {
                 $.ajax( {url: "rides/get/activity?id=" + id, success: activityDetails => {
@@ -312,7 +301,7 @@
                         
                         $.ajax( {url: windReq, success: windDetails => {
                             $("#modal-wind-direction").text(windDetails.wind_bearing_str);
-                            $("#modal-wind-speed").text(windDetails.wind_speed_str);
+                            $("#modal-wind-speed").text(windDetails.wind_speed_str + " km/h");
                             $("#modal-wind-correlation").text(windDetails.coefficient_str);
                         }});
                     } else {

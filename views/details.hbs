@@ -306,7 +306,19 @@
                     const data = chartDataResponse;
                     const ctxhistoricalSpeedDataChart = document.getElementById('historicalSpeedDataChart').getContext('2d');
                     ctxhistoricalSpeedDataChart.clearRect(0, 0, ctxhistoricalSpeedDataChart.width, ctxhistoricalSpeedDataChart.height);
-                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
+                    const options = {
+                        "title": {
+                            display: true,
+                        },
+                        "scales": {
+                            "yAxes": [{
+                                "ticks": {
+                                    "beginAtZero": true,
+                                    "callback": (value, index, values) => value + 'km/h',
+                                },
+                            }],
+                        }
+                    };
 
                     const allEffortsBarChart = new Chart(ctxhistoricalSpeedDataChart, {
                         type: 'line',
