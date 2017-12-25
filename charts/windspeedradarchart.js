@@ -1,11 +1,13 @@
+const AbstractChart = require('./abstractchart');
 
-class WindSpeedRadarChart {
-  constructor(dataArr) {
+class WindSpeedRadarChart extends AbstractChart {
+  constructor(dataArr, labelText) {
+    super(dataArr);
     this.data = {
       labels: ['North', 'North East', 'East', 'South East', 'South', 'South West', 'West', 'North West'],
       datasets:
       [{ type: 'radar',
-        label: '', // required: label should be defined!
+        label: labelText, // required: label should be defined!
         data: dataArr,
         fill: true,
         backgroundColor: ['rgba(54,162,235,0.2)'],

@@ -38,7 +38,6 @@ class StravaDataHandler {
             }
             dataArr = dataArr.sort((x, y) => (new Date(x.date) - new Date(y.date)));
             dataArr = dataArr.map(effortObj => effortObj.speed);
-            console.log(dataArr);
             resolve(dataArr);
           }
         });

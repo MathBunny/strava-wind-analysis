@@ -1,16 +1,31 @@
+const AbstractChart = require('./abstractchart');
 
-class PerformanceLineChart {
-  constructor(dataArr) {
+class PerformanceLineChart extends AbstractChart {
+  constructor(dataArr, label) {
+    super(dataArr);
     const labels = [];
-    for (let x = 0; x < dataArr.length; x += 1) {
-      labels.push(x);
+    if (dataArr.length > 10) {
+      let count = 0; // Labels along x-axis
+      for (let x = 0; x < dataArr.length; x += 1) {
+        if (count >= dataArr.length / 11) {
+          labels.push(`${x}`);
+          count = 0;
+        } else {
+          labels.push('');
+          count += 1;
+        }
+      }
+    } else {
+      for (let x = 0; x < dataArr.length; x += 1) {
+        labels.push(x);
+      }
     }
 
     this.data = {
       labels: labels, // eslint-disable-line
       datasets:
         [{ type: 'line',
-          label: 'Historical Performance',
+          label: label, // eslint-disable-line
           data: dataArr,
           fill: false,
           backgroundColor: ['rgb(75, 192, 192)'],
