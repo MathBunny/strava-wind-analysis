@@ -66,68 +66,16 @@
                                         <li class="slab-100"><a href="#" id="individual-segmented-efforts-interpolate">Individual Segmented + Interpolation </a></li>
                                         <li class="slab-100"><a href="#" id="all-segmented-efforts-interpolate">All Efforts Segmented + Interpolation </a></li>
                                         <li class="slab-100"><a href="#" id="personal-history-regression">Performance Regression Analysis </a></li>
+                                        <hr>
+                                        <p class="fw-200">Chart Options</p> 
+                                        <div class="slidecontainer">
+                                            <li class="slab-100">Start Domain: <input type="range" min="0" max="100" value="0" class="slider" id="startDomainSlider"> <div style="float: right" id="startX"> 0</div></li>
+                                        </div>
+                                        <div class="slidecontainer">
+                                            <li class="slab-100">End Domain: <input type="range" min="0" max="100" value="100" class="slider" id="endDomainSlider"> <div style="float: right" id="endX"> 0</div></li>
+                                        </div>
                                     </ul>
                                 </nav>
-                                
-                                {{!-- <ul class="ink-tree-view" style="margin: 20px">
-                                    <li>
-                                        <a href="#">Bar Graphs</a>
-                                        <ul>
-                                            <li>
-                                                <a href="#">Aggregate Speed</a>
-                                                <ul>
-                                                    <li><a href="#" id="individual-segment-efforts-imposed">Individual</a></li>
-                                                    <li><a href="#" id="all-segment-efforts-imposed">Leaderboard</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">Wind Data</a>
-                                                <ul>
-                                                    <li><a href="#">Adjusted Leaderboard</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Line Graphs</a>
-                                        <ul>
-                                            <li>
-                                                <a href="#">Historical Performance</a>
-                                                <ul>
-                                                    <li><a href="#" id="personal-history">Personal Performance</a></li>
-                                                    <li><a href="#">Leaderboard Performance</a></li>
-                                                </ul>
-                                            </li>
-                                            <li>
-                                                <a href="#">Wind Data</a>
-                                                <ul>
-                                                    <li><a href="#">Adjusted Personal Performance</a></li>
-                                                    <li><a href="#">Adjusted Leaderboard Performance</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Scatterplot</a>
-                                        <ul>
-                                            <li><a href="#">Ride Distance Scatterplot</a></li>
-                                            <li>
-                                                <a href="#">Wind Data</a>
-                                                <ul>
-                                                    <li><a href="#">Individual Speed Scatterplot</a></li>
-                                                    <li><a href="#">Leaderboard Speed Scatterplot</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#">Radar</a>
-                                        <ul>
-                                            <li><a href="#">Personal Radar</a></li>
-                                            <li><a href="#">Leaderboard Radar</a></li>
-                                        </ul>
-                                    </li>
-                                </ul> !--}}
                             </div>            
                         </div>
                         <div class="all-70">
@@ -259,6 +207,7 @@
         <script type="text/javascript" src="/javascripts/ink-all.min.js"></script>
         <script type="text/javascript" src="/javascripts/autoload.js"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="/javascripts/nokey.js"></script>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
@@ -297,7 +246,8 @@
                 path["resource_state"] = {{resource_state}};
             {{/with}}
             initialize();
-
+            let origChartArr;
+            let currChart;
 
             function getChart(chartType, id){
                 if (id == undefined){
@@ -313,10 +263,45 @@
                     const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
                         type: 'bar', // ??? 
                         data: chartDataResponse.data,
-                        options: defaultOptions,
+                        options: (chartType.indexOf('aggregate') === -1) ? defaultOptions : chartDataResponse.options,
                     });
+
+                    $('#startDomainSlider').slider(); 
+                    $('#endDomainSlider').slider(); 
+                    console.log(chartDataResponse.data.labels.length);
+                    console.log($( "#endDomainSlider" ).slider( "option", "max" ));
+
+                    $("#startDomainSlider").slider("option", "max", chartDataResponse.data.labels.length);
+                    $("#endDomainSlider").slider("option", "max", chartDataResponse.data.labels.length);
+
+                    console.log($( "#endDomainSlider" ).slider( "option", "max" ));
+                    //$("#startDomainSlider").slider("option", "max", chartDataResponse.data.labels.length);
+                    // $("#startDomainSlider").max = chartDataResponse.data.labels.length;
+                    $("#startDomainSlider").val = 0;
+                    $("#endDomainSlider").val = $("#endDomainSlider").max;
+                    $("#startX").text(0);
+                    $("#endX").text(chartDataResponse.data.labels.length);
+
+                    origChartArr = allEffortsBarChart.data.labels.slice();
+                    currData = allEffortsBarChart;
                 });
             }
+
+            $(document).on('input', '#startDomainSlider', () => {
+                currData.data.labels = origChartArr.slice($("#startDomainSlider").val(), $("#endDomainSlider").val());
+                currData.update();
+                console.log($("#startDomainSlider").val() + " " + $("#endDomainSlider").val());
+                console.log($( "#endDomainSlider" ).slider( "option", "max" ));
+                $("#startX").text($("#startDomainSlider").val());
+                $("#endX").text($("#endDomainSlider").val());
+            });
+
+            $(document).on('input', '#endDomainSlider', () => {
+                currData.data.labels = origChartArr.slice($("#startDomainSlider").val(), $("#endDomainSlider").val());
+                currData.update();
+                $("#startX").text($("#startDomainSlider").val());
+                $("#endX").text($("#endDomainSlider").val());
+            });
 
             function showModal(id){
                 $("#showModal")[0].click();
@@ -336,6 +321,7 @@
                         data: data,
                         options: options
                     });
+                    origChart = allEffortsBarChart;
                 });
 
                 // Line graph for historical performance

@@ -18,7 +18,7 @@ class LineChartDatasetDecorator extends AbstractChart {
       label: this.labelText,
       data: this.newDataArr,
       fill: false,
-      backgroundColor: [borderColoring],
+      backgroundColor: borderColoring,
       borderColor: borderColoring,
       borderWidth: 1,
       lineTension: 0.2,

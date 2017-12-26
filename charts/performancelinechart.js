@@ -30,7 +30,7 @@ class PerformanceLineChart extends AbstractChart {
           label: label, // eslint-disable-line
           data: dataArr,
           fill: false,
-          backgroundColor: ['rgb(158,158,158)'],
+          backgroundColor: 'rgb(158,158,158)',
           borderColor: borderColoring,
           borderWidth: 1,
           lineTension: 0.2 }],
