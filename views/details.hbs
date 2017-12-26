@@ -37,25 +37,38 @@
             <div class="ink-tabs top" data-prevent-url-change="true">
                 <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
                 <ul class="tabs-nav" style="margin-top: -20px">
-                    <li><a class="tabs-tab" href="#overview">Overview</a></li>
-                    <li><a class="tabs-tab" href="#charts">Charts Visualization</a></li>
-                    <li><a class="tabs-tab" href="#compare">Athlete Comparison</a></li>
+                    <li><a class="tabs-tab" href="#overview" id="overviewTab">Overview</a></li>
+                    <li><a class="tabs-tab" href="#charts" id="chartsTab">Charts Visualization</a></li>
+                    <li><a class="tabs-tab" href="#compare" id="compareTab">Athlete Comparison</a></li>
                 </ul>
 
                 <div id="charts" class="tabs-content">
                     <div class="column-group">
                         <div class="all-30">
                             <div style="margin: 10px">
-                                <center> <h3 class="fw-400"> Chart Selection </h3> </center>
-                                <hr>
-                                <ul class="ink-tree-view" style="margin: 20px">
+                               <nav class= "ink-navigation sidebar">
+                                    <ul>
+                                        <li class="fw-200"> Chart Selection </li>
+                                        <hr>
+                                        <li class="slab-100"><a href="#" id="individual-segment-efforts-imposed">Individual Efforts Segmented</a></li>
+                                        <li class="slab-100"><a href="#" id="all-segment-efforts-imposed">All Efforts Segmented </a></li>
+                                        <li class="slab-100"><a href="#" id="personal-history">Individual Historical Performance </a></li>
+                                        <li class="slab-100"><a href="#" id="leaderboard-history">Leaderboard Historical Performance </a></li>
+                                        <hr>
+                                        <li class="slab-100"><a href="#" id="individual-segmented-efforts-interpolate">Individual Segmented + Interpolation </a></li>
+                                        <li class="slab-100"><a href="#" id="all-segmented-efforts-interpolate">All Efforts Segmented + Interpolation </a></li>
+                                        <li class="slab-100"><a href="#" id="personal-history-regression">Performance Regression Analysis </a></li>
+                                    </ul>
+                                </nav>
+                                
+                                {{!-- <ul class="ink-tree-view" style="margin: 20px">
                                     <li>
                                         <a href="#">Bar Graphs</a>
                                         <ul>
                                             <li>
                                                 <a href="#">Aggregate Speed</a>
                                                 <ul>
-                                                    <li><a href="#">Individual</a></li>
+                                                    <li><a href="#" id="individual-segment-efforts-imposed">Individual</a></li>
                                                     <li><a href="#" id="all-segment-efforts-imposed">Leaderboard</a></li>
                                                 </ul>
                                             </li>
@@ -73,7 +86,7 @@
                                             <li>
                                                 <a href="#">Historical Performance</a>
                                                 <ul>
-                                                    <li><a href="#">Personal Performance</a></li>
+                                                    <li><a href="#" id="personal-history">Personal Performance</a></li>
                                                     <li><a href="#">Leaderboard Performance</a></li>
                                                 </ul>
                                             </li>
@@ -106,7 +119,7 @@
                                             <li><a href="#">Leaderboard Radar</a></li>
                                         </ul>
                                     </li>
-                                </ul>
+                                </ul> !--}}
                             </div>            
                         </div>
                         <div class="all-70">
@@ -243,10 +256,31 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 
         <script>
-            document.getElementById ("all-segment-efforts-imposed").addEventListener("click", () => getChart("all-segment-efforts-imposed"), false);
+            document.getElementById ("all-segment-efforts-imposed").addEventListener("click", () => getChart("aggregate-leaderboard"), false);
+            document.getElementById ("individual-segment-efforts-imposed").addEventListener("click", () => getChart("aggregate-individual"), false);
+            document.getElementById ("personal-history").addEventListener("click", () => getChart("individual-historical-performance"), false);
+            document.getElementById ("leaderboard-history").addEventListener("click", () => getChart("leaderboard-historical-performance"), false);
+
+            document.getElementById ("overviewTab").addEventListener("click", () => pushDown(), false);
+            document.getElementById ("chartsTab").addEventListener("click", () => pushDown(), false);
+            document.getElementById ("compareTab").addEventListener("click", () => pushDown(), false);
 
             longitude = parseFloat({{longitude}}).toFixed(6);
             latitude = parseFloat({{latitude}}).toFixed(6);
+
+            const defaultOptions = {
+                "title": {
+                    display: true,
+                },
+                "scales": {
+                    "yAxes": [{
+                        "ticks": {
+                            "beginAtZero": true,
+                            "callback": (value, index, values) => value + 'km/h',
+                        },
+                    }],
+                }
+            };
 
             path = [];
             {{#with map}}
@@ -258,23 +292,24 @@
 
 
             function getChart(chartType, id){
-
+                console.log('Called!');
                 if (id == undefined){
-                    id = 0;//{{athleteID}};
+                    id = "{{athleteID}}";
                 }
-                $.getJSON(`../../charts/get/data/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
+
+                $.getJSON(`../../charts/get/chart/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
+                    console.log('got feedback');
                     $('#chart').remove();
                     $('#chart-container').append('<canvas id="chart"></canvas>');
-                    const data = chartDataResponse;
                     const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
                     ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
-                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
 
                     const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
-                        type: 'bar',
-                        data: data,
-                        options: options
+                        type: 'bar', // ??? 
+                        data: chartDataResponse.data,
+                        options: defaultOptions,
                     });
+                    console.log(chartDataResponse);
                 });
             }
 
@@ -306,7 +341,19 @@
                     const data = chartDataResponse;
                     const ctxhistoricalSpeedDataChart = document.getElementById('historicalSpeedDataChart').getContext('2d');
                     ctxhistoricalSpeedDataChart.clearRect(0, 0, ctxhistoricalSpeedDataChart.width, ctxhistoricalSpeedDataChart.height);
-                    const options = { "scales": { "yAxes": [{ "ticks": { "beginAtZero":true }}]}};
+                    const options = {
+                        "title": {
+                            display: true,
+                        },
+                        "scales": {
+                            "yAxes": [{
+                                "ticks": {
+                                    "beginAtZero": true,
+                                    "callback": (value, index, values) => value + 'km/h',
+                                },
+                            }],
+                        }
+                    };
 
                     const allEffortsBarChart = new Chart(ctxhistoricalSpeedDataChart, {
                         type: 'line',
@@ -328,10 +375,25 @@
                 });
             });
 
+            function pushDown() {
+                setTimeout(() => {
+                    let footer = $("#footer");
+                    let pos = footer.position();
+                    let height = $(window).height();
+                    height = height - pos.top;
+                    height = height - footer.height();
+                    if (height > 0) {
+                        footer.css({
+                            'margin-top': height + 'px'
+                        });
+                    }
+                }, 1000);
+            }
+
             $(window).bind("load", function () {
-                var footer = $("#footer");
-                var pos = footer.position();
-                var height = $(window).height();
+                let footer = $("#footer");
+                let pos = footer.position();
+                let height = $(window).height();
                 height = height - pos.top;
                 height = height - footer.height();
                 if (height > 0) {

@@ -133,7 +133,7 @@ router.get('/details', (req, res) => {
   } else {
     const leaderboard = [];
     const segmentID = req.query.id;
-    const athleteID = req.query.athleteID;
+    const athleteID = req.user.id;
     requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}/leaderboard?&access_token=${req.user.accessToken}`).then((response) => {
       const leaderboardResponse = JSON.parse(response.body);
       leaderboardResponse.entries.forEach((effort) => {

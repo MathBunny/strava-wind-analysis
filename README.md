@@ -3,7 +3,7 @@ The purpose of this web app is to inform users of how much wind influence riders
 
 ## Build, Configure and Run
 First, install the dependencies. Ensure you have Node.js installed and npm:
-```
+```shell
 npm install
 ```
 
@@ -25,13 +25,13 @@ exports.accessToken = accessToken;
 ```
 
 To start the server use:
-```
+```shell
 npm start
 ```
 
 ## Running Tests
 You can run tests using Mocha and Chai:
-```
+```shell
 npm test
 ```
 
