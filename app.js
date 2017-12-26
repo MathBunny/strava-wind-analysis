@@ -82,6 +82,8 @@ app.use((err, req, res) => {
   res.render('error');
 });
 
+process.on('uncaughtException', err => console.log(err.stack));
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });

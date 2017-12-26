@@ -2,6 +2,7 @@ const express = require('express');
 const requestify = require('requestify');
 const geography = require('../utilities/geography');
 const filters = require('../utilities/filters');
+const config = require('../config');
 const Vector = require('../utilities/vector');
 
 const router = express.Router();
@@ -178,7 +179,7 @@ router.get('/details', (req, res) => {
           }
           effort.speed = `${(((effort.distance * 3.6) / effort.elapsed_time).toFixed(2))}km/h`;
 
-          const darkskyrequest = `https://api.forecast.io/forecast/81c978e8db7b136e4bf3c8988c2d90a6/${segmentData.latitude},${segmentData.longitude},${effort.start_date_iso}?units=ca`;
+          const darkskyrequest = `https://api.forecast.io/forecast/${config.weatherKey}/${segmentData.latitude},${segmentData.longitude},${effort.start_date_iso}?units=ca`;
           requestify.get(darkskyrequest).then((windDataResponse) => {
             const windData = JSON.parse(windDataResponse.body);
             const date = new Date(effort.start_date_iso);
@@ -218,7 +219,10 @@ router.get('/details', (req, res) => {
               res.render('details', segmentData);
             }
           }).fail((err) => {
-            res.render('error', { message: err.body, stack: ' Dark Sky API Error ', status: err.code });
+            segmentData.errMsg = `${err.body}\n\nError has occured with fetching the weather data, likely caused by too much load on the external wind source (Dark Sky API). This issue should be resolved within 24 hours, if you continue to experience this issue, please contact me.`;
+            res.render('details', segmentData);
+            count = segmentData.leaderboard.length + 1;
+            // res.render('error', { message: `${err.body} Dark Sky API Error. If this occurs, it is likely because of issues with the weather API.`, stack: ' Dark Sky API Error ', status: err.code });
             console.log(err);
           });
         });

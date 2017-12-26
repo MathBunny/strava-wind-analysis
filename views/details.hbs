@@ -34,8 +34,16 @@
         </div>
         <br><br>
         <div class="ink-grid">
+            {{#if errMsg}}
+                    <div class="ink-alert block error" role="alert">
+                        <button class="ink-dismiss">&times;</button>
+                        <h4>Internal System Error</h4>
+                        <p class="fw-300">{{errMsg}}</p>
+                    </div>
+                    <br><br>
+                {{/if}}
             <div class="ink-tabs top" data-prevent-url-change="true">
-                <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
+
                 <ul class="tabs-nav" style="margin-top: -20px">
                     <li><a class="tabs-tab" href="#overview" id="overviewTab">Overview</a></li>
                     <li><a class="tabs-tab" href="#charts" id="chartsTab">Charts Visualization</a></li>
@@ -292,13 +300,11 @@
 
 
             function getChart(chartType, id){
-                console.log('Called!');
                 if (id == undefined){
                     id = "{{athleteID}}";
                 }
 
                 $.getJSON(`../../charts/get/chart/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
-                    console.log('got feedback');
                     $('#chart').remove();
                     $('#chart-container').append('<canvas id="chart"></canvas>');
                     const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
@@ -309,7 +315,6 @@
                         data: chartDataResponse.data,
                         options: defaultOptions,
                     });
-                    console.log(chartDataResponse);
                 });
             }
 
