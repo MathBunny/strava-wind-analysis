@@ -12,13 +12,13 @@ class LineChartDatasetDecorator extends AbstractChart {
 
   getData() {
     const data = this.parent.getData(); // Mutating parent data in the get, perform deep copy
-    const borderColoring = LineChartUtils.getColor(data.entries.length + 1);
+    const borderColoring = LineChartUtils.getColor(data.datasets.length + 1);
     const newData = {
       type: 'line',
       label: this.labelText,
       data: this.newDataArr,
       fill: false,
-      backgroundColor: ['rgb(255, 87, 34)'],
+      backgroundColor: [borderColoring],
       borderColor: borderColoring,
       borderWidth: 1,
       lineTension: 0.2,

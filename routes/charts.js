@@ -15,15 +15,36 @@ router.get('/get/chart/leaderboard-historical-performance', (req, res) => {
     stravadatahandler.getLeaderboardAthletes(req.user.accessToken, req.query.segmentID).then((athletes) => {
       let chart;
       let count = 0;
-      athletes.forEach((athlete) => {
-        stravadatahandler.getAthleteHistoricalSpeed(req.user.accessToken, req.query.segmentID, athlete.athleteID).then((data) => {
+
+      let arr = [];
+      const p = new Promise((resolve) => {
+        athletes.forEach((athlete) => {
+          stravadatahandler.getAthleteHistoricalSpeed(req.user.accessToken, req.query.segmentID, athlete.athleteID).then((data) => {
+            const obj = {};
+            obj.data = data;
+            obj.athlete = athlete;
+            arr.push(obj);
+
+            count += 1;
+            if ((count - athletes.length) === 0) {
+              resolve();
+            }
+          });
+        });
+      });
+      p.then(() => {
+        count = 0;
+        arr = arr.sort((x, y) => (y.data.length - x.data.length));
+        arr.forEach((obj) => {
+          const athlete = obj.athlete;
+          const data = obj.data;
           if (chart === undefined) {
-            chart = ChartFactory.getChart('performancelinechart', data, `${athlete.name}'s Performance`, true);
+            chart = ChartFactory.getChart('performancelinechart', data, athlete.name, true);
           } else {
-            chart = new LineChartDatasetDecorator(chart, data, `${athlete.name}'s Performance`);
+            chart = new LineChartDatasetDecorator(chart, data, athlete.name);
           }
           count += 1;
-          if (count === athletes.length) {
+          if ((count - athletes.length) === 0) {
             const chartData = {
               data: chart.getData(),
               options: chart.getOptions(),
@@ -32,7 +53,7 @@ router.get('/get/chart/leaderboard-historical-performance', (req, res) => {
           }
         });
       });
-    });
+    }).catch(error => console.error(error));
   }
 });
 

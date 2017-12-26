@@ -268,6 +268,20 @@
             longitude = parseFloat({{longitude}}).toFixed(6);
             latitude = parseFloat({{latitude}}).toFixed(6);
 
+            const defaultOptions = {
+                "title": {
+                    display: true,
+                },
+                "scales": {
+                    "yAxes": [{
+                        "ticks": {
+                            "beginAtZero": true,
+                            "callback": (value, index, values) => value + 'km/h',
+                        },
+                    }],
+                }
+            };
+
             path = [];
             {{#with map}}
                 path["id"] = "{{id}}";
@@ -293,7 +307,7 @@
                     const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
                         type: 'bar', // ??? 
                         data: chartDataResponse.data,
-                        options: chartDataResponse.options,
+                        options: defaultOptions,
                     });
                     console.log(chartDataResponse);
                 });

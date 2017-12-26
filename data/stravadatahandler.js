@@ -22,9 +22,9 @@ class StravaDataHandler {
     return new Promise((resolve) => {
       let dataArr = [];
 
-      const maxPageCount = 49;
+      const maxPageCount = 4;
       let pagesComplete = 0;
-      for (let page = 0; page < 50; page += 1) {
+      for (let page = 0; page < 5; page += 1) {
         requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}/all_efforts?&access_token=${accessToken}&per_page=200&page=${page}&athlete_id=${athleteID}`).then((segmentEffortResponse) => { // eslint-disable-line
           const responseData = JSON.parse(segmentEffortResponse.body);
           responseData.forEach((effort) => {
