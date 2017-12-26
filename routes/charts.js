@@ -2,8 +2,39 @@ const express = require('express');
 const requestify = require('requestify');
 const stravadatahandler = require('../data/stravadatahandler');
 const ChartFactory = require('../charts/chartfactory');
+const LineChartDatasetDecorator = require('../charts/decorators/linechartdatasetdecorator');
 
 const router = express.Router();
+
+router.get('/get/chart/leaderboard-historical-performance', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.send({ error: 'error: unauthenticated user' });
+  } else if (req.query.segmentID === undefined) {
+    res.send({ error: 'error: undefined segment ID' });
+  } else {
+    stravadatahandler.getLeaderboardAthletes(req.user.accessToken, req.query.segmentID).then((athletes) => {
+      let chart;
+      let count = 0;
+      athletes.forEach((athlete) => {
+        stravadatahandler.getAthleteHistoricalSpeed(req.user.accessToken, req.query.segmentID, athlete.athleteID).then((data) => {
+          if (chart === undefined) {
+            chart = ChartFactory.getChart('performancelinechart', data, `${athlete.name}'s Performance`, true);
+          } else {
+            chart = new LineChartDatasetDecorator(chart, data, `${athlete.name}'s Performance`);
+          }
+          count += 1;
+          if (count === athletes.length) {
+            const chartData = {
+              data: chart.getData(),
+              options: chart.getOptions(),
+            };
+            res.send(chartData);
+          }
+        });
+      });
+    });
+  }
+});
 
 
 router.get('/get/chart/individual-historical-performance', (req, res) => {

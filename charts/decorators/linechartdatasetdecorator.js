@@ -1,4 +1,5 @@
-const AbstractChart = require('./abstractchart');
+const AbstractChart = require('../abstractchart');
+const LineChartUtils = require('../linechartutils');
 
 class LineChartDatasetDecorator extends AbstractChart {
   constructor(parent, newDataArr, labelText, hasPoints) {
@@ -11,13 +12,14 @@ class LineChartDatasetDecorator extends AbstractChart {
 
   getData() {
     const data = this.parent.getData(); // Mutating parent data in the get, perform deep copy
+    const borderColoring = LineChartUtils.getColor(data.entries.length + 1);
     const newData = {
       type: 'line',
       label: this.labelText,
       data: this.newDataArr,
       fill: false,
       backgroundColor: ['rgb(255, 87, 34)'],
-      borderColor: 'rgb(239,83,80)',
+      borderColor: borderColoring,
       borderWidth: 1,
       lineTension: 0.2,
     };

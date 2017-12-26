@@ -1,6 +1,22 @@
 const requestify = require('requestify');
 
 class StravaDataHandler {
+  static getLeaderboardAthletes(accessToken, segmentID) {
+    return new Promise((resolve) => {
+      requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}/leaderboard?&access_token=${accessToken}`).then((segmentResponse) => {
+        const segmentData = JSON.parse(segmentResponse.body);
+        const arr = [];
+        segmentData.entries.forEach((athlete) => {
+          const entry = {};
+          entry.athleteID = athlete.athlete_id;
+          entry.name = athlete.athlete_name;
+          arr.push(entry);
+        });
+        resolve(arr);
+      }).fail(err => console.log(err));
+    });
+  }
+
   // Returns array containing historical speeds on segment, sorted from oldest to most recent
   static getAthleteHistoricalSpeed(accessToken, segmentID, athleteID) {
     return new Promise((resolve) => {

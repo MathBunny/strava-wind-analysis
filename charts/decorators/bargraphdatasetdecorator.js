@@ -1,4 +1,4 @@
-const AbstractChart = require('./abstractchart');
+const AbstractChart = require('../abstractchart');
 
 class BarGraphDataSetDecorator extends AbstractChart {
   constructor(parent, newDataArr, labelText) {
