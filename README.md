@@ -15,6 +15,7 @@ Bringing machine learning analytics, data visualization and weather data to cycl
 ## Screenshots
 ![Strava Wind Analysis](https://i.imgur.com/IBPMPKc.png)
 ![Strava Wind Analysis](https://i.imgur.com/IQpQnBx.png)
+![Strava Wind Analysis](https://i.imgur.com/pP6sWZ4.png)
 ![Strava Wind Analysis](https://i.imgur.com/OIxU9fs.png)
 ![Strava Wind Analysis](https://i.imgur.com/U33jx8U.png)
 
