@@ -1,5 +1,23 @@
 ![Strava Wind Analysis](https://i.imgur.com/9eaXBJu.png)
-The purpose of this web app is to inform users of how much wind influence riders in a segment leaderboard.
+
+Bringing machine learning analytics, data visualization and weather data to cycling activities and segments.
+
+## Features
+* Strava OAuth authentication
+* Performance analytics on historical segment and aggregate data
+* Interactive charts using chart.js, Google Maps integration
+* Wind analysis using DarkSky API and vector manipulation algorithm
+* Individual modals with athlete-specific statistics on segment leaderboard
+* Linear regression and interpolation tools using scikit-learn
+* Segment and ride filtering options (distance, speed, etc.)
+* Legacy website support
+
+## Screenshots
+![Strava Wind Analysis](https://i.imgur.com/IBPMPKc.png)
+![Strava Wind Analysis](https://i.imgur.com/IQpQnBx.png)
+![Strava Wind Analysis](https://i.imgur.com/OIxU9fs.png)
+![Strava Wind Analysis](https://i.imgur.com/U33jx8U.png)
+
 
 ## Build, Configure and Run
 First, install the dependencies. Ensure you have Node.js installed and npm:
@@ -35,11 +53,5 @@ You can run tests using Mocha and Chai:
 npm test
 ```
 
-## Features
-* Login using Strava OAuth, preloads a selection of segments for users
-* Integrated legacy website with hidden API keys
-* Improved algorithm for segment effort correlation factor generation
-* Legacy website for historical purposes
-
 ## Contributing
-Feel free to submit a pull request. The coding conventions of this app follow the AirBnB base style guide.
+Feel free to submit a pull request. The coding conventions of this app follow the Airbnb base style guide.
