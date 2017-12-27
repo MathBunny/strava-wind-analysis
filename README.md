@@ -1,4 +1,4 @@
-# Strava Wind Analysis Backend
+![Strava Wind Analysis](https://i.imgur.com/9eaXBJu.png)
 The purpose of this web app is to inform users of how much wind influence riders in a segment leaderboard.
 
 ## Build, Configure and Run

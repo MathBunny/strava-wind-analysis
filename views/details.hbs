@@ -247,7 +247,7 @@
             {{/with}}
             initialize();
             let origChartArr;
-            let currChart;
+            let currData;
 
             function getChart(chartType, id){
                 if (id == undefined){
@@ -268,15 +268,8 @@
 
                     $('#startDomainSlider').slider(); 
                     $('#endDomainSlider').slider(); 
-                    console.log(chartDataResponse.data.labels.length);
-                    console.log($( "#endDomainSlider" ).slider( "option", "max" ));
-
                     $("#startDomainSlider").slider("option", "max", chartDataResponse.data.labels.length);
                     $("#endDomainSlider").slider("option", "max", chartDataResponse.data.labels.length);
-
-                    console.log($( "#endDomainSlider" ).slider( "option", "max" ));
-                    //$("#startDomainSlider").slider("option", "max", chartDataResponse.data.labels.length);
-                    // $("#startDomainSlider").max = chartDataResponse.data.labels.length;
                     $("#startDomainSlider").val = 0;
                     $("#endDomainSlider").val = $("#endDomainSlider").max;
                     $("#startX").text(0);
@@ -290,8 +283,6 @@
             $(document).on('input', '#startDomainSlider', () => {
                 currData.data.labels = origChartArr.slice($("#startDomainSlider").val(), $("#endDomainSlider").val());
                 currData.update();
-                console.log($("#startDomainSlider").val() + " " + $("#endDomainSlider").val());
-                console.log($( "#endDomainSlider" ).slider( "option", "max" ));
                 $("#startX").text($("#startDomainSlider").val());
                 $("#endX").text($("#endDomainSlider").val());
             });

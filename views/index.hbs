@@ -43,6 +43,30 @@
 
                 <div id="feed" class="tabs-content">
                     <p> Coming soon! </p>
+                    <div class="column-group gutters">
+                    <div class="all-100">
+                        <h2>heading</h2>
+                        
+                    </div>
+                    </div>
+                        <div class="column-group gutters">
+                            <div class="all-33 small-100 tiny-100">
+                                <h3>heading</h3>
+                                
+                                <p class="quarter-top-space">"Red is not the right word," was the reply. "The plague was scarlet.  The whole face and body turned scarlet in an hour's time. Don't I  know? Didn't I see enough of it? And I am telling you it was scarlet  because&mdash;well, because it was scarlet. There is no other word for it."</p>
+                            </div>
+                            <div class="all-33 small-100 tiny-100">
+                                <h3>heading</h3>
+                                
+                                <p class="quarter-top-space">"Red is not the right word," was the reply. "The plague was scarlet.  The whole face and body turned scarlet in an hour's time. Don't I  know? Didn't I see enough of it? And I am telling you it was scarlet  because&mdash;well, because it was scarlet. There is no other word for it."</p>
+                            </div>
+                            <div class="all-33 small-100 tiny-100">
+                                <h3>heading</h3>
+                                
+                                <p class="quarter-top-space">"Red is not the right word," was the reply. "The plague was scarlet.  The whole face and body turned scarlet in an hour's time. Don't I  know? Didn't I see enough of it? And I am telling you it was scarlet  because&mdash;well, because it was scarlet. There is no other word for it."</p>
+                            </div>
+                        </div>
+                    
                 </div>
 
                 <div id="blog" class="tabs-content">
@@ -135,6 +159,7 @@
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.1.10/js/holder.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/autoload.js"></script>
 
         <footer class="clearfix" id="footer" style="margin-top:-500px">
@@ -149,6 +174,24 @@
         </footer>
 
         <script>
+
+            function pushDown() {
+                setTimeout(() => {
+                    var footer = $("#footer");
+                    var pos = footer.position();
+                    var height = $(window).height();
+                    height = height - pos.top;
+                    height = height - footer.height();
+                    if (height > 0) {
+                        footer.css({
+                            'margin-top': height + 'px'
+                        });
+                    }
+                }, 500);
+            }
+            pushDown();
+
+
             $('.ink-dismiss').click(() => {
                 $('#ink-alert').remove();
             });
