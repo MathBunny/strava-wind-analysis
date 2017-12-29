@@ -178,9 +178,7 @@
             let count = -3;
             function loadRecommendationsRow(countIndex) {
                 $.getJSON('../../get/recommendations?accessToken=' + accessToken, (segmentResponses) => {
-                    const countIndex1 = countIndex + 1;
-                    const countIndex2 = countIndex + 2;
-                    $('#map-rows').append(`<div class="column-group gutters"> <div class="all-33 small-100 tiny-100"><h4 id='segment${countIndex}-heading' class="fw-300" style="text-align:center;"> </h4> <div id="map${countIndex}" style="display:block;width:max-width;height:250px"></div> <p class="fw-300" id="segment${countIndex}-text"> </p> </div><div class="all-33 small-100 tiny-100"><h4 id='segment${countIndex1}-heading'class="fw-300"style="text-align:center;"></h4><div id="map${countIndex1}"style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex1}-text"></p> </div> <div class="all-33 small-100 tiny-100"><h4 id='segment${countIndex2}-heading'class="fw-300"style="text-align:center;"></h4> <div id="map${countIndex2}" style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex2}-text"></p></div></div>`);
+                    $('#map-rows').append(`<div class="column-group gutters"> <div class="all-33 small-100 tiny-100">  <a href="/segments/details?id=${segmentResponses[countIndex].segmentDetails.segment.id}"> <h4 id='segment${countIndex}-heading' class="fw-300" style="text-align:center;"> </h4> </a> <div id="map${countIndex}" style="display:block;width:max-width;height:250px"></div> <p class="fw-300" id="segment${countIndex}-text"> </p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+1].segmentDetails.segment.id}"> <h4 id='segment${countIndex+1}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+1}"style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+1}-text"></p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+2].segmentDetails.segment.id}"> <h4 id='segment${countIndex+2}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+2}" style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+2}-text"></p></div></div>`);
 
                     const data = segmentResponses;
                     for(let x = countIndex; x < countIndex + 3; x += 1) {
@@ -197,7 +195,7 @@
             }
             loadRecommendationsRow(count+=3);
             loadRecommendationsRow(count+=3);
-            
+
             function createMap(latitude, longitude, path, mapDOMID) {
 
                 /* This method initializes the Google maps and outputs it on the page */
