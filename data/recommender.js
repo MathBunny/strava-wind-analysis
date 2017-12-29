@@ -25,7 +25,7 @@ class Recommender {
         weightedPts.set(0, 10);
         weightedPts.set(1, 5);
 
-        new Promise((resolveA) => {
+        return new Promise((resolveA) => {
           stravadatahandler.getDetailedActivityDetails(accessToken, activitiesList[0].id).then((activity) => {
             activity.segment_efforts.forEach((segmentEffort) => { // eslint-disable-line
               let pts = weightedPts.get(0);
@@ -79,14 +79,21 @@ class Recommender {
             resolve(scores);
           } else {
             // Algorithm B: Take the most recent segment efforts (greedily)
-            activitiesList.forEach((activity) => {
-              stravadatahandler.getDetailedActivityDetails(accessToken, activity.id).then((detailedActivity) => {
-                detailedActivity.segment_efforts.forEach((segmentEffort) => {
-                  scores.push({ segmentDetails: segmentEffort });
+            let count = activitiesList.length;
+            const f = new Promise((resolveD) => {
+              activitiesList.forEach((activity) => {
+                stravadatahandler.getDetailedActivityDetails(accessToken, activity.id).then((detailedActivity) => {
+                  detailedActivity.segment_efforts.forEach((segmentEffort) => {
+                    scores.push({ segmentDetails: segmentEffort });
+                  });
+                  count -= 1;
+                  if (count === 0) {
+                    resolveD();
+                  }
                 });
               });
             });
-            setTimeout(() => resolve(scores), 500);
+            f.then(() => resolve(scores));
           }
         });
       });
