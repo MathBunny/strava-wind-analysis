@@ -173,27 +173,39 @@
 
         <script>
             const accessToken = '{{accessToken}}';
+            let segmentResponses = undefined;
 
             let count = -3;
-            function loadRecommendationsRow(countIndex) {
-                $.getJSON('../../get/recommendations?accessToken=' + accessToken, (segmentResponses) => {
-                    $('#map-rows').append(`<div class="column-group gutters"> <div class="all-33 small-100 tiny-100">  <a href="/segments/details?id=${segmentResponses[countIndex].segmentDetails.segment.id}"> <h4 id='segment${countIndex}-heading' class="fw-300" style="text-align:center;"> </h4> </a> <div id="map${countIndex}" style="display:block;width:max-width;height:250px"></div> <p class="fw-300" id="segment${countIndex}-text"> </p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+1].segmentDetails.segment.id}"> <h4 id='segment${countIndex+1}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+1}"style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+1}-text"></p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+2].segmentDetails.segment.id}"> <h4 id='segment${countIndex+2}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+2}" style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+2}-text"></p></div></div>`);
 
-                    const data = segmentResponses;
-                    for(let x = countIndex; x < countIndex + 3; x += 1) {
-                        $(`#segment${x}-heading`).text(data[x].segmentDetails.name);
-                        $.getJSON('../../get/segmentDetails?accessToken=' + accessToken + '&segmentID=' + data[x].segmentDetails.segment.id, (detailedSegment) => {
-                            const path = {};
-                            path.id = detailedSegment.map.id;
-                            path.polyline = detailedSegment.map.polyline;
-                            path.resource_state = detailedSegment.map.resource_state;
-                            createMap(detailedSegment.start_latlng[0], detailedSegment.start_latlng[1], path, `map${x}`);
-                        });
-                    }
-                });
+            function generateRow(countIndex) {
+                $('#map-rows').append(`<div class="column-group gutters"> <div class="all-33 small-100 tiny-100">  <a href="/segments/details?id=${segmentResponses[countIndex].segmentDetails.segment.id}"> <h4 id='segment${countIndex}-heading' class="fw-300" style="text-align:center;"> </h4> </a> <div id="map${countIndex}" style="display:block;width:max-width;height:250px"></div> <p class="fw-300" id="segment${countIndex}-text"> </p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+1].segmentDetails.segment.id}"> <h4 id='segment${countIndex+1}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+1}"style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+1}-text"></p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+2].segmentDetails.segment.id}"> <h4 id='segment${countIndex+2}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+2}" style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+2}-text"></p></div></div>`);
+                const data = segmentResponses;
+                for(let x = countIndex; x < countIndex + 3; x += 1) {
+                    $(`#segment${x}-heading`).text(data[x].segmentDetails.name);
+                    $.getJSON('../../get/segmentDetails?accessToken=' + accessToken + '&segmentID=' + data[x].segmentDetails.segment.id, (detailedSegment) => {
+                        const path = {};
+                        path.id = detailedSegment.map.id;
+                        path.polyline = detailedSegment.map.polyline;
+                        path.resource_state = detailedSegment.map.resource_state;
+                        createMap(detailedSegment.start_latlng[0], detailedSegment.start_latlng[1], path, `map${x}`);
+                    });
+                }
+                if (countIndex == 0) {
+                    loadRecommendationsRow(count += 3);
+                }
             }
-            loadRecommendationsRow(count+=3);
-            loadRecommendationsRow(count+=3);
+            
+            function loadRecommendationsRow(countIndex) {
+                if (segmentResponses === undefined) {
+                    $.getJSON('../../get/recommendations?accessToken=' + accessToken, (segmentResponsesR) => {
+                        segmentResponses = segmentResponsesR;
+                        generateRow(countIndex);
+                    });
+                } else {
+                    generateRow(countIndex);
+                }
+            }
+            loadRecommendationsRow(count += 3);
 
             function createMap(latitude, longitude, path, mapDOMID) {
 
@@ -237,18 +249,15 @@
             $('.ink-dismiss').click(() => {
                 $('#ink-alert').remove();
             });
-            /*$(window).bind("load", function () {
-                var footer = $("#footer");
-                var pos = footer.position();
-                var height = $(window).height();
-                height = height - pos.top;
-                height = height - footer.height();
-                if (height > 0) {
-                    footer.css({
-                        'margin-top': height + 'px'
-                    });
+            
+            $(window).scroll(function() {
+                if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+                    if (count < 25) {
+                        loadRecommendationsRow(count += 3);
+                    }
                 }
-            });*/
+            });
+
         </script>
 
 
