@@ -1,6 +1,33 @@
 const requestify = require('requestify');
 
 class StravaDataHandler {
+  static getDetailedSegmentDetails(accessToken, segmentID) {
+    return new Promise((resolve) => {
+      requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}?&access_token=${accessToken}`).then((detailedSegmentResponse) => {
+        const detailedSegmentDetails = JSON.parse(detailedSegmentResponse.body);
+        resolve(detailedSegmentDetails);
+      }).fail(err => console.log(err));
+    });
+  }
+
+  static getDetailedActivityDetails(accessToken, segmentID) {
+    return new Promise((resolve) => {
+      requestify.get(`https://www.strava.com/api/v3/activities/${segmentID}?&access_token=${accessToken}`).then((detailedActivityResponse) => {
+        const detailedActivityDetails = JSON.parse(detailedActivityResponse.body);
+        resolve(detailedActivityDetails);
+      }).fail(err => console.log(err));
+    });
+  }
+
+  static getActivitiesList(accessToken) {
+    return new Promise((resolve) => {
+      requestify.get(`https://www.strava.com/api/v3/athlete/activities?&access_token=${accessToken}`).then((activitiesResponse) => {
+        const activitesList = JSON.parse(activitiesResponse.body);
+        resolve(activitesList);
+      }).fail(err => console.log(err));
+    });
+  }
+
   static getLeaderboardAthletes(accessToken, segmentID) {
     return new Promise((resolve) => {
       requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}/leaderboard?&access_token=${accessToken}`).then((segmentResponse) => {

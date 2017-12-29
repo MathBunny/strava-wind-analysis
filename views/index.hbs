@@ -9,8 +9,17 @@
         <title> Wind Analysis - Home </title>
 
         <style>
+            /* Modularize this by just using property in div */
+            body{
+                position: relative;
+            }
             footer {
                 background: #ccc;
+                position:absolute;
+                bottom:0;
+                width:100%;
+                height:60px;
+                transform: translateY(100%);
             }
         </style>
     </head>
@@ -42,7 +51,18 @@
                 </ul>
 
                 <div id="feed" class="tabs-content">
-                    <p> Coming soon! </p>
+                    <div class="column-group gutters">
+                        <div class="all-100">
+                            <center>
+                                <img src="https://i.imgur.com/9eaXBJu.png">
+                            </center>
+                        </div>
+                    </div>
+                    <div id="map-rows">
+                        
+                    </div>
+                    <center> <button class="ink-button" onclick="loadRecommendationsRow(count+=3);">View More</button> </center>
+                    <br><br>
                 </div>
 
                 <div id="blog" class="tabs-content">
@@ -134,7 +154,11 @@
         <div class="push"></div>
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'></script>
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
+        <script type="text/javascript" src="/javascripts/nokey.js"></script>
+        <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
+        <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="http://cdn.ink.sapo.pt/3.1.10/js/holder.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/autoload.js"></script>
 
         <footer class="clearfix" id="footer" style="margin-top:-500px">
@@ -149,10 +173,72 @@
         </footer>
 
         <script>
+            const accessToken = '{{accessToken}}';
+
+            let count = -3;
+            function loadRecommendationsRow(countIndex) {
+                $.getJSON('../../get/recommendations?accessToken=' + accessToken, (segmentResponses) => {
+                    $('#map-rows').append(`<div class="column-group gutters"> <div class="all-33 small-100 tiny-100">  <a href="/segments/details?id=${segmentResponses[countIndex].segmentDetails.segment.id}"> <h4 id='segment${countIndex}-heading' class="fw-300" style="text-align:center;"> </h4> </a> <div id="map${countIndex}" style="display:block;width:max-width;height:250px"></div> <p class="fw-300" id="segment${countIndex}-text"> </p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+1].segmentDetails.segment.id}"> <h4 id='segment${countIndex+1}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+1}"style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+1}-text"></p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+2].segmentDetails.segment.id}"> <h4 id='segment${countIndex+2}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+2}" style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+2}-text"></p></div></div>`);
+
+                    const data = segmentResponses;
+                    for(let x = countIndex; x < countIndex + 3; x += 1) {
+                        $(`#segment${x}-heading`).text(data[x].segmentDetails.name);
+                        $.getJSON('../../get/segmentDetails?accessToken=' + accessToken + '&segmentID=' + data[x].segmentDetails.segment.id, (detailedSegment) => {
+                            const path = {};
+                            path.id = detailedSegment.map.id;
+                            path.polyline = detailedSegment.map.polyline;
+                            path.resource_state = detailedSegment.map.resource_state;
+                            createMap(detailedSegment.start_latlng[0], detailedSegment.start_latlng[1], path, `map${x}`);
+                        });
+                    }
+                });
+            }
+            loadRecommendationsRow(count+=3);
+            loadRecommendationsRow(count+=3);
+
+            function createMap(latitude, longitude, path, mapDOMID) {
+
+                /* This method initializes the Google maps and outputs it on the page */
+                function initialize() {
+                    var myLatlng = new google.maps.LatLng(latitude, longitude);
+                    var myOptions = {
+                        zoom: 13,
+                        center: myLatlng,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    }
+
+                    var map = new google.maps.Map(document.getElementById(mapDOMID), myOptions);
+                    path.polyline = path.polyline.replace(/&#x60;/g, '`');
+                    var decodedPath = google.maps.geometry.encoding.decodePath(path.polyline);
+                    var decodedLevels = decodeLevels("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
+
+                    var setRegion = new google.maps.Polyline({
+                        path: decodedPath,
+                        levels: decodedLevels,
+                        strokeColor: "#FF0000",
+                        strokeOpacity: 1.0,
+                        strokeWeight: 2,
+                        map: map
+                    });
+                }
+
+                /* This method decodes the map from the summary polyline */
+                function decodeLevels(encodedLevelsString) {
+                    var decodedLevels = [];
+
+                    for (var i = 0; i < encodedLevelsString.length; ++i) {
+                        var level = encodedLevelsString.charCodeAt(i) - 63;
+                        decodedLevels.push(level);
+                    }
+                    return decodedLevels;
+                }
+                initialize();
+            }
+
             $('.ink-dismiss').click(() => {
                 $('#ink-alert').remove();
             });
-            $(window).bind("load", function () {
+            /*$(window).bind("load", function () {
                 var footer = $("#footer");
                 var pos = footer.position();
                 var height = $(window).height();
@@ -163,7 +249,7 @@
                         'margin-top': height + 'px'
                     });
                 }
-            });
+            });*/
         </script>
 
 
