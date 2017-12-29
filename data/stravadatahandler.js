@@ -1,6 +1,15 @@
 const requestify = require('requestify');
 
 class StravaDataHandler {
+  static getDetailedSegmentDetails(accessToken, segmentID) {
+    return new Promise((resolve) => {
+      requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}?&access_token=${accessToken}`).then((detailedSegmentResponse) => {
+        const detailedSegmentDetails = JSON.parse(detailedSegmentResponse.body);
+        resolve(detailedSegmentDetails);
+      }).fail(err => console.log(err));
+    });
+  }
+
   static getDetailedActivityDetails(accessToken, segmentID) {
     return new Promise((resolve) => {
       requestify.get(`https://www.strava.com/api/v3/activities/${segmentID}?&access_token=${accessToken}`).then((detailedActivityResponse) => {
