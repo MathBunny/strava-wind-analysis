@@ -21,8 +21,6 @@ class PerformanceLineChart extends AbstractChart {
       }
     }
 
-    const borderColoring = (multi === true) ? ('rgb(158,158,158)') : ['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)', 'rgb(201, 203, 207)'];
-
     this.data = {
       labels: labels, // eslint-disable-line
       datasets:
@@ -30,8 +28,8 @@ class PerformanceLineChart extends AbstractChart {
           label: label, // eslint-disable-line
           data: dataArr,
           fill: false,
-          backgroundColor: 'rgb(158,158,158)',
-          borderColor: borderColoring,
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(158,158,158)',
           borderWidth: 1,
           lineTension: 0.2 }],
     };

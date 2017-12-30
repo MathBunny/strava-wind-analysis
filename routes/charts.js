@@ -287,6 +287,7 @@ router.get('/get/data/all-segment-efforts', (req, res) => {
   }
 });
 
+
 router.get('/get/data/all-segment-efforts-imposed', (req, res) => {
   if (!req.isAuthenticated()) {
     res.send({ error: 'error: unauthenticated user' });
