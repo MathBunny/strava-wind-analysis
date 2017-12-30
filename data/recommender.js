@@ -66,7 +66,7 @@ class Recommender {
             });
           });
         }).then(() => {
-          if (scores.length >= 3) {
+          if (scores.length >= 6) {
             scores = scores.sort((x, y) => y.score - x.score);
             const set = new Set();
             scores = scores.filter((score) => {
