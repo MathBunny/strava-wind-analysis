@@ -71,6 +71,8 @@
                                 <ul>
                                     <li class="fw-200"> Post History </li>
                                     <hr>
+                                    <li class="slab-100"> <a href="#2017-12-29"> 2017-12-30 </a></li>
+                                    <li class="slab-100"> <a href="#2017-12-29"> 2017-12-29 </a></li>
                                     <li class="slab-100"> <a href="#2017-10-13"> 2017-10-13 </a></li>
                                     <li class="slab-100"> <a href="#2017-08-12"> 2017-08-12 </a></li>
                                     <li class="slab-100"> <a href="#2017-07-30"> 2017-07-30 </a></li>
@@ -83,22 +85,59 @@
                                 <div id="ink-alert" class="ink-alert block" role="alert">
                                     <button class="ink-dismiss">&times;</button>
                                     <h4>Curent system status: Pre-release</h4>
-                                    <p class="fw-300">Please note that this site can go down at any time as it is in beta until January 1, 2018.</p>
+                                    <p class="fw-300">Please note that this site can go down at any time as it is in beta until May 1, 2018.</p>
                                 </div>
+                                
+                                <div id="2017-12-30">
+                                    <h2 style="display: inline-block"> Segment Data Visualization <small>| December 30, 2017 </small></h2>
+                                    <div class= "column-group">
+                                    <div class="all-60">
+                                        <p class="fw-300"> A dedicated segment data visualization page was added, for more in-depth analysis on segment performance. 
+                                        <br><br>
+                                        Beyond performance improvements on the historical data for individual efforts, the backend now uses a more sophisticated chart building system employing decorators and abstracting the Strava API.
+                                        The most interesting chart is the addition of the leaderboard historical performance chart. By default it includes adjacent athletes on the leaderboard, but you can remove them by clicking on the legend and adjust the domain as required.
+                                        </p>
+                                    </div>
+                                    <div class="all-40">
+                                         <a href="/images/leaderboardhistorical.png" target="_blank">  <img src="/images/leaderboardhistorical.png"> </a>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div id="2017-12-29">
+                                    <h2 style="display: inline-block"> Feeds Page <small>| December 29, 2017 </small></h2>
+                                    <div class= "column-group">
+                                        <div class="all-40">
+                                            <!-- https://i.imgur.com/keoXY8h.png https://i.imgur.com/u31Mdmi.png -->
+                                            <a href="/images/feed.png" target="_blank"> <img src="/images/feed.png"> </a>
+                                        </div>
+                                        <div class="all-60">
+                                            <p class="fw-300"> The main page now features a segment recommender system added on-top of the normal blog page. The segment name is clickable and will send the user to the detailed segment view page.
+                                            <br><br>
+                                            The segment recommender follows a content-filtering algorithm. The heuristic first looks at the 3 most recent non-manual entry cycling rides, and iterates through all segment efforts. 
+                                            It then assigns points to each effort depending on achievements including PR and leaderboard placement. If no segment efforts happen in the last 3 rides, then all segments efforts are returned in chronological order.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <hr> 
 
                                 <div id="2017-10-13">
                                     <h2 style="display: inline-block"> Charts & Modals <small>| October 13, 2017 </small></h2>
                                     <div class= "column-group">
-                                    <div class="all-60">
-                                        <p class="fw-300"> Charts and modals were added to the site, adding ability to visually compare the athletes' performance. 
-                                        <br><br>
-                                        There are currently two charts supported on the segment detail page. The first is the bar graph, which denotes the distributions of speed used by segment efforts
-                                        clumped into buckets in increments of 10km/h. The second type of chart, found after clicking on an athlete name, contains the improvement in speed of segments, going from most recent to more historic performance.
-                                        </p>
-                                    </div>
-                                    <div class="all-40">
-                                        <img src="https://i.imgur.com/VK8F8dg.png">
-                                    </div>
+                                        <div class="all-60">
+                                            <p class="fw-300"> Charts and modals were added to the site, adding ability to visually compare the athletes' performance. 
+                                            <br><br>
+                                            There are currently two charts supported on the segment detail page. The first is the bar graph, which denotes the distributions of speed used by segment efforts
+                                            clumped into buckets in increments of 10km/h. The second type of chart, found after clicking on an athlete name, contains the improvement in speed of segments, going from most recent to more historic performance.
+                                            </p>
+                                        </div>
+                                        <div class="all-40">
+                                            <a href="/images/individualhistorical.png" target="_blank"><img src="/images/individualhistorical.png"> </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -116,6 +155,7 @@
                                     <p class="fw-300"> This website was created by <a href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>, an 18 year old
                                     studying Computer Science at the University of Waterloo in Canada. Feel free to reach out to me via email at <a href="mailto:horatiulazu@gmail.com">horatiulazu@gmail.com</a>.
                                 </div>
+                                <br><br><br>
 
                                 {{!-- 
                                 <hr>
