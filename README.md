@@ -26,7 +26,7 @@ First, install the dependencies. Ensure you have Node.js installed and npm:
 npm install
 ```
 
-Now setup the configuration file in the root folder as follows:
+Now setup the configuration file in the root folder as follows (saved as `config.js`):
 ```javascript
 const clientID = 0;
 const clientSecret = "0";
@@ -34,6 +34,7 @@ const callbackURL = "http://localhost:3000/login/callback";
 const weatherKey = "YourDarkSkyWeatherKey";
 const port = 3000;
 const accessToken = "0";
+const mlEndpoint = "YourMLEndPoint";
 
 exports.clientID = clientID;
 exports.clientSecret = clientSecret;
@@ -41,6 +42,7 @@ exports.callbackURL = callbackURL;
 exports.port = port;
 exports.weatherKey = weatherKey;
 exports.accessToken = accessToken;
+exports.mlEndpoint = mlEndpoint;
 ```
 
 To start the server use:

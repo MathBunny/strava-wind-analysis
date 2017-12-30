@@ -44,7 +44,6 @@
 
         <div class="ink-grid">
             <div class="ink-tabs top" data-prevent-url-change="true">
-                <!-- If you're using 'bottom' positioning, put this div AFTER the content. -->
                 <ul class="tabs-nav" style="margin-top: -20px">
                     <li><a class="tabs-tab" href="#feed">Feed</a></li>
                     <li><a class="tabs-tab" href="#blog">Blog</a></li>
@@ -72,6 +71,8 @@
                                 <ul>
                                     <li class="fw-200"> Post History </li>
                                     <hr>
+                                    <li class="slab-100"> <a href="#2017-12-29"> 2017-12-30 </a></li>
+                                    <li class="slab-100"> <a href="#2017-12-29"> 2017-12-29 </a></li>
                                     <li class="slab-100"> <a href="#2017-10-13"> 2017-10-13 </a></li>
                                     <li class="slab-100"> <a href="#2017-08-12"> 2017-08-12 </a></li>
                                     <li class="slab-100"> <a href="#2017-07-30"> 2017-07-30 </a></li>
@@ -84,22 +85,59 @@
                                 <div id="ink-alert" class="ink-alert block" role="alert">
                                     <button class="ink-dismiss">&times;</button>
                                     <h4>Curent system status: Pre-release</h4>
-                                    <p class="fw-300">Please note that this site can go down at any time as it is in beta until January 1, 2018.</p>
+                                    <p class="fw-300">Please note that this site can go down at any time as it is in beta until May 1, 2018.</p>
                                 </div>
+                                
+                                <div id="2017-12-30">
+                                    <h2 style="display: inline-block"> Segment Data Visualization <small>| December 30, 2017 </small></h2>
+                                    <div class= "column-group">
+                                    <div class="all-60">
+                                        <p class="fw-300"> A dedicated segment data visualization page was added, for more in-depth analysis on segment performance. 
+                                        <br><br>
+                                        Beyond performance improvements on the historical data for individual efforts, the backend now uses a more sophisticated chart building system employing decorators and abstracting the Strava API.
+                                        The most interesting chart is the addition of the leaderboard historical performance chart. By default it includes adjacent athletes on the leaderboard, but you can remove them by clicking on the legend and adjust the domain as required.
+                                        </p>
+                                    </div>
+                                    <div class="all-40">
+                                         <a href="/images/leaderboardhistorical.png" target="_blank">  <img src="/images/leaderboardhistorical.png"> </a>
+                                    </div>
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div id="2017-12-29">
+                                    <h2 style="display: inline-block"> Feeds Page <small>| December 29, 2017 </small></h2>
+                                    <div class= "column-group">
+                                        <div class="all-40">
+                                            <!-- https://i.imgur.com/keoXY8h.png https://i.imgur.com/u31Mdmi.png -->
+                                            <a href="/images/feed.png" target="_blank"> <img src="/images/feed.png"> </a>
+                                        </div>
+                                        <div class="all-60">
+                                            <p class="fw-300"> The main page now features a segment recommender system added on-top of the normal blog page. The segment name is clickable and will send the user to the detailed segment view page.
+                                            <br><br>
+                                            The segment recommender follows a content-filtering algorithm. The heuristic first looks at the 3 most recent non-manual entry cycling rides, and iterates through all segment efforts. 
+                                            It then assigns points to each effort depending on achievements including PR and leaderboard placement. If no segment efforts happen in the last 3 rides, then all segments efforts are returned in chronological order.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <hr> 
 
                                 <div id="2017-10-13">
                                     <h2 style="display: inline-block"> Charts & Modals <small>| October 13, 2017 </small></h2>
                                     <div class= "column-group">
-                                    <div class="all-60">
-                                        <p class="fw-300"> Charts and modals were added to the site, adding ability to visually compare the athletes' performance. 
-                                        <br><br>
-                                        There are currently two charts supported on the segment detail page. The first is the bar graph, which denotes the distributions of speed used by segment efforts
-                                        clumped into buckets in increments of 10km/h. The second type of chart, found after clicking on an athlete name, contains the improvement in speed of segments, going from most recent to more historic performance.
-                                        </p>
-                                    </div>
-                                    <div class="all-40">
-                                        <img src="https://i.imgur.com/VK8F8dg.png">
-                                    </div>
+                                        <div class="all-60">
+                                            <p class="fw-300"> Charts and modals were added to the site, adding ability to visually compare the athletes' performance. 
+                                            <br><br>
+                                            There are currently two charts supported on the segment detail page. The first is the bar graph, which denotes the distributions of speed used by segment efforts
+                                            clumped into buckets in increments of 10km/h. The second type of chart, found after clicking on an athlete name, contains the improvement in speed of segments, going from most recent to more historic performance.
+                                            </p>
+                                        </div>
+                                        <div class="all-40">
+                                            <a href="/images/individualhistorical.png" target="_blank"><img src="/images/individualhistorical.png"> </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <hr>
@@ -117,6 +155,7 @@
                                     <p class="fw-300"> This website was created by <a href="http://horatiulazu.ca" target="_blank">Horatiu Lazu</a>, an 18 year old
                                     studying Computer Science at the University of Waterloo in Canada. Feel free to reach out to me via email at <a href="mailto:horatiulazu@gmail.com">horatiulazu@gmail.com</a>.
                                 </div>
+                                <br><br><br>
 
                                 {{!-- 
                                 <hr>
@@ -174,27 +213,39 @@
 
         <script>
             const accessToken = '{{accessToken}}';
+            let segmentResponses = undefined;
 
             let count = -3;
-            function loadRecommendationsRow(countIndex) {
-                $.getJSON('../../get/recommendations?accessToken=' + accessToken, (segmentResponses) => {
-                    $('#map-rows').append(`<div class="column-group gutters"> <div class="all-33 small-100 tiny-100">  <a href="/segments/details?id=${segmentResponses[countIndex].segmentDetails.segment.id}"> <h4 id='segment${countIndex}-heading' class="fw-300" style="text-align:center;"> </h4> </a> <div id="map${countIndex}" style="display:block;width:max-width;height:250px"></div> <p class="fw-300" id="segment${countIndex}-text"> </p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+1].segmentDetails.segment.id}"> <h4 id='segment${countIndex+1}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+1}"style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+1}-text"></p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+2].segmentDetails.segment.id}"> <h4 id='segment${countIndex+2}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+2}" style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+2}-text"></p></div></div>`);
 
-                    const data = segmentResponses;
-                    for(let x = countIndex; x < countIndex + 3; x += 1) {
-                        $(`#segment${x}-heading`).text(data[x].segmentDetails.name);
-                        $.getJSON('../../get/segmentDetails?accessToken=' + accessToken + '&segmentID=' + data[x].segmentDetails.segment.id, (detailedSegment) => {
-                            const path = {};
-                            path.id = detailedSegment.map.id;
-                            path.polyline = detailedSegment.map.polyline;
-                            path.resource_state = detailedSegment.map.resource_state;
-                            createMap(detailedSegment.start_latlng[0], detailedSegment.start_latlng[1], path, `map${x}`);
-                        });
-                    }
-                });
+            function generateRow(countIndex) {
+                $('#map-rows').append(`<div class="column-group gutters"> <div class="all-33 small-100 tiny-100">  <a href="/segments/details?id=${segmentResponses[countIndex].segmentDetails.segment.id}"> <h4 id='segment${countIndex}-heading' class="fw-300" style="text-align:center;"> </h4> </a> <div id="map${countIndex}" style="display:block;width:max-width;height:250px"></div> <p class="fw-300" id="segment${countIndex}-text"> </p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+1].segmentDetails.segment.id}"> <h4 id='segment${countIndex+1}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+1}"style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+1}-text"></p> </div> <div class="all-33 small-100 tiny-100"> <a href="/segments/details?id=${segmentResponses[countIndex+2].segmentDetails.segment.id}"> <h4 id='segment${countIndex+2}-heading'class="fw-300"style="text-align:center;"></h4> </a> <div id="map${countIndex+2}" style="display:block;width:max-width;height:250px"></div><p class="fw-300" id="segment${countIndex+2}-text"></p></div></div>`);
+                const data = segmentResponses;
+                for(let x = countIndex; x < countIndex + 3; x += 1) {
+                    $(`#segment${x}-heading`).text(data[x].segmentDetails.name);
+                    $.getJSON('../../get/segmentDetails?accessToken=' + accessToken + '&segmentID=' + data[x].segmentDetails.segment.id, (detailedSegment) => {
+                        const path = {};
+                        path.id = detailedSegment.map.id;
+                        path.polyline = detailedSegment.map.polyline;
+                        path.resource_state = detailedSegment.map.resource_state;
+                        createMap(detailedSegment.start_latlng[0], detailedSegment.start_latlng[1], path, `map${x}`);
+                    });
+                }
+                if (countIndex == 0) {
+                    loadRecommendationsRow(count += 3);
+                }
             }
-            loadRecommendationsRow(count+=3);
-            loadRecommendationsRow(count+=3);
+            
+            function loadRecommendationsRow(countIndex) {
+                if (segmentResponses === undefined) {
+                    $.getJSON('../../get/recommendations?accessToken=' + accessToken, (segmentResponsesR) => {
+                        segmentResponses = segmentResponsesR;
+                        generateRow(countIndex);
+                    });
+                } else {
+                    generateRow(countIndex);
+                }
+            }
+            loadRecommendationsRow(count += 3);
 
             function createMap(latitude, longitude, path, mapDOMID) {
 
@@ -238,18 +289,15 @@
             $('.ink-dismiss').click(() => {
                 $('#ink-alert').remove();
             });
-            /*$(window).bind("load", function () {
-                var footer = $("#footer");
-                var pos = footer.position();
-                var height = $(window).height();
-                height = height - pos.top;
-                height = height - footer.height();
-                if (height > 0) {
-                    footer.css({
-                        'margin-top': height + 'px'
-                    });
+            
+            $(window).scroll(function() {
+                if ((window.innerHeight + window.scrollY) >= document.body.scrollHeight) {
+                    if (count < 25) {
+                        loadRecommendationsRow(count += 3);
+                    }
                 }
-            });*/
+            });
+
         </script>
 
 
