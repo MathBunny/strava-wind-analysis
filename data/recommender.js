@@ -37,7 +37,7 @@ class Recommender {
             });
             resolveA();
           });
-        }).then(() => {
+        }).then(() => { // eslint-disable-line
           return new Promise((resolveB) => { // eslint-disable-line
             stravadatahandler.getDetailedActivityDetails(accessToken, activitiesList[1].id).then((activity) => {
               activity.segment_efforts.forEach((segmentEffort) => { // eslint-disable-line
@@ -51,7 +51,7 @@ class Recommender {
               resolveB();
             });
           });
-        }).then(() => {
+        }).then(() => { // eslint-disable-line
           return new Promise((resolveC) => { // eslint-disable-line
             stravadatahandler.getDetailedActivityDetails(accessToken, activitiesList[2].id).then((activity) => {
               activity.segment_efforts.forEach((segmentEffort) => { // eslint-disable-line
