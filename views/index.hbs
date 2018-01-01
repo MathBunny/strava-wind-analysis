@@ -9,7 +9,6 @@
         <title> Wind Analysis - Home </title>
 
         <style>
-            /* Modularize this by just using property in div */
             body{
                 position: relative;
             }
@@ -54,6 +53,8 @@
                         <div class="all-100">
                             <center>
                                 <img src="https://i.imgur.com/9eaXBJu.png">
+                                <br>
+                                <img src="/images/home-loading-spinner.gif" id="loading">
                             </center>
                         </div>
                     </div>
@@ -71,7 +72,7 @@
                                 <ul>
                                     <li class="fw-200"> Post History </li>
                                     <hr>
-                                    <li class="slab-100"> <a href="#2017-12-29"> 2017-12-30 </a></li>
+                                    <li class="slab-100"> <a href="#2017-12-30"> 2017-12-30 </a></li>
                                     <li class="slab-100"> <a href="#2017-12-29"> 2017-12-29 </a></li>
                                     <li class="slab-100"> <a href="#2017-10-13"> 2017-10-13 </a></li>
                                     <li class="slab-100"> <a href="#2017-08-12"> 2017-08-12 </a></li>
@@ -146,7 +147,7 @@
                                     <p class="fw-300"> Today marks the initial release of the new Strava Wind Analysis website. The purpose of this website is to compute how wind influenced riders in segment leaderboards. 
                                         Unlike the previous version, this version is easier to use and doesn't require users to find segment IDs by themselves. Moreover, it features a newly designed user interface.
                                         <br><br>
-                                        You can find the legacy website <a href="http://strava-weather-analysis.paperplane.io/" target="_blank"> here</a>.
+                                        You can find the legacy website <a href="/legacy" target="_blank"> here</a>.
                                         </p>
                                 </div>
                                 <hr>
@@ -228,6 +229,9 @@
                         path.polyline = detailedSegment.map.polyline;
                         path.resource_state = detailedSegment.map.resource_state;
                         createMap(detailedSegment.start_latlng[0], detailedSegment.start_latlng[1], path, `map${x}`);
+                        if ($('#loading').length) {
+                            $('#loading').remove();
+                        }
                     });
                 }
                 if (countIndex == 0) {
