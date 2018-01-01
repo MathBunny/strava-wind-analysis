@@ -32,5 +32,8 @@ npm-debug.log
 # The configuration file
 config.js
 
+# Redis files
+*.rdb
+
 .DS_Store
 package-lock.json
