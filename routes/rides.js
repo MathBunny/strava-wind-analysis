@@ -14,7 +14,10 @@ router.get('/details', (req, res) => {
   }
 });
 
-router.get('/get/activity', (req, res) => {
+router.get('/get/activity', (req, res, next) => {
+  res.express_redis_cache_name = `rides/get/activity?user=${req.user.id}&activity=${req.query.id}`;
+  next();
+}, cache.route(), (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else if (!req.query.id) {
@@ -28,7 +31,7 @@ router.get('/get/activity', (req, res) => {
 });
 
 router.get('/get/activities', (req, res, next) => {
-  res.express_redis_cache_name = `/get/activities?user=${req.user.id}`;
+  res.express_redis_cache_name = `rides/get/activities?user=${req.user.id}`;
   next();
 }, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
