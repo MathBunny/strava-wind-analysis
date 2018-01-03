@@ -1,6 +1,8 @@
 const requestify = require('requestify');
+const config = require('../config');
 
 class DarkySkyDataHandler {
+  // You can check Redis on usage count
   static getWeatherDetails(accessToken, athleteID, latitude, longitude, date) {
     return new Promise((resolve) => {
       requestify.get(`https://api.forecast.io/forecast/${config.weatherKey}/${latitude},${longitude},${date}?units=ca`).then((detailedWeatherResponse) => {
@@ -9,6 +11,6 @@ class DarkySkyDataHandler {
       }).fail(err => console.log(err));
     });
   }
-};
+}
 
 module.exports = DarkySkyDataHandler;

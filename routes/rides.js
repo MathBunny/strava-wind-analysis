@@ -1,8 +1,10 @@
 const express = require('express');
 const requestify = require('requestify');
 const filters = require('../utilities/filters');
+const config = require('../config');
 
 const router = express.Router();
+const cache = require('express-redis-cache')();
 
 router.get('/details', (req, res) => {
   if (!req.isAuthenticated()) {
@@ -25,7 +27,10 @@ router.get('/get/activity', (req, res) => {
   }
 });
 
-router.get('/get/activities', (req, res) => {
+router.get('/get/activities', (req, res, next) => {
+  res.express_redis_cache_name = `/get/activities?user=${req.user.id}`;
+  next();
+}, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else {
