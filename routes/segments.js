@@ -6,9 +6,14 @@ const config = require('../config');
 const Vector = require('../utilities/vector');
 
 const router = express.Router();
+const cache = require('express-redis-cache')();
+
 let segmentIDs = new Set();
 
-router.get('/get/activity', (req, res) => {
+router.get('/get/activity', (req, res, next) => {
+  res.express_redis_cache_name = `segments/get/activity?user=${req.user.id}&activity=${req.query.activityID}`;
+  next();
+}, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else {
@@ -18,9 +23,6 @@ router.get('/get/activity', (req, res) => {
       let segments = [];
       activityDetails.segment_efforts.forEach((segment) => {
         const prRank = segment.pr_rank;
-        // if (prRank === 1) {
-        //  prRank = (req.user._json.sex === 'M' ? 'KOM' : 'QOM'); // eslint-disable-line no-underscore-dangle
-        // }
         const segmentData = segment.segment;
         if (!segmentIDs.has(segmentData.id) && !segmentIDs.has(segmentData.name)) {
           segmentIDs.add(segmentData.id);
@@ -55,7 +57,10 @@ router.get('/get/activity', (req, res) => {
   }
 });
 
-router.get('/get/activities', (req, res) => {
+router.get('/get/activities', (req, res, next) => {
+  res.express_redis_cache_name = `segments/get/activities?user=${req.user.id}`;
+  next();
+}, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else {
