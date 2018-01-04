@@ -10,6 +10,7 @@ Bringing machine learning analytics, data visualization and weather data to cycl
 * Individual modals with athlete-specific statistics on segment leaderboard
 * Linear regression and interpolation tools using scikit-learn
 * Segment and ride filtering options (distance, speed, etc.)
+* Improved performance with Redis caching
 * Legacy website support
 
 ## Screenshots
@@ -35,6 +36,7 @@ const weatherKey = "YourDarkSkyWeatherKey";
 const port = 3000;
 const accessToken = "0";
 const mlEndpoint = "YourMLEndPoint";
+const defaultExpirationTime = 7200; // Redis cache expiration time
 
 exports.clientID = clientID;
 exports.clientSecret = clientSecret;
@@ -43,6 +45,15 @@ exports.port = port;
 exports.weatherKey = weatherKey;
 exports.accessToken = accessToken;
 exports.mlEndpoint = mlEndpoint;
+exports.defaultExpirationTime = defaultExpirationTime;
+```
+
+Now setup a Redis instance and direct it to `localhost` with port `6379` (default configuration).
+
+Install and run the machine learning server with Flask:
+
+```shell
+FLASK_APP=app.py flask run
 ```
 
 To start the server use:
