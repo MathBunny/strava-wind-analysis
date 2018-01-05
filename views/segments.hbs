@@ -201,7 +201,6 @@
                 $.ajax( {url: "segments/get/activities", success: activities => {
                     activities.forEach(activity => {
                         $.ajax( {url: `segments/get/activity?activityID=${activity.id}&filtered=true&filters=${filter}`, success: segmentDetails => {
-                            console.log(segmentDetails);
                             segmentDetails.segmentsArr.forEach(segment => {
                                 let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
                                 segmentRow += "<td>" + segment.name + "</td>";
