@@ -12,7 +12,7 @@ const cache = require('express-redis-cache')();
 let segmentIDs = new Set();
 
 router.get('/get/activity', (req, res, next) => {
-  res.express_redis_cache_name = `segments/get/activity?user=${req.user.id}&activity=${req.query.activityID}`;
+  res.express_redis_cache_name = `segments/get/activity?user=${req.user.id}&activity=${req.query.activityID}&filters=${(req.query.filters === undefined ? '' : req.query.filters)}`;
   next();
 }, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
@@ -53,19 +53,20 @@ router.get('/get/activity', (req, res, next) => {
           }
         });
       }
-      res.send(segments);
+
+      res.send({ segmentsArr: segments });
     });
   }
 });
 
 router.get('/get/activities', (req, res, next) => {
   res.express_redis_cache_name = `segments/get/activities?user=${req.user.id}`;
+  segmentIDs = new Set();
   next();
 }, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else {
-    segmentIDs = new Set();
     requestify.get(`https://www.strava.com/api/v3/athlete/activities?access_token=${req.user.accessToken}`).then((response) => {
       const activities = JSON.parse(response.body);
       res.send(activities);
