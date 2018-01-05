@@ -201,7 +201,7 @@
                 $.ajax( {url: "segments/get/activities", success: activities => {
                     activities.forEach(activity => {
                         $.ajax( {url: `segments/get/activity?activityID=${activity.id}&filtered=true&filters=${filter}`, success: segmentDetails => {
-                            segmentDetails.forEach(segment => {
+                            segmentDetails.segmentsArr.forEach(segment => {
                                 let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
                                 segmentRow += "<td>" + segment.name + "</td>";
                                 segmentRow += "<td>" + segment.city + ", " + segment.country + "</td>";
@@ -242,7 +242,7 @@
             $.ajax( {url: "segments/get/activities", success: activities => {
               activities.forEach(activity => {
                 $.ajax( {url: "segments/get/activity?activityID=" + activity.id, success: segmentDetails => {
-                    segmentDetails.forEach(segment => {
+                    segmentDetails.segmentsArr.forEach(segment => {
                         let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
                         segmentRow += "<td>" + segment.name + "</td>";
                         segmentRow += "<td>" + segment.city + ", " + segment.country + "</td>";

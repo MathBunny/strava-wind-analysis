@@ -3,6 +3,7 @@ const requestify = require('requestify');
 const geography = require('../utilities/geography');
 const filters = require('../utilities/filters');
 const config = require('../config');
+const darkskydatahandler = require('../data/darkskydatahandler');
 const Vector = require('../utilities/vector');
 
 const router = express.Router();
@@ -11,7 +12,7 @@ const cache = require('express-redis-cache')();
 let segmentIDs = new Set();
 
 router.get('/get/activity', (req, res, next) => {
-  res.express_redis_cache_name = `segments/get/activity?user=${req.user.id}&activity=${req.query.activityID}`;
+  res.express_redis_cache_name = `segments/get/activity?user=${req.user.id}&activity=${req.query.activityID}&filters=${(req.query.filters === undefined ? '' : req.query.filters)}`;
   next();
 }, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
@@ -52,19 +53,20 @@ router.get('/get/activity', (req, res, next) => {
           }
         });
       }
-      res.send(segments);
+
+      res.send({ segmentsArr: segments });
     });
   }
 });
 
 router.get('/get/activities', (req, res, next) => {
   res.express_redis_cache_name = `segments/get/activities?user=${req.user.id}`;
+  segmentIDs = new Set();
   next();
 }, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else {
-    segmentIDs = new Set();
     requestify.get(`https://www.strava.com/api/v3/athlete/activities?access_token=${req.user.accessToken}`).then((response) => {
       const activities = JSON.parse(response.body);
       res.send(activities);
@@ -184,21 +186,14 @@ router.get('/details', (req, res) => {
           }
           effort.speed = `${(((effort.distance * 3.6) / effort.elapsed_time).toFixed(2))}km/h`;
 
-          const darkskyrequest = `https://api.forecast.io/forecast/${config.weatherKey}/${segmentData.latitude},${segmentData.longitude},${effort.start_date_iso}?units=ca`;
-          requestify.get(darkskyrequest).then((windDataResponse) => {
-            const windData = JSON.parse(windDataResponse.body);
+          // const darkskyrequest = `https://api.forecast.io/forecast/${config.weatherKey}/${segmentData.latitude},${segmentData.longitude},${effort.start_date_iso}?units=ca`;
+          // requestify.get(darkskyrequest).then((windDataResponse) => {
+          darkskydatahandler.getWeatherDetails(config.weatherKey, req.user.id, segmentData.latitude, segmentData.longitude, effort.start_date_iso).then((windData) => {
+            // const windData = JSON.parse(windDataResponse.body);
             const date = new Date(effort.start_date_iso);
             
             effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
             effort.wind_speed_str = effort.wind_speed.toFixed(2);
-
-            if (effort.wind_speed_str === '0.00') {
-              console.log(effort.wind_speed);
-              console.log(effort.wind_speed_str);
-              console.log(windData.hourly.data);
-              console.log(date.getHours());
-              console.log(windData.hourly.data[date.getHours()].windSpeed);
-            }
 
 
             effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
@@ -223,7 +218,8 @@ router.get('/details', (req, res) => {
             if (count === segmentData.leaderboard.length) {
               res.render('details', segmentData);
             }
-          }).fail((err) => {
+            console.log('done');
+          }).catch((err) => {
             segmentData.errMsg = `${err.body}\n\nError has occured with fetching the weather data, likely caused by too much load on the external wind source (Dark Sky API). This issue should be resolved within 24 hours, if you continue to experience this issue, please contact me.`;
             res.render('details', segmentData);
             count = segmentData.leaderboard.length + 1;
