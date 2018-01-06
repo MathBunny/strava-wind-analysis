@@ -36,6 +36,7 @@ router.get('/', (req, res) => {
 
       db.db('stravawindanalysis').collection('users').findOne({ id: req.user.id }, (error, result) => {
         if (result === null) {
+          req.user._json.ridesFilter = false; // eslint-disable-line
           db.db('stravawindanalysis').collection('users').insertOne(req.user._json, () => { // eslint-disable-line
             db.close();
           });

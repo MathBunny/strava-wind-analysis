@@ -10,13 +10,34 @@ router.get('/get/rides-filter', (req, res) => {
     res.redirect('/');
   } else {
     MongoClient.connect(config.mongoDBUrl, (err, db) => {
-      console.log(db);
-      db.db(config.dbName).collection('users').findOne({ id: req.user.id }, (error, result) => {
+      db.collection('users').findOne({ id: req.user.id }, (error, result) => {
         if (error) {
           console.log(error);
         }
         db.close();
-        res.send(result);
+        if (result.ridesFilter === undefined) {
+          res.send(false);
+        } else {
+          res.send(result.ridesFilter);
+        }
+      });
+    });
+  }
+});
+
+router.put('/put/rides-filter', (req, res) => {
+  if (!req.isAuthenticated() || req.query.ridesFilter === undefined) {
+    res.redirect('/');
+  } else {
+    MongoClient.connect(config.mongoDBUrl, (err, db) => {
+      const newVal = { $set: { ridesFilter: req.query.ridesFilter } };
+      db.collection('users').updateOne({ id: req.user.id }, newVal, (error) => {
+        if (error) {
+          console.log(error);
+          res.send(error);
+        }
+        res.send('success');
+        db.close();
       });
     });
   }

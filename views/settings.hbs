@@ -35,13 +35,13 @@
                     <legend>General Settings</legend>
                     <div class="control-group">
                         <ul class="control unstyled">
-                            <li><input type="checkbox" id="cb5" name="cb5" value="Chimaira"><label for="cb5">Display only cycling activities</label></li>
+                            <li><input type="checkbox" id="ridesFilter"><label for="ridesFilter">Filter non-cycling rides</label></li>
                         </ul>
                     </div>
                 </fieldset>
                 <hr>
                 <button class="ink-button">Reset Cache</button>
-                <button class="ink-button">Apply Changes</button>
+                <button class="ink-button" id="apply">Apply Changes</button>
             </form>
         </div>
 
@@ -59,6 +59,38 @@
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script>
+            $("#apply").click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "PUT",
+                    url: `settings/put/rides-filter?ridesFilter=${($('#ridesFilter').prop('checked'))}`,
+                    data: { 
+                    },
+                    success: (success) => {
+                        alert('Successfully Updated');
+                    },
+                    error: (result) => {
+                    }
+                });
+            });
+
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: 'settings/get/rides-filter?',
+                data: { 
+                },
+                success: (success) => {
+                    if (success === 'false') {
+                        $('#ridesFilter').prop('checked', false);
+                    } else {
+                        $('#ridesFilter').prop('checked', true);
+                    }
+                },
+                error: (result) => {
+                }
+            });
+
             $(window).bind("load", function () {
                 var footer = $("#footer");
                 var pos = footer.position();
