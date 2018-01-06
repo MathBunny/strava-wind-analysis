@@ -33,16 +33,22 @@ router.get('/', (req, res) => {
       if (err) {
         console.log(err);
       }
-
-      db.db('stravawindanalysis').collection('users').findOne({ id: req.user.id }, (error, result) => {
+      db.collection('users').findOne({ id: req.user.id }, (error, result) => {
+        let logins = 0;
         if (result === null) {
-          req.user._json.ridesFilter = false; // eslint-disable-line
-          db.db('stravawindanalysis').collection('users').insertOne(req.user._json, () => { // eslint-disable-line
-            db.close();
+          const newUserObj = req.user._json; // eslint-disable-line
+          newUserObj.ridesFilter = false;
+          newUserObj.logins = 0;
+          newUserObj.api = 0;
+          db.collection('users').insertOne(newUserObj, () => {
           });
-        } else {
-          db.close();
+        } else if (result.logins !== undefined) {
+          logins = result.logins;
         }
+        const newVal = { $set: { logins: logins + 1 } };
+        db.collection('users').updateOne({ id: req.user.id }, newVal, () => {
+          db.close();
+        });
       });
     });
   }

@@ -4,6 +4,29 @@ const config = require('../config');
 
 const router = express.Router();
 
+router.get('/get/user-data', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    MongoClient.connect(config.mongoDBUrl, (err, db) => {
+      db.collection('users').findOne({ id: req.user.id }, (error, result) => {
+        if (error) {
+          console.log(error);
+        }
+        db.close();
+        const resObj = {};
+        resObj.name = `${result.firstname} ${result.lastname}`;
+        resObj.username = result.username;
+        resObj.sex = result.sex;
+        resObj.id = result.id;
+        resObj.weight = result.weight;
+        resObj.logins = 0;
+        resObj.api = 0;
+        res.send(resObj);
+      });
+    });
+  }
+});
 
 router.get('/get/rides-filter', (req, res) => {
   if (!req.isAuthenticated()) {

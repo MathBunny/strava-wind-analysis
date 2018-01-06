@@ -34,14 +34,52 @@
                 <fieldset>
                     <legend>General Settings</legend>
                     <div class="control-group">
-                        <ul class="control unstyled">
+                        <ul class="control unstyled" style="margin-top: -10px">
                             <li><input type="checkbox" id="ridesFilter"><label for="ridesFilter">Filter non-cycling rides</label></li>
                         </ul>
                     </div>
                 </fieldset>
+                <fieldset>
+                    <legend>Strava Profile Details</legend>
+                    <div class="control-group">
+                        <ul class="control unstyled" style="margin-top: -10px; margin-bottom:-20px">
+                            <table class="ink-table">
+                            <thead>
+                                <tr>
+                                <th class="align-left">Field</th>
+                                <th class="align-left">Content</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-300">
+                                <tr>
+                                <td>Full Name</td>
+                                <td id="name"></td>
+                                </tr>
+                                <tr>
+                                <td>Athlete ID</td>
+                                <td id="id"></td>
+                                </tr>
+                                <tr>
+                                <td>Sex</td>
+                                <td id="sex"></td>
+                                <tr>
+                                <td>Weight</td>
+                                <td id="weight"></td>
+                                <tr>
+                                <td>Login Count</td>
+                                <td id="logins"></td>
+                                <tr>
+                                <td>Weather API Usage</td>
+                                <td id="api"></td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </ul>
+                    </div>
+                </fieldset>
                 <hr>
-                <button class="ink-button">Reset Cache</button>
-                <button class="ink-button" id="apply">Apply Changes</button>
+                <button class="ink-button red">Reset Cache </button>
+                <button class="ink-button green" id="apply">Apply Changes</button>
             </form>
         </div>
 
@@ -72,6 +110,23 @@
                     error: (result) => {
                     }
                 });
+            });
+
+            $.ajax({
+                type: "GET",
+                url: 'settings/get/user-data?',
+                data: { 
+                },
+                success: (data) => {
+                    $("#name").text(data.name);
+                    $("#id").text(data.id);
+                    $("#weight").text(`${data.weight}kg`);
+                    $("#sex").text(data.sex);
+                    $("#logins").text(data.logins);
+                    $("#api").text(`${data.api} of 500 Daily`);
+                },
+                error: (result) => {
+                }
             });
 
             $.ajax({
