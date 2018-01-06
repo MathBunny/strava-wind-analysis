@@ -192,8 +192,9 @@ router.get('/details', (req, res) => {
               db.close();
             });
 
-            if (api !== undefined && api >= 500) {
-              res.render('error', { message: 'Error! You exceeded API limits' });
+            if (api !== undefined && api >= config.dailyDarkSkyLimit) {
+              segmentData.errMsg = 'You have exceeded the daily weather API limit. \n\n You can review your daily usage under settings.';
+              res.render('details', segmentData);
             } else {
               segmentData.leaderboard.forEach((effortData) => {
                 const effort = effortData;

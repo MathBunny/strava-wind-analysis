@@ -32,7 +32,7 @@ router.get('/get/user-data', (req, res) => {
           api = 0;
         }
 
-        resObj.api = api;
+        resObj.api = `${api} requests of ${config.dailyDarkSkyLimit} daily`;
         res.send(resObj);
       });
     });
