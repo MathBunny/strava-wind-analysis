@@ -1,6 +1,8 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
+        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink-flex.min.css">
         <title> Wind Analysis - Settings </title>
 
         <style>
@@ -28,7 +30,19 @@
         <div class="ink-grid">
             <br>
             <br>
-            Coming soon!
+            <form class="ink-form">
+                <fieldset>
+                    <legend>General Settings</legend>
+                    <div class="control-group">
+                        <ul class="control unstyled">
+                            <li><input type="checkbox" id="cb5" name="cb5" value="Chimaira"><label for="cb5">Display only cycling activities</label></li>
+                        </ul>
+                    </div>
+                </fieldset>
+                <hr>
+                <button class="ink-button">Reset Cache</button>
+                <button class="ink-button">Apply Changes</button>
+            </form>
         </div>
 
         <footer class="clearfix" id="footer">

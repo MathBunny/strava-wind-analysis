@@ -37,6 +37,7 @@ const port = 3000;
 const accessToken = "0";
 const mlEndpoint = "YourMLEndPoint";
 const defaultExpirationTime = 7200; // Redis cache expiration time
+const mongoDBUrl = ''; // MongoDB url
 
 exports.clientID = clientID;
 exports.clientSecret = clientSecret;
@@ -46,6 +47,7 @@ exports.weatherKey = weatherKey;
 exports.accessToken = accessToken;
 exports.mlEndpoint = mlEndpoint;
 exports.defaultExpirationTime = defaultExpirationTime;
+exports.mongoDBUrl = mongoDBUrl;
 ```
 
 Now setup a Redis instance and direct it to `localhost` with port `6379` (default configuration).

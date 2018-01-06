@@ -186,10 +186,7 @@ router.get('/details', (req, res) => {
           }
           effort.speed = `${(((effort.distance * 3.6) / effort.elapsed_time).toFixed(2))}km/h`;
 
-          // const darkskyrequest = `https://api.forecast.io/forecast/${config.weatherKey}/${segmentData.latitude},${segmentData.longitude},${effort.start_date_iso}?units=ca`;
-          // requestify.get(darkskyrequest).then((windDataResponse) => {
           darkskydatahandler.getWeatherDetails(config.weatherKey, req.user.id, segmentData.latitude, segmentData.longitude, effort.start_date_iso).then((windData) => {
-            // const windData = JSON.parse(windDataResponse.body);
             const date = new Date(effort.start_date_iso);
             
             effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
@@ -218,7 +215,6 @@ router.get('/details', (req, res) => {
             if (count === segmentData.leaderboard.length) {
               res.render('details', segmentData);
             }
-            console.log('done');
           }).catch((err) => {
             segmentData.errMsg = `${err.body}\n\nError has occured with fetching the weather data, likely caused by too much load on the external wind source (Dark Sky API). This issue should be resolved within 24 hours, if you continue to experience this issue, please contact me.`;
             res.render('details', segmentData);

@@ -19,6 +19,7 @@
     "firebase": "^4.2.0",
     "hbs": "~4.0.1",
     "mocha": "^3.5.0",
+    "mongodb": "^2.2.33",
     "morgan": "~1.8.1",
     "passport": "^0.3.2",
     "passport-strava": "^0.2.0",
