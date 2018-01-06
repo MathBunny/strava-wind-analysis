@@ -185,17 +185,17 @@ router.get('/details', (req, res) => {
 
             const api = result.api[dateStr];
 
-            const obj = result.api;
-            obj[dateStr] = (api === undefined) ? (1) : (api + segmentData.leaderboard.length);
-            const newVal = { $set: { api: obj } };
-            db.collection('users').updateOne({ id: athleteID }, newVal, () => {
-              db.close();
-            });
-
-            if (api !== undefined && api >= config.dailyDarkSkyLimit) {
+            if (api !== undefined && api + segmentData.leaderboard.length >= config.dailyDarkSkyLimit) {
               segmentData.errMsg = 'You have exceeded the daily weather API limit. \n\n You can review your daily usage under settings.';
               res.render('details', segmentData);
             } else {
+              const obj = result.api;
+              obj[dateStr] = (api === undefined) ? (1) : (api + segmentData.leaderboard.length);
+              const newVal = { $set: { api: obj } };
+              db.collection('users').updateOne({ id: athleteID }, newVal, () => {
+                db.close();
+              });
+
               segmentData.leaderboard.forEach((effortData) => {
                 const effort = effortData;
                 effort.start_date_iso = effort.start_date;
