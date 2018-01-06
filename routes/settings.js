@@ -20,8 +20,19 @@ router.get('/get/user-data', (req, res) => {
         resObj.sex = result.sex;
         resObj.id = result.id;
         resObj.weight = result.weight;
-        resObj.logins = 0;
-        resObj.api = 0;
+        resObj.logins = result.logins;
+
+        const today = new Date();
+        const dd = today.getDate();
+        const mm = today.getMonth();
+        const yyyy = today.getFullYear();
+
+        let api = result.api[`${dd}|${mm}|${yyyy}`];
+        if (!api) {
+          api = 0;
+        }
+
+        resObj.api = api;
         res.send(resObj);
       });
     });

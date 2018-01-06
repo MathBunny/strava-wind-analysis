@@ -4,6 +4,7 @@ const geography = require('../utilities/geography');
 const filters = require('../utilities/filters');
 const config = require('../config');
 const darkskydatahandler = require('../data/darkskydatahandler');
+const MongoClient = require('mongodb').MongoClient;
 const Vector = require('../utilities/vector');
 
 const router = express.Router();
@@ -170,57 +171,84 @@ router.get('/details', (req, res) => {
         segmentData.map.polyline = polyline;
 
         let count = 0;
-        segmentData.leaderboard.forEach((effortData) => {
-          const effort = effortData;
-          effort.start_date_iso = effort.start_date;
-          effort.start_date = effort.start_date.substring(0, 10);
-          effort.athlete_name = (effort.athlete_name.length > 22) ? (`${effort.athlete_name.substring(0, 20)}...`) : (effort.athlete_name);
-          if (effort.rank % 10 === 1) {
-            effort.rank = `${effort.rank}st`;
-          } else if (effort.rank % 10 === 2) {
-            effort.rank = `${effort.rank}nd`;
-          } else if (effort.rank % 10 === 3) {
-            effort.rank = `${effort.rank}rd`;
-          } else {
-            effort.rank = `${effort.rank}th`;
+
+        MongoClient.connect(config.mongoDBUrl, (dbErr, db) => {
+          if (dbErr) {
+            res.render('error', { message: (dbErr) });
           }
-          effort.speed = `${(((effort.distance * 3.6) / effort.elapsed_time).toFixed(2))}km/h`;
+          db.collection('users').findOne({ id: athleteID }, (findErr, result) => {
+            const today = new Date();
+            const dd = today.getDate();
+            const mm = today.getMonth();
+            const yyyy = today.getFullYear();
+            const dateStr = `${dd}|${mm}|${yyyy}`;
 
-          darkskydatahandler.getWeatherDetails(config.weatherKey, req.user.id, segmentData.latitude, segmentData.longitude, effort.start_date_iso).then((windData) => {
-            const date = new Date(effort.start_date_iso);
-            
-            effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
-            effort.wind_speed_str = effort.wind_speed.toFixed(2);
+            const api = result.api[dateStr];
 
+            const obj = result.api;
+            obj[dateStr] = (api === undefined) ? (1) : (api + segmentData.leaderboard.length);
+            const newVal = { $set: { api: obj } };
+            db.collection('users').updateOne({ id: athleteID }, newVal, () => {
+              db.close();
+            });
 
-            effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
-            effort.wind_bearing_str = geography.degreesToCardinal(effort.wind_bearing);
-            effort.ride_bearing_str = geography.convertLatLongToCardinal(segmentData.end_latlng[0], // longLatToCardinal
-              segmentData.end_latlng[1], segmentData.start_latlng[0], segmentData.start_latlng[1]);
-
-            try {
-              const windVector = new Vector(-Vector.getLatitudeFromBearing(effort.wind_bearing),
-                -Vector.getLongitudeFromBearing(effort.wind_bearing));
-              const segmentVector = new Vector(parseFloat(segmentData.latitude),
-                parseFloat(segmentData.longitude));
-              const roundoffValue = 1 - Vector.getDistance(windVector, segmentVector);
-              const speed = Vector.resultantSpeed(parseInt(effort.wind_speed, 0));
-              effort.coefficient = speed * roundoffValue;
-              effort.coefficient_str = (effort.coefficient).toFixed(2);
-            } catch (e) {
-              console.log(e);
+            if (api !== undefined && api >= 500) {
+              res.render('error', { message: 'Error! You exceeded API limits' });
+            } else {
+              segmentData.leaderboard.forEach((effortData) => {
+                const effort = effortData;
+                effort.start_date_iso = effort.start_date;
+                effort.start_date = effort.start_date.substring(0, 10);
+                effort.athlete_name = (effort.athlete_name.length > 22) ? (`${effort.athlete_name.substring(0, 20)}...`) : (effort.athlete_name);
+                if (effort.rank % 10 === 1) {
+                  effort.rank = `${effort.rank}st`;
+                } else if (effort.rank % 10 === 2) {
+                  effort.rank = `${effort.rank}nd`;
+                } else if (effort.rank % 10 === 3) {
+                  effort.rank = `${effort.rank}rd`;
+                } else {
+                  effort.rank = `${effort.rank}th`;
+                }
+                effort.speed = `${(((effort.distance * 3.6) / effort.elapsed_time).toFixed(2))}km/h`;
+      
+                darkskydatahandler.getWeatherDetails(config.weatherKey, req.user.id, segmentData.latitude, segmentData.longitude, effort.start_date_iso).then((windData) => {
+                  const date = new Date(effort.start_date_iso);
+                  
+                  effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
+                  effort.wind_speed_str = effort.wind_speed.toFixed(2);
+      
+      
+                  effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
+                  effort.wind_bearing_str = geography.degreesToCardinal(effort.wind_bearing);
+                  effort.ride_bearing_str = geography.convertLatLongToCardinal(segmentData.end_latlng[0], // longLatToCardinal
+                    segmentData.end_latlng[1], segmentData.start_latlng[0], segmentData.start_latlng[1]);
+      
+                  try {
+                    const windVector = new Vector(-Vector.getLatitudeFromBearing(effort.wind_bearing),
+                      -Vector.getLongitudeFromBearing(effort.wind_bearing));
+                    const segmentVector = new Vector(parseFloat(segmentData.latitude),
+                      parseFloat(segmentData.longitude));
+                    const roundoffValue = 1 - Vector.getDistance(windVector, segmentVector);
+                    const speed = Vector.resultantSpeed(parseInt(effort.wind_speed, 0));
+                    effort.coefficient = speed * roundoffValue;
+                    effort.coefficient_str = (effort.coefficient).toFixed(2);
+                  } catch (e) {
+                    console.log(e);
+                  }
+      
+                  count += 1;
+                  if (count === segmentData.leaderboard.length) {
+                    res.render('details', segmentData);
+                  }
+                }).catch((err) => {
+                  segmentData.errMsg = `${err.body}\n\nError has occured with fetching the weather data, likely caused by too much load on the external wind source (Dark Sky API). This issue should be resolved within 24 hours, if you continue to experience this issue, please contact me.`;
+                  res.render('details', segmentData);
+                  count = segmentData.leaderboard.length + 1;
+                  // res.render('error', { message: `${err.body} Dark Sky API Error. If this occurs, it is likely because of issues with the weather API.`, stack: ' Dark Sky API Error ', status: err.code });
+                  console.log(err);
+                });
+              });
             }
-
-            count += 1;
-            if (count === segmentData.leaderboard.length) {
-              res.render('details', segmentData);
-            }
-          }).catch((err) => {
-            segmentData.errMsg = `${err.body}\n\nError has occured with fetching the weather data, likely caused by too much load on the external wind source (Dark Sky API). This issue should be resolved within 24 hours, if you continue to experience this issue, please contact me.`;
-            res.render('details', segmentData);
-            count = segmentData.leaderboard.length + 1;
-            // res.render('error', { message: `${err.body} Dark Sky API Error. If this occurs, it is likely because of issues with the weather API.`, stack: ' Dark Sky API Error ', status: err.code });
-            console.log(err);
           });
         });
       }).fail((errorResponse) => {

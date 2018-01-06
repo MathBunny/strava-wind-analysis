@@ -39,7 +39,8 @@ router.get('/', (req, res) => {
           const newUserObj = req.user._json; // eslint-disable-line
           newUserObj.ridesFilter = false;
           newUserObj.logins = 0;
-          newUserObj.api = 0;
+          newUserObj.api = {};
+          
           db.collection('users').insertOne(newUserObj, () => {
           });
         } else if (result.logins !== undefined) {
