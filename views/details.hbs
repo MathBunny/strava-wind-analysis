@@ -62,6 +62,7 @@
                                         <li class="slab-100"><a href="#" id="all-segment-efforts-imposed">All Efforts Segmented </a></li>
                                         <li class="slab-100"><a href="#" id="personal-history">Individual Historical Performance </a></li>
                                         <li class="slab-100"><a href="#" id="leaderboard-history">Leaderboard Historical Performance </a></li>
+                                        <li class="slab-100"><a href="#" id="individual-wind-radar">Individual Wind Radar </a></li>
                                         <hr>
                                         {{!-- <li class="slab-100"><a href="#" id="individual-segmented-efforts-interpolate">Individual Segmented + Interpolation </a></li>
                                         <li class="slab-100"><a href="#" id="all-segmented-efforts-interpolate">All Efforts Segmented + Interpolation </a></li> !--}}
@@ -218,6 +219,7 @@
             document.getElementById ("personal-history").addEventListener("click", () => getChart("individual-historical-performance"), false);
             document.getElementById ("leaderboard-history").addEventListener("click", () => getChart("leaderboard-historical-performance"), false);
             document.getElementById ("personal-history-regression").addEventListener("click", () => getChart("individual-historical-regression"), false);
+            document.getElementById ("individual-wind-radar").addEventListener("click", () => getChart("individual-wind-radar"), false);
             // document.getElementById ("all-segmented-efforts-interpolate").addEventListener("click", () => getChart("all-segment-efforts-imposed"), false);
 
             document.getElementById ("overviewTab").addEventListener("click", () => pushDown(), false);
@@ -257,15 +259,20 @@
                 }
 
                 $.getJSON(`../../charts/get/chart/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
+                    if (chartDataResponse.message) {
+                        alert(chartDataResponse.message);
+                        return;
+                    }
+                    
                     $('#chart').remove();
                     $('#chart-container').append('<canvas id="chart"></canvas>');
                     const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
                     ctxIndividualEffortsSpeedChart.clearRect(0, 0, ctxIndividualEffortsSpeedChart.width, ctxIndividualEffortsSpeedChart.height);
 
                     const allEffortsBarChart = new Chart(ctxIndividualEffortsSpeedChart, {
-                        type: 'bar', // ??? 
+                        type: (chartType.indexOf('radar') != -1 ? 'radar' : 'bar'), // ??? 
                         data: chartDataResponse.data,
-                        options: (chartType.indexOf('aggregate') === -1) ? defaultOptions : chartDataResponse.options,
+                        options: (chartType.indexOf('aggregate') === -1 && chartType.indexOf('radar') === -1) ? defaultOptions : chartDataResponse.options,
                     });
 
                     $('#startDomainSlider').slider(); 

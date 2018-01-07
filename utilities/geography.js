@@ -30,6 +30,16 @@ function degreesToCardinal(num) {
   return arr[(val % 16)];
 }
 
+function degreesToCardinalSimple(num) {
+  let val = Math.floor((num / 22.5) + 0.5);
+  const arr = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW'];
+  val %= 16;
+  if (val % 2 === 1) {
+    val -= 1;
+  }
+  return arr[val];
+}
+
 function getPolarAngleLongLat(lat1, long1, lat2, long2) {
   const dLat = lat1 - lat2;
   const dLong = long1 - long2;
@@ -63,6 +73,7 @@ function convertLatLongToCardinal(lat1, long1, lat2, long2) {
 
 exports.longLatToCardinal = longLatToCardinal;
 exports.degreesToCardinal = degreesToCardinal;
+exports.degreesToCardinalSimple = degreesToCardinalSimple;
 exports.getPolarAngleLongLat = getPolarAngleLongLat;
 exports.convertPolarAngleToBearing = convertPolarAngleToBearing;
 exports.convertLatLongToCardinal = convertLatLongToCardinal;

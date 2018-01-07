@@ -251,7 +251,7 @@
             });
 
             function loadActivityDetails(id) {
-                $.ajax( {url: "rides/get/activity?id=" + id, success: activityDetails => {
+                $.ajax( {url: "rides/get/activity?id=" + id, dataType: "json", success: activityDetails => {
                     if (activityDetails.start_latlng !== null) {
                         $("#activityTrigger")[0].click();
                         
@@ -293,7 +293,7 @@
             }
             
 
-            $.ajax( {url: "rides/get/activities", success: activities => {
+            $.ajax( {url: "rides/get/activities", dataType: "json", success: activities => {
               activities.forEach(activity => {
                 let segmentRow = `<tr class="fw-100" onclick="loadActivityDetails(${activity.id});">`;
                 let activityName = activity.name;

@@ -2,7 +2,6 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('../config');
 const redis = require('redis');
-require('redis-delete-wildcard')(redis);
 
 const client = redis.createClient();
 const router = express.Router();

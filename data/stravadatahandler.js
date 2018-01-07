@@ -45,7 +45,7 @@ class StravaDataHandler {
   }
 
   // Returns array containing historical speeds on segment, sorted from oldest to most recent
-  static getAthleteHistoricalSpeed(accessToken, segmentID, athleteID) {
+  static getAthleteHistoricalSpeed(accessToken, segmentID, athleteID, includeDates) {
     return new Promise((resolve) => {
       let dataArr = [];
 
@@ -62,25 +62,10 @@ class StravaDataHandler {
           });
           pagesComplete += 1;
           if (pagesComplete === maxPageCount) {
-            const labels = [];
-            if (dataArr.length > 10) {
-              let count = 0; // Labels along x-axis
-              for (let x = 0; x < dataArr.length; x += 1) {
-                if (count >= dataArr.length / 11) {
-                  labels.push(`${x}`);
-                  count = 0;
-                } else {
-                  labels.push('');
-                  count += 1;
-                }
-              }
-            } else {
-              for (let x = 0; x < dataArr.length; x += 1) {
-                labels.push(x);
-              }
-            }
             dataArr = dataArr.sort((x, y) => (new Date(x.date) - new Date(y.date)));
-            dataArr = dataArr.map(effortObj => effortObj.speed);
+            if (!includeDates) {
+              dataArr = dataArr.map(effortObj => effortObj.speed);
+            }
             resolve(dataArr);
           }
         });

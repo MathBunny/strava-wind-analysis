@@ -33,7 +33,7 @@ router.get('/get/activity', (req, res, next) => {
 router.get('/get/activities', (req, res, next) => {
   res.express_redis_cache_name = `rides/get/activities?user=${req.user.id}&filters=${req.query.filters === undefined ? '' : req.query.filters}`;
   next();
-}, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
+}, cache.route({ expire: config.defaultExpirationTime, type: 'application/json' }), (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else {
@@ -53,7 +53,10 @@ router.get('/get/activities', (req, res, next) => {
           }
         });
       }
-      res.send(activities);
+      res._headers['content-type'] = 'application/json';
+      console.log(activities.length);
+      console.log(typeof activities);
+      res.json(activities);
     });
   }
 });

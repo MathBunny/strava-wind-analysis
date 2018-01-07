@@ -11,6 +11,7 @@ Bringing machine learning analytics, data visualization and weather data to cycl
 * Linear regression and interpolation tools using scikit-learn
 * Segment and ride filtering options (distance, speed, etc.)
 * Improved performance with Redis caching
+* Integration with MongoDB including weather API throttling and user profiles
 * Legacy website support
 
 ## Screenshots
