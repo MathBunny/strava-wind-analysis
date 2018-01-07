@@ -86,7 +86,7 @@ router.get('/get/chart/individual-wind-radar', (req, res) => {
                       }
                     }
                     
-                    const chart = ChartFactory.getChart('radarwindchart', dataArr, 'Individual Performance');
+                    const chart = ChartFactory.getChart('radarwindchart', dataArr, 'Average Individual Performance per Direction');
                     const chartData = {
                       data: chart.getData(),
                       options: chart.getOptions(),
