@@ -1,6 +1,8 @@
 <html>
     <head>
         <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/ink.css">
+        <link rel="stylesheet" type="text/css" href="http://fastly.ink.sapo.pt/3.1.10/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/css/ink-flex.min.css">
         <title> Wind Analysis - Settings </title>
 
         <style>
@@ -28,7 +30,57 @@
         <div class="ink-grid">
             <br>
             <br>
-            Coming soon!
+            <form class="ink-form">
+                <fieldset>
+                    <legend>General Settings</legend>
+                    <div class="control-group">
+                        <ul class="control unstyled" style="margin-top: -10px">
+                            <li class="fw-300"><input type="checkbox" id="ridesFilter"><label for="ridesFilter">Filter non-cycling rides</label></li>
+                        </ul>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>Strava Profile Details</legend>
+                    <div class="control-group">
+                        <ul class="control unstyled" style="margin-top: -10px; margin-bottom:-20px">
+                            <table class="ink-table">
+                            <thead>
+                                <tr>
+                                <th class="align-left">Field</th>
+                                <th class="align-left">Content</th>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-300">
+                                <tr>
+                                <td>Full Name</td>
+                                <td id="name"></td>
+                                </tr>
+                                <tr>
+                                <td>Athlete ID</td>
+                                <td id="id"></td>
+                                </tr>
+                                <tr>
+                                <td>Sex</td>
+                                <td id="sex"></td>
+                                <tr>
+                                <td>Weight</td>
+                                <td id="weight"></td>
+                                <tr>
+                                <td>Login Count</td>
+                                <td id="logins"></td>
+                                <tr>
+                                <td>Weather API Usage</td>
+                                <td id="api"></td>
+                                </tr>
+                            </tbody>
+                            </table>
+                        </ul>
+                    </div>
+                </fieldset>
+                <hr>
+                <button class="ink-button red" id="clear">Reset Cache </button>
+                <button class="ink-button green" id="apply">Apply Changes</button>
+            </form>
         </div>
 
         <footer class="clearfix" id="footer">
@@ -45,6 +97,71 @@
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script>
+            $("#apply").click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "PUT",
+                    url: `settings/put/rides-filter?ridesFilter=${($('#ridesFilter').prop('checked'))}`,
+                    data: { 
+                    },
+                    success: (success) => {
+                        alert('Successfully Updated');
+                    },
+                    error: (result) => {
+                    }
+                });
+            });
+
+            $("#clear").click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "PUT",
+                    url: `settings/put/reset-cache`,
+                    data: { 
+                    },
+                    success: (success) => {
+                        alert(success.message);
+                    },
+                    error: (result) => {
+                        alert('Operation Failed');
+                    }
+                });
+            });
+
+            $.ajax({
+                type: "GET",
+                url: 'settings/get/user-data?',
+                data: { 
+                },
+                success: (data) => {
+                    $("#name").text(data.name);
+                    $("#id").text(data.id);
+                    $("#weight").text(`${data.weight}kg`);
+                    $("#sex").text(data.sex);
+                    $("#logins").text(data.logins);
+                    $("#api").text(data.api);
+                },
+                error: (result) => {
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: 'settings/get/rides-filter?',
+                data: { 
+                },
+                success: (success) => {
+                    if (success === 'false') {
+                        $('#ridesFilter').prop('checked', false);
+                    } else {
+                        $('#ridesFilter').prop('checked', true);
+                    }
+                },
+                error: (result) => {
+                }
+            });
+
             $(window).bind("load", function () {
                 var footer = $("#footer");
                 var pos = footer.position();
