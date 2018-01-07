@@ -1,6 +1,5 @@
 const AggregateBarChart = require('./aggregatebarchart');
 const PerformanceLineChart = require('./performancelinechart');
-const WindSpeedRadarChart = require('./windspeedradarchart');
 const RadarWindChart = require('./radarwindchart');
 
 class ChartFactory {
@@ -9,8 +8,6 @@ class ChartFactory {
       return new AggregateBarChart(data, labelText);
     } else if (type === 'performancelinechart') {
       return new PerformanceLineChart(data, labelText, multi);
-    } else if (type === 'windspeedradarchart') {
-      return new WindSpeedRadarChart(data, labelText);
     } else if (type === 'radarwindchart') {
       return new RadarWindChart(data, labelText);
     }

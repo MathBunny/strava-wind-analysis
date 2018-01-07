@@ -19,7 +19,7 @@ router.get('/get/chart/individual-wind-radar', (req, res) => {
   } else if (req.query.athleteID === undefined) {
     res.send({ error: 'error: undefined athlete ID' });
   } else {
-    stravadatahandler.getAthleteHistoricalSpeed(req.user.accessToken, req.query.segmentID, req.query.athleteID).then((data) => {
+    stravadatahandler.getAthleteHistoricalSpeed(req.user.accessToken, req.query.segmentID, req.query.athleteID, true).then((data) => {
       MongoClient.connect(config.mongoDBUrl, (dbErr, db) => {
         if (dbErr) {
           res.render('error', { message: (dbErr) });
@@ -36,19 +36,30 @@ router.get('/get/chart/individual-wind-radar', (req, res) => {
           if (api !== undefined && api + data.length >= config.dailyDarkSkyLimit) {
             res.render('error', { message: 'You have exceeded the daily weather API limit. \n\n You can review your daily usage under settings.' });
           } else {
-            stravadatahandler.getDetailedSegmentDetails(req.user.acessToken, req.query.segmentID).then((segmentDetails) => {
+            const obj = result.api;
+            obj[dateStr] = (api === undefined) ? (1) : (api + data.length);
+            const newVal = { $set: { api: obj } };
+            db.collection('users').updateOne({ id: req.query.athleteID }, newVal, () => {
+              db.close();
+            });
+
+            stravadatahandler.getDetailedSegmentDetails(req.user.accessToken, req.query.segmentID).then((segmentDetails) => {
               const latitude = segmentDetails.start_latlng[0];
               const longitude = segmentDetails.start_latlng[1];
               const dataArrCum = {};
               const dataArrCount = {};
+              for (let x = 0; x < 8; x += 1) {
+                dataArrCum[x] = 0;
+                dataArrCount[x] = 0;
+              }
 
               let complete = 0;
               data.forEach((effort) => {
-                darkskydatahandler.getWeatherDetails(req.user.accessToken, req.user.id, latitude, longitude, effort.date).then((windData) => {
+                darkskydatahandler.getWeatherDetails(config.weatherKey, req.query.athleteID, latitude, longitude, effort.date).then((windData) => {
                   const date = new Date(effort.date);
 
                   const windBearing = windData.hourly.data[date.getHours()].windBearing;
-                  const windBearingStr = geography.degreesToCardinal(windBearing);
+                  const windBearingStr = geography.degreesToCardinalSimple(windBearing);
                   const mapping = {
                     N: 0,
                     NE: 1,
@@ -64,10 +75,18 @@ router.get('/get/chart/individual-wind-radar', (req, res) => {
                   complete += 1;
 
                   if (complete === data.length) {
+                    const dataArr = [];
+
                     for (let x = 0; x < 8; x += 1) {
-                      dataArrCum[x] /= dataArrCount[x];
+                      if (dataArrCum[x] !== 0) {
+                        dataArrCum[x] /= dataArrCount[x];
+                        dataArr.push(dataArrCum[x]);
+                      } else {
+                        dataArr.push(0);
+                      }
                     }
-                    const chart = ChartFactory.getChart('radarwindchart', data, 'Individual Performance');
+                    
+                    const chart = ChartFactory.getChart('radarwindchart', dataArr, 'Individual Performance');
                     const chartData = {
                       data: chart.getData(),
                       options: chart.getOptions(),
