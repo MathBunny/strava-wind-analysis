@@ -72,6 +72,7 @@
                                 <ul>
                                     <li class="fw-200"> Post History </li>
                                     <hr>
+                                    <li class="slab-100"> <a href="#2018-01-07"> 2018-01-07 </a></li>
                                     <li class="slab-100"> <a href="#2017-12-30"> 2017-12-30 </a></li>
                                     <li class="slab-100"> <a href="#2017-12-29"> 2017-12-29 </a></li>
                                     <li class="slab-100"> <a href="#2017-10-13"> 2017-10-13 </a></li>
@@ -89,6 +90,22 @@
                                     <p class="fw-300">Please note that this site can go down at any time as it is in beta until May 1, 2018.</p>
                                 </div>
                                 
+                                <div id="2018-01-07">
+                                    <h2 style="display: inline-block"> Radar Charts, Caching and Throttling <small>| January 7, 2018 </small></h2>
+                                    <div class= "column-group">
+                                    <div class="all-80">
+                                        <p class="fw-300"> Several features were added including individual radar charts, caching and weather API throttling. 
+                                        <br><br>
+                                        Radar charts take the average speed of historical efforts on segments after being bucketed to 8 categories based on wind direction. Speed improvements took place in reloading webpages through caching using an open-source data-structure called Redis.
+                                        Lastly, throttling was added to prevent abuse on the weather API. Users are now limited to 500 requests per day, if exceeded all site elements except the ones incorporating wind data will continue to work.
+                                        </p>
+                                    </div>
+                                    <div class="all-20">
+                                        <a href="https://chris.lu/upload/images/redis.png" target="_blank">  <img src="https://chris.lu/upload/images/redis.png"> </a>
+                                    </div>
+                                    </div>
+                                </div>
+                                <hr>
                                 <div id="2017-12-30">
                                     <h2 style="display: inline-block"> Segment Data Visualization <small>| December 30, 2017 </small></h2>
                                     <div class= "column-group">
