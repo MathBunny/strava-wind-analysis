@@ -1,7 +1,10 @@
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('../config');
+const redis = require('redis');
+require('redis-delete-wildcard')(redis);
 
+const client = redis.createClient();
 const router = express.Router();
 
 router.get('/get/user-data', (req, res) => {
@@ -55,6 +58,23 @@ router.get('/get/rides-filter', (req, res) => {
           res.send(result.ridesFilter);
         }
       });
+    });
+  }
+});
+
+router.put('/put/reset-cache', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    client.keys(`*user=${req.user.id}*`, (err, keys) => {
+      if (err) {
+        res.send('fail');
+      } else {
+        res.send({ message: `Successfully deleted ${keys.length} records` });
+        keys.forEach((key) => {
+          client.del(key, () => {});
+        });
+      }
     });
   }
 });

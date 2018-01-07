@@ -35,7 +35,7 @@
                     <legend>General Settings</legend>
                     <div class="control-group">
                         <ul class="control unstyled" style="margin-top: -10px">
-                            <li><input type="checkbox" id="ridesFilter"><label for="ridesFilter">Filter non-cycling rides</label></li>
+                            <li class="fw-300"><input type="checkbox" id="ridesFilter"><label for="ridesFilter">Filter non-cycling rides</label></li>
                         </ul>
                     </div>
                 </fieldset>
@@ -78,7 +78,7 @@
                     </div>
                 </fieldset>
                 <hr>
-                <button class="ink-button red">Reset Cache </button>
+                <button class="ink-button red" id="clear">Reset Cache </button>
                 <button class="ink-button green" id="apply">Apply Changes</button>
             </form>
         </div>
@@ -108,6 +108,22 @@
                         alert('Successfully Updated');
                     },
                     error: (result) => {
+                    }
+                });
+            });
+
+            $("#clear").click(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "PUT",
+                    url: `settings/put/reset-cache`,
+                    data: { 
+                    },
+                    success: (success) => {
+                        alert(success.message);
+                    },
+                    error: (result) => {
+                        alert('Operation Failed');
                     }
                 });
             });
