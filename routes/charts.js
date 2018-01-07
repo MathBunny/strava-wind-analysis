@@ -4,8 +4,85 @@ const stravadatahandler = require('../data/stravadatahandler');
 const mldatahandler = require('../data/mldatahandler');
 const ChartFactory = require('../charts/chartfactory');
 const LineChartDatasetDecorator = require('../charts/decorators/linechartdatasetdecorator');
+const darkskydatahandler = require('../data/darkskydatahandler');
+const geography = require('../utilities/geography');
+const MongoClient = require('mongodb').MongoClient;
+const config = require('../config');
 
 const router = express.Router();
+
+router.get('/get/chart/individual-wind-radar', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.send({ error: 'error: unauthenticated user' });
+  } else if (req.query.segmentID === undefined) {
+    res.send({ error: 'error: undefined segment ID' });
+  } else if (req.query.athleteID === undefined) {
+    res.send({ error: 'error: undefined athlete ID' });
+  } else {
+    stravadatahandler.getAthleteHistoricalSpeed(req.user.accessToken, req.query.segmentID, req.query.athleteID).then((data) => {
+      MongoClient.connect(config.mongoDBUrl, (dbErr, db) => {
+        if (dbErr) {
+          res.render('error', { message: (dbErr) });
+        }
+        db.collection('users').findOne({ id: req.user.id }, (findErr, result) => {
+          const today = new Date();
+          const dd = today.getDate();
+          const mm = today.getMonth();
+          const yyyy = today.getFullYear();
+          const dateStr = `${dd}|${mm}|${yyyy}`;
+
+          const api = result.api[dateStr];
+
+          if (api !== undefined && api + data.length >= config.dailyDarkSkyLimit) {
+            res.render('error', { message: 'You have exceeded the daily weather API limit. \n\n You can review your daily usage under settings.' });
+          } else {
+            stravadatahandler.getDetailedSegmentDetails(req.user.acessToken, req.query.segmentID).then((segmentDetails) => {
+              const latitude = segmentDetails.start_latlng[0];
+              const longitude = segmentDetails.start_latlng[1];
+              const dataArrCum = {};
+              const dataArrCount = {};
+
+              let complete = 0;
+              data.forEach((effort) => {
+                darkskydatahandler.getWeatherDetails(req.user.accessToken, req.user.id, latitude, longitude, effort.date).then((windData) => {
+                  const date = new Date(effort.date);
+
+                  const windBearing = windData.hourly.data[date.getHours()].windBearing;
+                  const windBearingStr = geography.degreesToCardinal(windBearing);
+                  const mapping = {
+                    N: 0,
+                    NE: 1,
+                    E: 2,
+                    SE: 3,
+                    S: 4,
+                    SW: 5,
+                    W: 6,
+                    NW: 7,
+                  };
+                  dataArrCum[mapping[windBearingStr]] += effort.speed;
+                  dataArrCount[mapping[windBearingStr]] += 1;
+                  complete += 1;
+
+                  if (complete === data.length) {
+                    for (let x = 0; x < 8; x += 1) {
+                      dataArrCum[x] /= dataArrCount[x];
+                    }
+                    const chart = ChartFactory.getChart('radarwindchart', data, 'Individual Performance');
+                    const chartData = {
+                      data: chart.getData(),
+                      options: chart.getOptions(),
+                    };
+                    res.send(chartData);
+                  }
+                });
+              });
+            });
+          }
+        });
+      });
+    });
+  }
+});
 
 router.get('/get/chart/individual-historical-regression', (req, res) => {
   if (!req.isAuthenticated()) {

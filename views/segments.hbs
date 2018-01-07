@@ -198,9 +198,9 @@
                 const filter = filtersArr.join('|');
                 $('#segment-list tbody').empty();
 
-                $.ajax( {url: "segments/get/activities", success: activities => {
+                $.ajax( {url: "segments/get/activities", dataType: "json", success: activities => {
                     activities.forEach(activity => {
-                        $.ajax( {url: `segments/get/activity?activityID=${activity.id}&filtered=true&filters=${filter}`, success: segmentDetails => {
+                        $.ajax( {url: `segments/get/activity?activityID=${activity.id}&filtered=true&filters=${filter}`, dataType: "json", success: segmentDetails => {
                             segmentDetails.segmentsArr.forEach(segment => {
                                 let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
                                 segmentRow += "<td>" + segment.name + "</td>";
@@ -239,9 +239,9 @@
               ga('create', 'UA-85289613-1', 'auto');
               ga('send', 'pageview');
 
-            $.ajax( {url: "segments/get/activities", success: activities => {
+            $.ajax( {url: "segments/get/activities", dataType: "json", success: activities => {
               activities.forEach(activity => {
-                $.ajax( {url: "segments/get/activity?activityID=" + activity.id, success: segmentDetails => {
+                $.ajax( {url: "segments/get/activity?activityID=" + activity.id, dataType: "json", success: segmentDetails => {
                     segmentDetails.segmentsArr.forEach(segment => {
                         let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
                         segmentRow += "<td>" + segment.name + "</td>";
