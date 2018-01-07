@@ -22,7 +22,7 @@ router.get('/get/chart/individual-wind-radar', (req, res) => {
     stravadatahandler.getAthleteHistoricalSpeed(req.user.accessToken, req.query.segmentID, req.query.athleteID, true).then((data) => {
       MongoClient.connect(config.mongoDBUrl, (dbErr, db) => {
         if (dbErr) {
-          res.render('error', { message: (dbErr) });
+          res.send({ message: (dbErr) });
         }
         db.collection('users').findOne({ id: req.user.id }, (findErr, result) => {
           const today = new Date();
@@ -34,7 +34,7 @@ router.get('/get/chart/individual-wind-radar', (req, res) => {
           const api = result.api[dateStr];
 
           if (api !== undefined && api + data.length >= config.dailyDarkSkyLimit) {
-            res.render('error', { message: 'You have exceeded the daily weather API limit. \n\n You can review your daily usage under settings.' });
+            res.send({ message: 'You have exceeded the daily weather API limit. \n\n You can review your daily usage under settings.' });
           } else {
             const obj = result.api;
             obj[dateStr] = (api === undefined) ? (1) : (api + data.length);

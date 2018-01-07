@@ -259,6 +259,11 @@
                 }
 
                 $.getJSON(`../../charts/get/chart/${chartType}?segmentID={{id}}&athleteID=${id}`, (chartDataResponse) => {
+                    if (chartDataResponse.message) {
+                        alert(chartDataResponse.message);
+                        return;
+                    }
+                    
                     $('#chart').remove();
                     $('#chart-container').append('<canvas id="chart"></canvas>');
                     const ctxIndividualEffortsSpeedChart = document.getElementById('chart').getContext('2d');
