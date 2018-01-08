@@ -9,6 +9,7 @@
 		<link rel="shortcut icon" href="/images/ThumbnailDesign_1.ico">
 		<title>Strava Analysis</title>
 		<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link href="/stylesheets/font-awesome.min.css" rel="stylesheet" media="screen">
 		<link href="/stylesheets/simple-line-icons.css" rel="stylesheet" media="screen">
 		<link href="/stylesheets/animate.css" rel="stylesheet">
@@ -50,7 +51,7 @@
 							<li><a href="#home">Home</a></li>
 							<li><a href="#description">Description</a></li>
 							<li><a href="#segments">Segments</a></li>
-							<li><a href="#rides">Rides</a></li>
+							<li><a href="#screenshots">Screenshots</a></li>
 							<li><a href="#poweredby">Powered By</a></li>
 						</ul>
 					</div>
@@ -91,7 +92,7 @@
 			</div>
 		</section>
 
-		<section id="portfolio" class="pfblock">
+		<section id="segments" class="pfblock">
 			<div class="container">
 				<div class="row">
 					<div class="col-sm-10 col-sm-offset-1">
@@ -104,21 +105,67 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-6 col-sm-offset-0">
+					<div class="col-lg-5 col-sm-offset-0">
+						<div class="pfblock-header wow fadeInLeft">
+							<canvas id="chart3"></canvas>
+							<br>
+						</div>
+					</div>
+					<div class="col-lg-5 col-sm-offset-2">
+						<div class="pfblock-header wow fadeInLeft">
+							<canvas id="chart4"></canvas>
+							<br>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-8 col-sm-offset-2">
 						<div class="pfblock-header wow fadeInLeft">
 							<canvas id="chart2"></canvas>
 							<br>
 						</div>
 					</div>
 				</div>
+		</section>
+		<section class="pfblock pfblock-gray" id="screenshots">
+			<div class="container">
+					<h2 style="text-align: center;"> Screenshots </h2>
+					<div class="row">
+					<div class="col-lg-10 col-sm-offset-1">
+						<div class="pfblock-header wow zoomIn">
+							<div class="pfblock-header wow zoomIn">
+								<div id="myCarousel" class="carousel slide" data-ride="carousel">
+
+								<ol class="carousel-indicators">
+									<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+									<li data-target="#myCarousel" data-slide-to="1"></li>
+									<li data-target="#myCarousel" data-slide-to="2"></li>
+								</ol>
+								<div class="carousel-inner">
+									<div class="item active">
+										<img src="https://i.imgur.com/ukyOW3n.png" alt="">
+									</div>
+									<div class="item">
+										<img src="https://i.imgur.com/DD3zIDt.png" alt="">
+									</div>
+									<div class="item">
+										<img src="https://i.imgur.com/Oc4UtoW.png" alt="">
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
+				</div>
+				</div>
 			</div>
 		</section>
-		<section class="pfblock pfblock-gray" id="skills">
+
+		<section class="pfblock pfblock" id="poweredby">
 			<div class="container">
 				<div class="row skills">
 					<div class="row">
 						<div class="col-sm-10 col-sm-offset-1">
-							<div class="pfblock-header wow fadeInUp">
+							<div class="pfblock-header wow zoomIn">
 								<h2 class="pfblock-title">Built Using / Powered By</h2>
 								<div class="pfblock-line"></div>
 								<div class="pfblock-subtitle">
@@ -165,6 +212,21 @@
 		<script src="/javascripts/custom.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 		<script>
+			$("#myCarousel").carousel({interval: 3000});
+				// Enable Carousel Indicators
+			$(".item1").click(function(){
+					$("#myCarousel").carousel(0);
+			});
+			$(".item2").click(function(){
+					$("#myCarousel").carousel(1);
+			});
+			$(".item3").click(function(){
+					$("#myCarousel").carousel(2);
+			});
+			$(".item4").click(function(){
+					$("#myCarousel").carousel(3);
+			});
+
 			const individualSegmentdata = {
 				labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11],
 				datasets:
