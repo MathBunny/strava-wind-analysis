@@ -21,8 +21,9 @@ class RadarWindChart extends AbstractChart {
         display: true,
         text: 'Wind Speed Radar Chart',
       },
-      scales: {
+      scale: {
         ticks: {
+          beginAtZero: true,
           min: 0,
           callback: value => `${value} + 'km/h`,
         },

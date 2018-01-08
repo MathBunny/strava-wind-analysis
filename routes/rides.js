@@ -54,8 +54,6 @@ router.get('/get/activities', (req, res, next) => {
         });
       }
       res._headers['content-type'] = 'application/json';
-      console.log(activities.length);
-      console.log(typeof activities);
       res.json(activities);
     });
   }
