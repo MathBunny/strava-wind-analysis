@@ -105,14 +105,14 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-lg-5 col-sm-offset-0">
+					<div class="col-lg-6 col-sm-offset-0">
 						<div class="pfblock-header wow fadeInLeft">
 							<canvas id="chart3"></canvas>
 							<br>
 						</div>
 					</div>
-					<div class="col-lg-5 col-sm-offset-2">
-						<div class="pfblock-header wow fadeInLeft">
+					<div class="col-lg-6 col-sm-offset-0">
+						<div class="pfblock-header wow fadeInRight">
 							<canvas id="chart4"></canvas>
 							<br>
 						</div>
@@ -120,7 +120,7 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-8 col-sm-offset-2">
-						<div class="pfblock-header wow fadeInLeft">
+						<div class="pfblock-header wow fadeInUp">
 							<canvas id="chart2"></canvas>
 							<br>
 						</div>
@@ -307,8 +307,87 @@
 				}
 			};
 
+			const aggregateBarChartData =  {
+      labels: ['0-10km/h', '10-20km/h', '20-30m/h', '30-40km/h', '40-50km/h', '50km/h+'],
+      datasets:
+				[{ label: 'Leaderboard Segment Efforts',
+					data: [11, 1222, 3422, 1344, 322, 8, 2],
+					fill: false,
+					backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(255, 159, 64, 0.2)', 'rgba(255, 205, 86, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)', 'rgba(201, 203, 207, 0.2)'],
+					borderColor:
+					['rgb(255, 99, 132)', 'rgb(255, 159, 64)', 'rgb(255, 205, 86)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)', 'rgb(201, 203, 207)'],
+					borderWidth: 1 }],
+			};
+
+			const aggregateBarChartOptions = {
+				title: {
+					title: 'Railtrail Southbound Leaderboard Segment Performance',
+					display: true
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true,
+							callback: value => `${value}`,
+						},
+					}],
+				},
+			};
+
+			const ctxLeaderboardEffortSegmentedChart = document.getElementById('chart4').getContext('2d');
+			ctxLeaderboardEffortSegmentedChart.clearRect(0, 0, ctxLeaderboardEffortSegmentedChart.width, ctxLeaderboardEffortSegmentedChart.height);
+
+			const leaderboardChartData = {
+      labels: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'], // eslint-disable-line
+      datasets:
+        [{ type: 'line',
+          label: 'Horatiu Lazu', // eslint-disable-line
+          data: [30, 34, 32, 31, 34, 36, 34, 32, 39, 38.4, 32, 44],
+          fill: false,
+          backgroundColor: 'rgb(255, 99, 132)',
+          borderColor: 'rgb(158,158,158)',
+          borderWidth: 1,
+          lineTension: 0.2 },
+					{ type: 'line',
+          label: 'Apaar Madan', // eslint-disable-line
+          data: [28, 33, 35, 38, 33, 37, 38, 36, 36, 40.4, 36, 39],
+          fill: false,
+          backgroundColor: 'rgb(33,150,243)',
+          borderColor: 'rgb(33,150,243)',
+          borderWidth: 1,
+          lineTension: 0.2 },
+					{ type: 'line',
+          label: 'Mohit Baghat', // eslint-disable-line
+          data: [27, 30, 25, 30, 31, 28, 32, 29, 33, 32, 33, 30.5],
+          fill: false,
+          backgroundColor: 'rgb(139,195,74)',
+          borderColor: 'rgb(139,195,74)',
+          borderWidth: 1,
+          lineTension: 0.2 }],
+			};
+
+			const leaderboardChartOptions = {
+				title: {
+					display: true,
+					text: 'Banbury Road 5km - Leaderboard Historic Segment Performance'
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true,
+							callback: value => `${value}km/h`,
+						},
+					}],
+				},
+			};
+
+			const ctxLeaderboardEffortsLineChart = document.getElementById('chart3').getContext('2d');
+			ctxLeaderboardEffortsLineChart.clearRect(0, 0, ctxLeaderboardEffortsLineChart.width, ctxLeaderboardEffortsLineChart.height);
+
 			let inViewChart1 = false;
 			let inViewChart2 = false;
+			let inViewChart3 = false;
+			let inViewChart4 = false;
 
 			function isScrolledIntoView(elem){
 				const docViewTop = $(window).scrollTop();
@@ -342,6 +421,28 @@
 					});
 				} else {
 					inViewChart2 = false;  
+				}
+				if (isScrolledIntoView('#chart3')) {
+					if (inViewChart3) { return; }
+					inViewChart3 = true;
+					const leaderboardChart = new Chart(ctxLeaderboardEffortsLineChart, {
+						type: 'line',
+						data: leaderboardChartData,
+						options: leaderboardChartOptions
+					});
+				} else {
+					inViewChart3 = false;  
+				}
+				if (isScrolledIntoView('#chart4')) {
+					if (inViewChart4) { return; }
+					inViewChart4 = true;
+					const leaderboardSegmentedChart = new Chart(ctxLeaderboardEffortSegmentedChart, {
+						type: 'bar',
+						data: aggregateBarChartData,
+						options: aggregateBarChartOptions
+					});
+				} else {
+					inViewChart4 = false;  
 				}
 			});
 		</script>

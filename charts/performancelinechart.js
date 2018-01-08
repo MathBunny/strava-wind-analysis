@@ -42,7 +42,7 @@ class PerformanceLineChart extends AbstractChart {
         yAxes: [{
           ticks: {
             beginAtZero: true,
-            callback: value => `${value} + 'km/h`,
+            callback: value => `${value}km/h`,
           },
         }],
       },
