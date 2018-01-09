@@ -226,7 +226,26 @@
                 const ctxAllActivitiesSpeedChart = document.getElementById('chart').getContext('2d');
                 const allActivitiesScatterPlotChart = Chart.Scatter(ctxAllActivitiesSpeedChart, {
                     data: data.data,
-                    options: data.options,
+                    options: {
+                        title: {
+                            text: 'Aggregate Distance/Speed Scatter Plot',
+                            display: true,
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${value}km/h`,
+                                },
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${value}km`,
+                                },
+                            }],
+                        },
+                    },
                 });
             });
 

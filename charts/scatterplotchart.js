@@ -27,6 +27,14 @@ class ScatterPlotChart extends AbstractChart {
         text: 'Aggregate Distance/Speed Scatter Plot',
         display: true,
       },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+            callback: value => `${value}km/h`,
+          },
+        }],
+      },
     };
   }
 }
