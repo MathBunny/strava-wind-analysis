@@ -21,7 +21,7 @@ class StravaDataHandler {
 
   static getActivitiesList(accessToken) {
     return new Promise((resolve) => {
-      requestify.get(`https://www.strava.com/api/v3/athlete/activities?&access_token=${accessToken}`).then((activitiesResponse) => {
+      requestify.get(`https://www.strava.com/api/v3/athlete/activities?&access_token=${accessToken}&per_page=200`).then((activitiesResponse) => {
         const activitesList = JSON.parse(activitiesResponse.body);
         resolve(activitesList);
       }).fail(err => console.log(err));

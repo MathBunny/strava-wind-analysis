@@ -137,7 +137,7 @@
                     </div>
                 </div>
                 <div id="aggregate" class="tabs-content">
-                    <p> Coming soon! </p>
+                    <canvas id="chart"></canvas>
                 </div>
             </div>
             
@@ -188,6 +188,8 @@
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?libraries=geometry&amp;sensor=false"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="/javascripts/googlemaps.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+
         </main>
         <footer class="clearfix" id="footer" style="margin-top:-1000px">
             <div class="ink-grid">
@@ -216,6 +218,34 @@
                             $("#" + key + "" + x).prop('checked', false);
                         }
                     }
+                });
+            });
+
+            $.getJSON('../../charts/get/chart/individual-aggregate-ride-scatterplot', (chartDataResponse) => {
+                const data = chartDataResponse;
+                const ctxAllActivitiesSpeedChart = document.getElementById('chart').getContext('2d');
+                const allActivitiesScatterPlotChart = Chart.Scatter(ctxAllActivitiesSpeedChart, {
+                    data: data.data,
+                    options: {
+                        title: {
+                            text: 'Aggregate Distance/Speed Scatter Plot',
+                            display: true,
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${value}km/h`,
+                                },
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${value}km`,
+                                },
+                            }],
+                        },
+                    },
                 });
             });
 
