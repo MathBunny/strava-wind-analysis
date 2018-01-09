@@ -11,6 +11,28 @@ const config = require('../config');
 
 const router = express.Router();
 
+router.get('/get/chart/individual-aggregate-ride-scatterplot', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.send({ error: 'error: unauthenticated user' });
+  } else {
+    stravadatahandler.getActivitiesList(req.user.accessToken).then((data) => {
+      const dataArr = [];
+      data.forEach((activity) => {
+        const activityObj = {};
+        activityObj.x = activity.distance / 1000;
+        activityObj.y = ((activity.distance * 3.6) / activity.moving_time);
+        dataArr.push(activityObj);
+      });
+      const chart = ChartFactory.getChart('scatterplotchart', dataArr, 'Distance-Speed Scatter Plot');
+      const chartData = {
+        data: chart.getData(),
+        options: chart.getOptions(),
+      };
+      res.send(chartData);
+    });
+  }
+});
+
 router.get('/get/chart/individual-wind-radar', (req, res) => {
   if (!req.isAuthenticated()) {
     res.send({ error: 'error: unauthenticated user' });
