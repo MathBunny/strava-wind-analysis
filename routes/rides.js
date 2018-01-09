@@ -58,7 +58,6 @@ router.get('/get/activities', (req, res, next) => {
         db.collection('users').findOne({ id: req.user.id }, (error, result) => {
           db.close();
           if (result.ridesFilter === 'true') {
-            console.log(activities);
             activities = activities.filter(x => x.type === 'Ride');
           }
           res.json(activities);

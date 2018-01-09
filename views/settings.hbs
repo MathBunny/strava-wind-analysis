@@ -97,6 +97,27 @@
         <script type="text/javascript" src="http://fastly.ink.sapo.pt/3.1.10/js/ink-all.js"></script>
         <script src="http://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
         <script>
+            function resetCache(showMessage) {
+                $.ajax({
+                    type: "PUT",
+                    url: `settings/put/reset-cache`,
+                    data: { 
+                    },
+                    success: (success) => {
+                        if (showMesssage) {
+                            alert(success.message);
+                        }
+                    },
+                    error: (result) => {
+                        alert('Operation Failed');
+                    }
+                });
+            }
+
+            $("#clear").click(function(e) {
+               resetCache(true);
+            });
+
             $("#apply").click(function(e) {
                 e.preventDefault();
                 $.ajax({
@@ -110,22 +131,7 @@
                     error: (result) => {
                     }
                 });
-            });
-
-            $("#clear").click(function(e) {
-                e.preventDefault();
-                $.ajax({
-                    type: "PUT",
-                    url: `settings/put/reset-cache`,
-                    data: { 
-                    },
-                    success: (success) => {
-                        alert(success.message);
-                    },
-                    error: (result) => {
-                        alert('Operation Failed');
-                    }
-                });
+                resetCache();
             });
 
             $.ajax({
