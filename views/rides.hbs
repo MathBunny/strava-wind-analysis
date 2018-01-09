@@ -137,7 +137,6 @@
                     </div>
                 </div>
                 <div id="aggregate" class="tabs-content">
-                    <p> Coming soon! </p>
                     <canvas id="chart"></canvas>
                 </div>
             </div>
@@ -224,9 +223,8 @@
 
             $.getJSON('../../charts/get/chart/individual-aggregate-ride-scatterplot', (chartDataResponse) => {
                 const data = chartDataResponse;
-                const ctxAllEffortsSpeedChart = document.getElementById('chart').getContext('2d');
-                const allEffortsBarChart = new Chart(ctxAllEffortsSpeedChart, {
-                    type: 'scatter',
+                const ctxAllActivitiesSpeedChart = document.getElementById('chart').getContext('2d');
+                const allActivitiesScatterPlotChart = Chart.Scatter(ctxAllActivitiesSpeedChart, {
                     data: data.data,
                     options: data.options,
                 });

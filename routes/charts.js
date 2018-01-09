@@ -18,12 +18,14 @@ router.get('/get/chart/individual-aggregate-ride-scatterplot', (req, res) => {
     stravadatahandler.getActivitiesList(req.user.accessToken).then((data) => {
       const dataArr = [];
       data.forEach((activity) => {
-        const activityObj = {};
-        activityObj.x = activity.distance / 1000;
-        activityObj.y = ((activity.distance * 3.6) / activity.moving_time);
-        dataArr.push(activityObj);
+        if (activity.type === 'Ride') {
+          const activityObj = {};
+          activityObj.x = activity.distance / 1000;
+          activityObj.y = ((activity.distance * 3.6) / activity.moving_time);
+          dataArr.push(activityObj);
+        }
       });
-      const chart = ChartFactory.getChart('scatterplotchart', dataArr, 'Distance-Speed Scatter Plot');
+      const chart = ChartFactory.getChart('scatterplotchart', dataArr, 'Individual Performance');
       const chartData = {
         data: chart.getData(),
         options: chart.getOptions(),
