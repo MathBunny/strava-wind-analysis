@@ -1,6 +1,7 @@
 const express = require('express');
 const requestify = require('requestify');
 const filters = require('../utilities/filters');
+const MongoClient = require('mongodb').MongoClient;
 const config = require('../config');
 
 const router = express.Router();
@@ -53,8 +54,16 @@ router.get('/get/activities', (req, res, next) => {
           }
         });
       }
-      res._headers['content-type'] = 'application/json';
-      res.json(activities);
+      MongoClient.connect(config.mongoDBUrl, (err, db) => {
+        db.collection('users').findOne({ id: req.user.id }, (error, result) => {
+          db.close();
+          if (result.ridesFilter === 'true') {
+            console.log(activities);
+            activities = activities.filter(x => x.type === 'Ride');
+          }
+          res.json(activities);
+        });
+      });
     });
   }
 });
