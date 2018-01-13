@@ -9,6 +9,7 @@ class ScatterPlotChart extends AbstractChart {
           fill: false,
           showLine: false,
           data: dataArr,
+          radius: 4,
           backgroundColor: 'rgba(33,150,243, 0.2)',
           borderColor: 'rgb(33,150,243)',
           elements: {

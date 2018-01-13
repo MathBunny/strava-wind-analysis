@@ -18,9 +18,13 @@ colors[14] = 'rgb(255,152,0)';
 colors[15] = 'rgb(121,85,72)';
 colors[16] = 'rgb(158,158,158)';
 
-class LineChartUtils {
+class ChartUtils {
   static getColor(count) {
     return colors[count % 17];
   }
+
+  static getOpaque(str) {
+    return `${str.substring(0, 3)}a${str.substring(3, str.length - 1)}, 0.2)`;
+  }
 }
-module.exports = LineChartUtils;
+module.exports = ChartUtils;

@@ -11,6 +11,21 @@ class MLDataHandler {
       }).fail(err => console.log(err));
     });
   }
+
+  static getRidesClustering(performanceData, numClusters) {
+    return new Promise((resolve) => {
+      const tupleArr = [];
+      performanceData.forEach((activity) => {
+        tupleArr.push(`${activity.x},${activity.y}`);
+      });
+      const str = `${tupleArr.join('|')}&${numClusters}`;
+
+      requestify.get(`${config.mlEndpoint}/get/kmeans-rides-clustering/${str}`).then((result) => {
+        const clusteringData = result.body.split('|');
+        resolve(clusteringData);
+      }).fail(err => console.log(err));
+    });
+  }
 }
 
 module.exports = MLDataHandler;

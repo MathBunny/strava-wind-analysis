@@ -96,6 +96,8 @@ class Recommender {
             f.then(() => resolve(scores));
           }
         });
+      }).catch(() => {
+        resolve([]);
       });
     });
   }

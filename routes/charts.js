@@ -4,12 +4,64 @@ const stravadatahandler = require('../data/stravadatahandler');
 const mldatahandler = require('../data/mldatahandler');
 const ChartFactory = require('../charts/chartfactory');
 const LineChartDatasetDecorator = require('../charts/decorators/linechartdatasetdecorator');
+const ScatterPlotDatasetDecorator = require('../charts/decorators/scatterplotdatasetdecorator');
 const darkskydatahandler = require('../data/darkskydatahandler');
 const geography = require('../utilities/geography');
 const MongoClient = require('mongodb').MongoClient;
 const config = require('../config');
 
 const router = express.Router();
+
+router.get('/get/chart/individual-aggregate-ride-scatterplot-ml', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.send({ error: 'error: unauthenticated user' });
+  } else {
+    stravadatahandler.getActivitiesList(req.user.accessToken).then((data) => {
+      const dataArr = [];
+      data.forEach((activity) => {
+        if (activity.type === 'Ride') {
+          const activityObj = {};
+          activityObj.x = activity.distance / 1000;
+          activityObj.y = ((activity.distance * 3.6) / activity.moving_time);
+          dataArr.push(activityObj);
+        }
+      });
+
+      const clusters = 5;
+      mldatahandler.getRidesClustering(dataArr, clusters).then((clustering) => {
+        let chart = undefined;
+        let count = 0;
+
+        const buckets = [];
+        for (let x = 0; x < clusters; x += 1) {
+          buckets.push([]);
+        }
+
+        dataArr.forEach((dataPoint) => {
+          buckets[clustering[count]].push(dataPoint);
+          count += 1;
+        });
+
+        count = 0;
+        buckets.forEach((bucket) => {
+          if (count === 0) {
+            chart = ChartFactory.getChart('scatterplotchart', bucket, `Cluster ${count + 1}`);
+          } else {
+            chart = new ScatterPlotDatasetDecorator(chart, bucket, `Cluster ${count + 1}`, parseInt(clustering[count], 10) * 5);
+          }
+          count += 1;
+        });
+
+        const chartData = {
+          data: chart.getData(),
+          options: chart.getOptions(),
+        };
+        res.send(chartData);
+      });
+    });
+  }
+});
+
 
 router.get('/get/chart/individual-aggregate-ride-scatterplot', (req, res) => {
   if (!req.isAuthenticated()) {
