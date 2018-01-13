@@ -27,13 +27,31 @@ router.get('/get/chart/individual-aggregate-ride-scatterplot-ml', (req, res) => 
         }
       });
 
-      mldatahandler.getRidesClustering(dataArr, 5).then((clustering) => {
-        let chart = ChartFactory.getChart('scatterplotchart', [], 'Individual Performance');
+      const clusters = 5;
+      mldatahandler.getRidesClustering(dataArr, clusters).then((clustering) => {
+        let chart = undefined;
         let count = 0;
+
+        const buckets = [];
+        for (let x = 0; x < clusters; x += 1) {
+          buckets.push([]);
+        }
+
         dataArr.forEach((dataPoint) => {
-          chart = new ScatterPlotDatasetDecorator(chart, [dataPoint], '', parseInt(clustering[count], 10) * 2);
+          buckets[clustering[count]].push(dataPoint);
           count += 1;
         });
+
+        count = 0;
+        buckets.forEach((bucket) => {
+          if (count === 0) {
+            chart = ChartFactory.getChart('scatterplotchart', bucket, `Cluster ${count + 1}`);
+          } else {
+            chart = new ScatterPlotDatasetDecorator(chart, bucket, `Cluster ${count + 1}`, parseInt(clustering[count], 10) * 5);
+          }
+          count += 1;
+        });
+
         const chartData = {
           data: chart.getData(),
           options: chart.getOptions(),
