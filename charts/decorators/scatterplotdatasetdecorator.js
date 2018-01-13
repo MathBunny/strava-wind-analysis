@@ -1,7 +1,7 @@
 const AbstractChart = require('../abstractchart');
 const ChartUtils = require('../chartutils');
 
-class LineChartDatasetDecorator extends AbstractChart {
+class ScatterPlotDatasetDecorator extends AbstractChart {
   constructor(parent, newDataArr, labelText, hasPoints) {
     super();
     this.parent = parent; // Original chart to be decorated
@@ -14,22 +14,24 @@ class LineChartDatasetDecorator extends AbstractChart {
     const data = this.parent.getData(); // Mutating parent data in the get, perform deep copy
     const borderColoring = ChartUtils.getColor(data.datasets.length + 1);
     const newData = {
-      type: 'line',
       label: this.labelText,
-      data: this.newDataArr,
       fill: false,
+      showLine: false,
+      data: this.newDataArr,
       backgroundColor: borderColoring,
       borderColor: borderColoring,
-      borderWidth: 1,
-      lineTension: 0.2,
+      elements: {
+        line: {
+          backgroundColor: 'rgba(0, 0, 0 ,0)',
+          borderWidth: 0,
+          borderColor: 'rgba(0, 0, 0, 0)',
+          fill: false,
+        },
+      },
     };
-
-    if (this.hasPoints === false) {
-      newData.pointRadius = 0;
-    }
 
     data.datasets.push(newData);
     return data;
   }
 }
-module.exports = LineChartDatasetDecorator;
+module.exports = ScatterPlotDatasetDecorator;
