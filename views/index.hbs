@@ -61,7 +61,10 @@
                     <div id="map-rows">
                         
                     </div>
-                    <center> <button class="ink-button" onclick="loadRecommendationsRow(count+=3);">View More</button> </center>
+                    <div id="err-text">
+
+                    </div>
+                    <center> <button class="ink-button" onclick="loadRecommendationsRow(count+=3);" id="more">View More</button> </center>
                     <br><br>
                 </div>
 
@@ -244,9 +247,6 @@
                         path.polyline = detailedSegment.map.polyline;
                         path.resource_state = detailedSegment.map.resource_state;
                         createMap(detailedSegment.start_latlng[0], detailedSegment.start_latlng[1], path, `map${x}`);
-                        if ($('#loading').length) {
-                            $('#loading').remove();
-                        }
                     });
                 }
                 if (countIndex == 0) {
@@ -258,6 +258,13 @@
                 if (segmentResponses === undefined) {
                     $.getJSON('../../get/recommendations?accessToken=' + accessToken, (segmentResponsesR) => {
                         segmentResponses = segmentResponsesR;
+                        if ($('#loading').length) {
+                            $('#loading').remove();
+                        }
+                        if (segmentResponses.length === 0) {
+                            $('#err-text').append(`<div class="ink-alert block" role="alert"><button class="ink-dismiss">&times;</button><h4>No segment history</h4><p class="fw-300">Please note that for best use Strava Wind Analysis recommends that you have segment history. Please upload several rides with segments onto Strava.</p> </div>`);
+                            $('#more').remove();
+                        }
                         generateRow(countIndex);
                     });
                 } else {
