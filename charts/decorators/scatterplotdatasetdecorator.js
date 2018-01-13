@@ -2,23 +2,24 @@ const AbstractChart = require('../abstractchart');
 const ChartUtils = require('../chartutils');
 
 class ScatterPlotDatasetDecorator extends AbstractChart {
-  constructor(parent, newDataArr, labelText, hasPoints) {
+  constructor(parent, newDataArr, labelText, clusterID) {
     super();
     this.parent = parent; // Original chart to be decorated
     this.newDataArr = newDataArr;
-    this.hasPoints = hasPoints;
+    this.clusterID = clusterID;
     this.labelText = labelText;
   }
 
   getData() {
     const data = this.parent.getData(); // Mutating parent data in the get, perform deep copy
-    const borderColoring = ChartUtils.getColor(data.datasets.length + 1);
+    const borderColoring = ChartUtils.getColor(this.clusterID);
     const newData = {
       label: this.labelText,
       fill: false,
       showLine: false,
       data: this.newDataArr,
-      backgroundColor: borderColoring,
+      backgroundColor: ChartUtils.getOpaque(borderColoring),
+      radius: 4,
       borderColor: borderColoring,
       elements: {
         line: {

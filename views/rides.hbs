@@ -137,7 +137,14 @@
                     </div>
                 </div>
                 <div id="aggregate" class="tabs-content">
-                    <canvas id="chart"></canvas>
+                     <div class="column-group">
+                        <div class="all-50">
+                             <canvas id="chart"></canvas>
+                        </div>
+                        <div class="all-50">
+                             <canvas id="chartClustered"></canvas>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -230,6 +237,37 @@
                     options: {
                         title: {
                             text: 'Aggregate Distance/Speed Scatter Plot',
+                            display: true,
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${value}km/h`,
+                                },
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    beginAtZero: true,
+                                    callback: value => `${value}km`,
+                                },
+                            }],
+                        },
+                    },
+                });
+            });
+
+            $.getJSON('../../charts/get/chart/individual-aggregate-ride-scatterplot-ml', (chartDataResponse) => {
+                const data = chartDataResponse;
+                const ctxAllActivitiesSpeedChart = document.getElementById('chartClustered').getContext('2d');
+                const allActivitiesScatterPlotChart = Chart.Scatter(ctxAllActivitiesSpeedChart, {
+                    data: data.data,
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        title: {
+                            text: 'Aggregate Distance/Speed Scatter Plot with Clustering',
                             display: true,
                         },
                         scales: {

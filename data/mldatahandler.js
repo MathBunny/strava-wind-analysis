@@ -16,9 +16,9 @@ class MLDataHandler {
     return new Promise((resolve) => {
       const tupleArr = [];
       performanceData.forEach((activity) => {
-        tupleArr.append(`${activity.speed},${activity.distance}`);
+        tupleArr.push(`${activity.x},${activity.y}`);
       });
-      const str = `${tupleArr.join(',')}&${numClusters}`;
+      const str = `${tupleArr.join('|')}&${numClusters}`;
 
       requestify.get(`${config.mlEndpoint}/get/kmeans-rides-clustering/${str}`).then((result) => {
         const clusteringData = result.body.split('|');

@@ -22,5 +22,9 @@ class ChartUtils {
   static getColor(count) {
     return colors[count % 17];
   }
+
+  static getOpaque(str) {
+    return `${str.substring(0, 3)}a${str.substring(3, str.length - 1)}, 0.2)`;
+  }
 }
 module.exports = ChartUtils;
