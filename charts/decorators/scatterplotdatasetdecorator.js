@@ -12,7 +12,7 @@ class ScatterPlotDatasetDecorator extends AbstractChart {
 
   getData() {
     const data = this.parent.getData(); // Mutating parent data in the get, perform deep copy
-    const borderColoring = ChartUtils.getColor(this.clusterID);
+    const borderColoring = ChartUtils.getColorShuffled(this.clusterID);
     const newData = {
       label: this.labelText,
       fill: false,
