@@ -14,7 +14,7 @@ const cache = require('express-redis-cache')();
 const router = express.Router();
 
 router.get('/get/chart/individual-aggregate-ride-scatterplot-ml', (req, res, next) => {
-  res.express_redis_cache_name = `charts/get/individual-aggregate-ride-scatterplot-ml?user=${req.user.id}`;
+  res.express_redis_cache_name = `charts/get/individual-aggregate-ride-scatterplot-ml?user=${req.user.id}&numClusters=${req.query.numClusters}`;
   next();
 }, cache.route({ expire: config.defaultExpirationTime }), (req, res) => {
   if (!req.isAuthenticated()) {
@@ -32,9 +32,9 @@ router.get('/get/chart/individual-aggregate-ride-scatterplot-ml', (req, res, nex
         }
       });
 
-      const clusters = 5;
+      const clusters = req.query.numClusters;
       mldatahandler.getRidesClustering(dataArr, clusters).then((clustering) => {
-        let chart = undefined;
+        let chart;
         let count = 0;
 
         const buckets = [];
@@ -52,7 +52,7 @@ router.get('/get/chart/individual-aggregate-ride-scatterplot-ml', (req, res, nex
           if (count === 0) {
             chart = ChartFactory.getChart('scatterplotchart', bucket, `Cluster ${count + 1}`);
           } else {
-            chart = new ScatterPlotDatasetDecorator(chart, bucket, `Cluster ${count + 1}`, parseInt(clustering[count], 10) * 5);
+            chart = new ScatterPlotDatasetDecorator(chart, bucket, `Cluster ${count + 1}`, count);
           }
           count += 1;
         });
@@ -170,7 +170,7 @@ router.get('/get/chart/individual-wind-radar', (req, res) => {
                         dataArr.push(0);
                       }
                     }
-                    
+
                     const chart = ChartFactory.getChart('radarwindchart', dataArr, 'Average Individual Performance per Direction');
                     const chartData = {
                       data: chart.getData(),

@@ -138,11 +138,25 @@
                 </div>
                 <div id="aggregate" class="tabs-content">
                      <div class="column-group">
-                        <div class="all-50">
-                             <canvas id="chart"></canvas>
+                         <div class="all-20">
+                            <div style="margin: 10px">
+                               <nav class= "ink-navigation sidebar">
+                                    <ul>
+                                        <li class="fw-200"> Aggregate Visualization Options </li>
+                                        <hr>
+                                        <div class="slidecontainer">
+                                            <li class="slab-100">Clusters: <input type="range" min="1" max="10" value="5" class="slider" id="clusterSlider"> <div style="float: right" id="clusters"> 5</div></li>
+                                        </div>
+                                        <hr>
+                                        <button class="ink-button" id="apply">Apply</button>
+                                    </ul>
+                                </nav>
+                            </div>            
                         </div>
-                        <div class="all-50">
-                             <canvas id="chartClustered"></canvas>
+                        <div class="all-80">
+                            <div id="clusteredChartContainer">
+                                <canvas id="chartClustered"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,6 +229,10 @@
             filteringGroups.set('dr', 6);
             filteringGroups.set('s', 8);
 
+            $(document).on('input', '#clusterSlider', () => {
+                $("#clusters").text($("#clusterSlider").val());
+            });
+
             Array.from(filteringGroups.keys()).forEach((key) => {
                 let count = filteringGroups.get(key);
                 $('#' + key + '' + count).click(() => {
@@ -229,78 +247,51 @@
                 });
             });
 
-            $.getJSON('../../charts/get/chart/individual-aggregate-ride-scatterplot', (chartDataResponse) => {
-                const data = chartDataResponse;
-                const ctxAllActivitiesSpeedChart = document.getElementById('chart').getContext('2d');
-                const allActivitiesScatterPlotChart = Chart.Scatter(ctxAllActivitiesSpeedChart, {
-                    data: data.data,
-                    options: {
-                        title: {
-                            text: 'Aggregate Distance/Speed Scatter Plot',
-                            display: true,
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    callback: value => `${value}km/h`,
-                                },
-                            }],
-                            xAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    callback: value => `${value}km`,
-                                },
-                            }],
-                        },
-                        tooltips: {
-                            enabled: true,
-                            mode: 'single',
-                            callbacks: {
-                                label: (tooltipItems, data)  => { 
-                                    return `${data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].label}, ${tooltipItems.yLabel.toFixed(2)}km/h, ${tooltipItems.xLabel.toFixed(2)}km`;
-                                }
-                            }
-                        },
-                    },
-                });
-            });
+            function fetchScatterplot(){
+                $.getJSON(`../../charts/get/chart/individual-aggregate-ride-scatterplot-ml?numClusters=${$("#clusterSlider").val()}`, (chartDataResponse) => {
+                    $('#chartClustered').remove();
+                    $('#clusteredChartContainer').append('<canvas id="chartClustered"></canvas>');
 
-            $.getJSON('../../charts/get/chart/individual-aggregate-ride-scatterplot-ml', (chartDataResponse) => {
-                const data = chartDataResponse;
-                const ctxAllActivitiesSpeedChart = document.getElementById('chartClustered').getContext('2d');
-                const allActivitiesScatterPlotChart = Chart.Scatter(ctxAllActivitiesSpeedChart, {
-                    data: data.data,
-                    options: {
-                        title: {
-                            text: 'Aggregate Distance/Speed Scatter Plot with Clustering',
-                            display: true,
-                        },
-                        scales: {
-                            yAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    callback: value => `${value}km/h`,
-                                },
-                            }],
-                            xAxes: [{
-                                ticks: {
-                                    beginAtZero: true,
-                                    callback: value => `${value}km`,
-                                },
-                            }],
-                        },
-                       tooltips: {
-                            enabled: true,
-                            mode: 'single',
-                            callbacks: {
-                                label: (tooltipItems, data)  => { 
-                                    return `${data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].label}, ${tooltipItems.yLabel.toFixed(2)}km/h, ${tooltipItems.xLabel.toFixed(2)}km`;
+                    const data = chartDataResponse;
+                    const ctxAllActivitiesSpeedChart = document.getElementById('chartClustered').getContext('2d');
+                    const allActivitiesScatterPlotChart = Chart.Scatter(ctxAllActivitiesSpeedChart, {
+                        data: data.data,
+                        options: {
+                            title: {
+                                text: `Aggregate Distance/Speed Scatter Plot with ${$("#clusterSlider").val()} Clusters`,
+                                display: true,
+                            },
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        callback: value => `${value}km/h`,
+                                    },
+                                }],
+                                xAxes: [{
+                                    ticks: {
+                                        beginAtZero: true,
+                                        callback: value => `${value}km`,
+                                    },
+                                }],
+                            },
+                        tooltips: {
+                                enabled: true,
+                                mode: 'single',
+                                callbacks: {
+                                    label: (tooltipItems, data)  => { 
+                                        return `${data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].label}, ${tooltipItems.yLabel.toFixed(2)}km/h, ${tooltipItems.xLabel.toFixed(2)}km`;
+                                        }
                                 }
-                            }
+                            },
                         },
-                    },
+                    });
                 });
+            }
+            fetchScatterplot();
+
+            $("#apply").click(() => {
+                fetchScatterplot();
             });
 
             $("#filter").click(() => {
