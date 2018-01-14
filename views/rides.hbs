@@ -253,6 +253,15 @@
                                 },
                             }],
                         },
+                        tooltips: {
+                            enabled: true,
+                            mode: 'single',
+                            callbacks: {
+                                label: (tooltipItems, data)  => { 
+                                    return `${data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].label}, ${tooltipItems.yLabel.toFixed(2)}km/h, ${tooltipItems.xLabel.toFixed(2)}km`;
+                                }
+                            }
+                        },
                     },
                 });
             });
@@ -280,6 +289,15 @@
                                     callback: value => `${value}km`,
                                 },
                             }],
+                        },
+                       tooltips: {
+                            enabled: true,
+                            mode: 'single',
+                            callbacks: {
+                                label: (tooltipItems, data)  => { 
+                                    return `${data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].label}, ${tooltipItems.yLabel.toFixed(2)}km/h, ${tooltipItems.xLabel.toFixed(2)}km`;
+                                }
+                            }
                         },
                     },
                 });
