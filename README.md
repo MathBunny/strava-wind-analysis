@@ -10,6 +10,7 @@ Bringing machine learning analytics, data visualization and weather data to cycl
 * Individual modals with athlete-specific statistics on segment leaderboard
 * Linear regression and interpolation tools using scikit-learn
 * Segment and ride filtering options (distance, speed, etc.)
+* Content-based segment recommendation engine for scrolling feed
 * Improved performance with Redis caching
 * Integration with MongoDB including weather API throttling and user profiles
 * Legacy website support
