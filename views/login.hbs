@@ -14,6 +14,8 @@
 		<link href="/stylesheets/simple-line-icons.css" rel="stylesheet" media="screen">
 		<link href="/stylesheets/animate.css" rel="stylesheet">
 		<link href="/stylesheets/login-style.css" rel="stylesheet" media="screen">
+		
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
 		<script src="/javascripts/modernizr.custom.js"></script>
 	</head>
 	<body>
@@ -74,19 +76,23 @@
 				</div>
 				<div class="row">
 					<div class="col-lg-5">
-						<div class="pfblock-subtitle">Feature overview:
-							<ul>
-								<li>Leaderboard wind and influence statistics</li> 
-								<li>Athlete comparison for segment performance</li> 
-								<li>Detailed charts for segment performance including historical data and leaderboard trends</li> 
-								<li>Segment performance regressions (ordinary linear, ridge, isotonic) and cubic interpolation</li>
-								<li>Activity clustering, performance anomaly detection, segment recommender system</li>  
-								<li>Time-series charts for overall activities</li> 
-							</ul>
+						<div class="pfblock-header wow fadeIn">
+							<div class="pfblock-subtitle" style="text-align:left;">Features overview:
+								<ul>
+									<li>Leaderboard wind and influence statistics</li> 
+									<li>Athlete comparison for segment performance</li> 
+									<li>Detailed charts for segment performance including historical data and leaderboard trends</li> 
+									<li>Segment performance regressions (ordinary linear, ridge, isotonic) and cubic interpolation</li>
+									<li>Activity clustering, performance anomaly detection, segment recommender system</li>  
+									<li>Time-series charts for overall activities</li> 
+								</ul>
+							</div>
 						</div>
 					</div>
 					<div class="col-lg-7">
-						<canvas id="chart1"></canvas>
+						<div class="pfblock-header wow fadeIn">
+							<canvas id="chart1"></canvas>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -127,7 +133,30 @@
 					</div>
 				</div>
 		</section>
-		<section class="pfblock pfblock-gray" id="screenshots">
+
+		<section id="rides" class="pfblock pfblock-gray">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-10 col-sm-offset-1">
+						<div class="pfblock-header wow fadeInUp">
+							<h2 class="pfblock-title">Ride Analytics</h2>
+							<div class="pfblock-subtitle">
+								Provides activity data and aggregate statistics across all of your rides.</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-10 col-sm-offset-1">
+						<div class="pfblock-header wow fadeInUp">
+							<canvas id="chart5"></canvas>
+							<br>
+						</div>
+					</div>
+				</div>
+		</section>
+
+		<section class="pfblock pfblock" id="screenshots">
 			<div class="container">
 					<h2 style="text-align: center;"> Screenshots </h2>
 					<div class="row">
@@ -160,16 +189,18 @@
 			</div>
 		</section>
 
-		<section class="pfblock pfblock" id="poweredby">
+		<section class="pfblock pfblock-gray" id="poweredby">
 			<div class="container">
 				<div class="row skills">
 					<div class="row">
 						<div class="col-sm-10 col-sm-offset-1">
-							<div class="pfblock-header wow zoomIn">
+							<div class="pfblock-header wow fadeIn">
 								<h2 class="pfblock-title">Built Using / Powered By</h2>
 								<div class="pfblock-line"></div>
 								<div class="pfblock-subtitle">
 									<img src="https://i.imgur.com/LTCwdl8.png">
+									<br><br>
+									<p> <a href="https://github.com/MathBunny/strava-wind-analysis">View on GitHub <svg version="1.1" width="16" height="16" viewBox="0 0 16 16" class="octicon octicon-mark-github" aria-hidden="true"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg></a></p>
 								</div>
 							</div>
 						</div>
@@ -177,6 +208,7 @@
 				</div>
 			</div>
 		</section>
+
 		<footer id="footer">
 			<div class="container">
 				<div class="row">
@@ -184,6 +216,9 @@
 						<p class="copyright">
 							Copyright © 2018 <a href="http://horatiulazu.ca" target="_blank" style="text-decorations: none; color: inherit;">Horatiu Lazu</a>
 						</p>
+						<a class="github-button" href="https://github.com/MathBunny" data-show-count="false" aria-label="Follow @MathBunny on GitHub">Follow @MathBunny</a>
+						<a class="github-button" href="https://github.com/MathBunny/strava-wind-analysis" data-icon="octicon-star" data-show-count="false" aria-label="Star MathBunny/strava-wind-analysis on GitHub">Star</a>
+						<a class="github-button" href="https://github.com/MathBunny/strava-wind-analysis/fork" data-icon="octicon-repo-forked" aria-label="Fork MathBunny/strava-wind-analysis on GitHub">Fork</a>
 					</div>
 				</div>
 			</div>
@@ -384,10 +419,658 @@
 			const ctxLeaderboardEffortsLineChart = document.getElementById('chart3').getContext('2d');
 			ctxLeaderboardEffortsLineChart.clearRect(0, 0, ctxLeaderboardEffortsLineChart.width, ctxLeaderboardEffortsLineChart.height);
 
+			// Clusterd Chart
+			const clusteringChartData = {
+				"datasets": [
+					{
+						"label": "Cluster 1",
+						"fill": false,
+						"showLine": false,
+						"data": [
+							{
+								"label": "Didn't record on Strava",
+								"x": 50,
+								"y": 20
+							},
+							{
+								"label": "Conversational Ride w/ Friends, Muddy + Slipped",
+								"x": 31.9309,
+								"y": 10.241557377049181
+							},
+							{
+								"label": "First ride @ Waterloo, gravel roads",
+								"x": 43.7827,
+								"y": 20.7037593589912
+							},
+							{
+								"label": "Lakeshore >35 degrees celcius",
+								"x": 47.100300000000004,
+								"y": 23.19577017783858
+							},
+							{
+								"label": "Mountain Bike ride to MEC",
+								"x": 33.331,
+								"y": 19.131313775510204
+							},
+							{
+								"label": "Lakeshore",
+								"x": 45,
+								"y": 22.5
+							},
+							{
+								"label": "Lakeshore",
+								"x": 45,
+								"y": 22.5
+							},
+							{
+								"label": "Lakeshore",
+								"x": 40,
+								"y": 22.857142857142858
+							},
+							{
+								"label": "EVERY RED LIGHT ON THE WAY BACK - not even joking",
+								"x": 38.2536,
+								"y": 25.540237388724034
+							},
+							{
+								"label": "Etobikoe - August 9 2015",
+								"x": 60.0877,
+								"y": 27.847028836251287
+							},
+							{
+								"label": "Etobikoe - July 26 2015",
+								"x": 60.697,
+								"y": 27.593029422906934
+							},
+							{
+								"label": "Centre Ville - July 19 2015",
+								"x": 31.0585,
+								"y": 26.539425587467363
+							},
+							{
+								"label": "Short Ride... [Good / Bad Ride] - July 8 2015",
+								"x": 32.2103,
+								"y": 26.860569840166782
+							},
+							{
+								"label": "Lakeshore - June 26 2015",
+								"x": 41.5657,
+								"y": 24.542647203542725
+							},
+							{
+								"label": "Lakeshore [RECOVERY] - June 23 2015",
+								"x": 41.8872,
+								"y": 22.409558626839054
+							},
+							{
+								"label": "Post-Crash Ride",
+								"x": 30,
+								"y": 25.714285714285715
+							},
+							{
+								"label": "Crash",
+								"x": 43.6323,
+								"y": 26.183743957326225
+							},
+							{
+								"label": "Lakeshore - June 11 2015",
+								"x": 39.507,
+								"y": 25.013225466056983
+							},
+							{
+								"label": "Lakeshore - June 6 2015",
+								"x": 44.9426,
+								"y": 26.49743858499836
+							},
+							{
+								"label": "Downtown - May 23 2015",
+								"x": 40.6475,
+								"y": 22.581944444444446
+							},
+							{
+								"label": "Billy Bishop Airport [Easy ride] - May 17 2015",
+								"x": 43.2639,
+								"y": 23.180538770650397
+							},
+							{
+								"label": "Lakeshore - May 10 2015",
+								"x": 34.8657,
+								"y": 27.948456913827652
+							},
+							{
+								"label": "Lakeshore - April 25 2015",
+								"x": 37.7599,
+								"y": 25.848191671420423
+							},
+							{
+								"label": "Missisauga (partial) - April 12 2015",
+								"x": 47.489,
+								"y": 21.87873048374712
+							},
+							{
+								"label": "Lakeshore (Scarborough) - September 27 2014",
+								"x": 52.23,
+								"y": 26.319708846584547
+							},
+							{
+								"label": "Downtown Toronto - September 3 2014",
+								"x": 33.1104,
+								"y": 24.80179775280899
+							},
+							{
+								"label": "Lakeshore - August 8 2014",
+								"x": 46.1262,
+								"y": 24.9668200270636
+							}
+						],
+						"radius": 4,
+						"backgroundColor": "rgba(33,150,243, 0.2)",
+						"borderColor": "rgb(33,150,243)",
+						"elements": {
+							"line": {
+								"backgroundColor": "rgba(0, 0, 0 ,0)",
+								"borderWidth": 0,
+								"borderColor": "rgba(0, 0, 0, 0)",
+								"fill": false
+							}
+						}
+					},
+					{
+						"label": "Cluster 2",
+						"fill": false,
+						"showLine": false,
+						"data": [
+							{
+								"label": "Morning ride",
+								"x": 203.912,
+								"y": 23.8153127433169
+							},
+							{
+								"label": "[Solo] Rain always has to ruin the day!",
+								"x": 157.618,
+								"y": 24.174539877300614
+							},
+							{
+								"label": "Oakville/Burlington - July 1 2015 [Gran Fondo 7]",
+								"x": 133.166,
+								"y": 24.416705714576757
+							},
+							{
+								"label": "Niagara Falls - September 20 2014",
+								"x": 177.931,
+								"y": 22.298670194249112
+							},
+							{
+								"label": "Hamilton - September 1 2014",
+								"x": 169.377,
+								"y": 24.26990925011941
+							}
+						],
+						"backgroundColor": "rgba(255,152,0, 0.2)",
+						"radius": 4,
+						"borderColor": "rgb(255,152,0)",
+						"elements": {
+							"line": {
+								"backgroundColor": "rgba(0, 0, 0 ,0)",
+								"borderWidth": 0,
+								"borderColor": "rgba(0, 0, 0, 0)",
+								"fill": false
+							}
+						}
+					},
+					{
+						"label": "Cluster 3",
+						"fill": false,
+						"showLine": false,
+						"data": [
+							{
+								"label": "Midterm study break",
+								"x": 2.6311999999999998,
+								"y": 28.360239520958082
+							},
+							{
+								"label": "Laurier -> Waterloo",
+								"x": 0.3669,
+								"y": 42.607741935483865
+							},
+							{
+								"label": "Waterloo -> Laurier",
+								"x": 0.5274,
+								"y": 24.033417721518987
+							},
+							{
+								"label": "Not really sick anymore, small loop",
+								"x": 4.9528,
+								"y": 30.271782682512736
+							},
+							{
+								"label": "Back tire exploded",
+								"x": 0.8022,
+								"y": 31.052903225806453
+							},
+							{
+								"label": "Ride back from school",
+								"x": 5.6277,
+								"y": 18.12139534883721
+							},
+							{
+								"label": "Ride to school",
+								"x": 5.549300000000001,
+								"y": 21.48116129032258
+							},
+							{
+								"label": "Ride Home",
+								"x": 5.6763,
+								"y": 22.308602620087335
+							},
+							{
+								"label": "Ride to school",
+								"x": 5.777,
+								"y": 19.436635514018693
+							},
+							{
+								"label": "Ride back from school",
+								"x": 5.5759,
+								"y": 24.659999999999997
+							},
+							{
+								"label": "Ride to school",
+								"x": 5.760800000000001,
+								"y": 18.583225806451615
+							},
+							{
+								"label": "Morning Ride",
+								"x": 0.0228,
+								"y": 27.36
+							},
+							{
+								"label": "Test Ride with VDO M6",
+								"x": 3.7832,
+								"y": 28.672673684210526
+							},
+							{
+								"label": "Last Ride of the Year - SUPER WINDY!!!",
+								"x": 9.8597,
+								"y": 24.513066298342544
+							},
+							{
+								"label": "Commute to Home",
+								"x": 4.822100000000001,
+								"y": 26.222900302114805
+							},
+							{
+								"label": "Canada Computers - August 21, 2015",
+								"x": 9.6037,
+								"y": 23.344577987846055
+							},
+							{
+								"label": "Beecroft Road - August 2 2015 [SEGMENT HUNT]",
+								"x": 10.3831,
+								"y": 23.99175866495507
+							},
+							{
+								"label": "Part 1 Mont Tremblant - July 22 2015",
+								"x": 9.4124,
+								"y": 31.28775623268698
+							},
+							{
+								"label": "Local - June 20 2015",
+								"x": 6.9544,
+								"y": 28.514624145785877
+							},
+							{
+								"label": "WL Mackenzie CI - June 20 2015",
+								"x": 0.6437,
+								"y": 27.26258823529412
+							},
+							{
+								"label": "Local - June 15 2015",
+								"x": 11.1407,
+								"y": 26.86304085733423
+							},
+							{
+								"label": "Kennard Avenue Sprint to Wilmington - May 29 2015",
+								"x": 0.7932,
+								"y": 25.95927272727273
+							},
+							{
+								"label": "Sunnybrook - May 24 2015",
+								"x": 10.831700000000001,
+								"y": 29.541
+							},
+							{
+								"label": "Bike Depot - May 10 2015",
+								"x": 6.1993,
+								"y": 22.295184815184815
+							},
+							{
+								"label": "Sunnybrook - May 7 2015",
+								"x": 10.7157,
+								"y": 29.42526315789474
+							},
+							{
+								"label": "Sunnybrook - May 6 2015",
+								"x": 9.3726,
+								"y": 29.442722513089006
+							},
+							{
+								"label": "Sunnybrook - April 17 2015",
+								"x": 9.845,
+								"y": 32.30811303555151
+							},
+							{
+								"label": "Gym Ride - December 12 2014",
+								"x": 5.02,
+								"y": 30.12
+							},
+							{
+								"label": "Gym Ride - December 11 2014",
+								"x": 8.45,
+								"y": 33.8
+							},
+							{
+								"label": "W.L. Mackenzie Track Test (400m) - September 25 2014",
+								"x": 0.5034,
+								"y": 30.71593220338983
+							},
+							{
+								"label": "Finch Trail Sprint & Test - September 24 2014",
+								"x": 3.0351,
+								"y": 30.017472527472528
+							},
+							{
+								"label": "William Lyon Mackenzie CI - September 23 2014",
+								"x": 4.3086,
+								"y": 22.414682080924855
+							},
+							{
+								"label": "Ontario Science Center - September 7 2014",
+								"x": 11.897,
+								"y": 27.542893890675245
+							},
+							{
+								"label": "Neighborhood - August 29 2014",
+								"x": 3.6458000000000004,
+								"y": 22.59015490533563
+							},
+							{
+								"label": "Neighborhood - August 29 2014",
+								"x": 7.456300000000001,
+								"y": 23.36177545691906
+							},
+							{
+								"label": "Neighborhood - August 28 2014",
+								"x": 4.782100000000001,
+								"y": 22.59259842519685
+							}
+						],
+						"backgroundColor": "rgba(156,39,176, 0.2)",
+						"radius": 4,
+						"borderColor": "rgb(156,39,176)",
+						"elements": {
+							"line": {
+								"backgroundColor": "rgba(0, 0, 0 ,0)",
+								"borderWidth": 0,
+								"borderColor": "rgba(0, 0, 0, 0)",
+								"fill": false
+							}
+						}
+					},
+					{
+						"label": "Cluster 4",
+						"fill": false,
+						"showLine": false,
+						"data": [
+							{
+								"label": "First moderate ride",
+								"x": 98.7823,
+								"y": 20.474194254130925
+							},
+							{
+								"label": "Weekend ride",
+								"x": 76.15589999999999,
+								"y": 22.816348202396803
+							},
+							{
+								"label": "Bike crash @ Lakeshore",
+								"x": 71.429,
+								"y": 23.853840445269014
+							},
+							{
+								"label": "Oakville - August 5 2015",
+								"x": 80.0392,
+								"y": 28.69074181021607
+							},
+							{
+								"label": "Group Ride w/ Friends - July 31 2015",
+								"x": 90,
+								"y": 22.5
+							},
+							{
+								"label": "Etobikoe - June 22 2015",
+								"x": 72.2095,
+								"y": 24.123440979955458
+							},
+							{
+								"label": "Mississauga - June 21 2015",
+								"x": 86.00739999999999,
+								"y": 24.563795319317734
+							},
+							{
+								"label": "Lakeshore (extended) - May 16 2015",
+								"x": 100,
+								"y": 25
+							},
+							{
+								"label": "Oakville - May 3 2015",
+								"x": 105.242,
+								"y": 28.24235557212076
+							},
+							{
+								"label": "Mississauga - April 12 2015",
+								"x": 90,
+								"y": 21.428571428571427
+							},
+							{
+								"label": "Missisauga - September 14 2014",
+								"x": 96.8218,
+								"y": 22.30488769437512
+							}
+						],
+						"backgroundColor": "rgba(244,67,54, 0.2)",
+						"radius": 4,
+						"borderColor": "rgb(244,67,54)",
+						"elements": {
+							"line": {
+								"backgroundColor": "rgba(0, 0, 0 ,0)",
+								"borderWidth": 0,
+								"borderColor": "rgba(0, 0, 0, 0)",
+								"fill": false
+							}
+						}
+					},
+					{
+						"label": "Cluster 5",
+						"fill": false,
+						"showLine": false,
+						"data": [
+							{
+								"label": "Free biking in a park with some friends",
+								"x": 12.5707,
+								"y": 10.585852631578948
+							},
+							{
+								"label": "Ride to school & back",
+								"x": 13.7415,
+								"y": 19.24879377431907
+							},
+							{
+								"label": "Lunch Ride to Earl Bales",
+								"x": 12.5063,
+								"y": 17.887437425506555
+							},
+							{
+								"label": "Lunch Ride",
+								"x": 13.4196,
+								"y": 16.939186535764378
+							},
+							{
+								"label": "Quite literal \"WARM\" up",
+								"x": 19.8715,
+								"y": 23.656547619047622
+							},
+							{
+								"label": "Local Ride in a Toaster",
+								"x": 16.401799999999998,
+								"y": 22.290101925254813
+							},
+							{
+								"label": "Forgot my bike computer upstairs, oh well",
+								"x": 19.849,
+								"y": 24.206097560975614
+							},
+							{
+								"label": "Scam of a Ride - August 22 2015",
+								"x": 14.1385,
+								"y": 20.954549197200492
+							},
+							{
+								"label": "Ride w/ Friend (George) - August 19 2015",
+								"x": 19.4803,
+								"y": 15.255401348705679
+							},
+							{
+								"label": "Local Easy Ride - August 11 2015",
+								"x": 12.798,
+								"y": 23.05945945945946
+							},
+							{
+								"label": "Ride to Banbury Tennis Club [Mountain Bike] - August 8 2015",
+								"x": 10.8472,
+								"y": 20.00508196721312
+							},
+							{
+								"label": "Oakville ride warm-up - August 5 2015",
+								"x": 14.0791,
+								"y": 20.961439205955337
+							},
+							{
+								"label": "Truly Random Ride [KOM?] - July 30 2015",
+								"x": 22.219099999999997,
+								"y": 22.11466961570362
+							},
+							{
+								"label": "Part #2 - Mont Tremblant - July 22 2015",
+								"x": 26.419700000000002,
+								"y": 29.059248395967003
+							},
+							{
+								"label": "Rain Storm Mont Tremblant - July 21 2015",
+								"x": 28.24,
+								"y": 27.686274509803923
+							},
+							{
+								"label": "Mont Tremblant - July 18 2015",
+								"x": 24.0985,
+								"y": 27.73484654731458
+							},
+							{
+								"label": "Gym Ride - June 25 2015",
+								"x": 12,
+								"y": 24
+							},
+							{
+								"label": "Gym Ride - June 24 2015",
+								"x": 13.5,
+								"y": 27
+							},
+							{
+								"label": "Local - June 19 2015",
+								"x": 20,
+								"y": 20
+							},
+							{
+								"label": "Library + WL Mackenzie - June 9 2015",
+								"x": 20.931099999999997,
+								"y": 23.792851278812755
+							},
+							{
+								"label": "Sunnybrook - May 28 2015",
+								"x": 15.005,
+								"y": 28.748270356572647
+							},
+							{
+								"label": "Sunnybrook - April 11 2015",
+								"x": 18.879,
+								"y": 22.63970686209194
+							},
+							{
+								"label": "Gym Ride - December 8 2014",
+								"x": 15,
+								"y": 32.608695652173914
+							},
+							{
+								"label": "Sunnybrook - October 2 2014",
+								"x": 17.745,
+								"y": 24.617341040462428
+							},
+							{
+								"label": "Sunnybrook - September 17 2014",
+								"x": 20.8447,
+								"y": 23.77722433460076
+							}
+						],
+						"backgroundColor": "rgba(63,81,181, 0.2)",
+						"radius": 4,
+						"borderColor": "rgb(63,81,181)",
+						"elements": {
+							"line": {
+								"backgroundColor": "rgba(0, 0, 0 ,0)",
+								"borderWidth": 0,
+								"borderColor": "rgba(0, 0, 0, 0)",
+								"fill": false
+							}
+						}
+					}
+				]
+			};
+
+			const ctxAllActivitiesClusterChart = document.getElementById('chart5').getContext('2d');
+			const clusteringChartOptions = {
+				title: {
+					text: 'Aggregate Distance/Speed Scatter Plot with 5 Clusters',
+					display: true,
+				},
+				scales: {
+					yAxes: [{
+						ticks: {
+							beginAtZero: true,
+							callback: value => `${value}km/h`,
+						},
+					}],
+					xAxes: [{
+						ticks: {
+							beginAtZero: true,
+							callback: value => `${value}km`,
+						},
+					}],
+				},
+			tooltips: {
+					enabled: true,
+					mode: 'single',
+					callbacks: {
+						label: (tooltipItems, data)  => { 
+							return `${data.datasets[tooltipItems.datasetIndex].data[tooltipItems.index].label}, ${tooltipItems.yLabel.toFixed(2)}km/h, ${tooltipItems.xLabel.toFixed(2)}km`;
+							}
+					}
+				},
+			};
+
 			let inViewChart1 = false;
 			let inViewChart2 = false;
 			let inViewChart3 = false;
 			let inViewChart4 = false;
+			let inViewChart5 = false;
 
 			function isScrolledIntoView(elem){
 				const docViewTop = $(window).scrollTop();
@@ -443,6 +1126,16 @@
 					});
 				} else {
 					inViewChart4 = false;  
+				}
+				if (isScrolledIntoView('#chart5')) {
+					if (inViewChart5) { return; }
+					inViewChart5 = true;
+					const allActivitiesClusterChart = Chart.Scatter(ctxAllActivitiesClusterChart, {
+						data: clusteringChartData,
+						options: clusteringChartOptions,
+					});
+				} else {
+					inViewChart5 = false;  
 				}
 			});
 		</script>
