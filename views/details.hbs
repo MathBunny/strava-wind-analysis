@@ -130,7 +130,7 @@
                                             <th class="align-left">Wind Speed</th>
                                             <th class="align-left">Wind Direction</th>
                                             <th class="align-left">Ride Direction</th>
-                                            <th class="align-left">Influence </th>
+                                            <th class="align-left">Influence<a href="#" onclick="showInfluenceContainer()"><sup class="fw-300"><sup>[?]</sup></a></th>
                                         </tr>
                                     </thead>
                                     <tbody class="fw-300">
@@ -150,7 +150,8 @@
                                         {{/each}}
                                     </tbody>
                                 </table>
-                                
+                                <div id="influenceContainer">
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -365,6 +366,10 @@
                     options: options
                 });
             });
+
+            function showInfluenceContainer(){
+                    $("#influenceContainer").append(`<div class="ink-alert info block" role="alert"> <button class="ink-dismiss">&times;</button><h4>Influence Scoring Explanation</h4><p class="fw-300">Influence ratings determine the impact that wind had on a rider. Factors that are taken into account include wind direction, speed and the rider's direction and speed. Through manipulation of vectors and empirical data on wind's influence on cycling an approximate number is generated indicating wind's net influence, which added to . <br><br> Lower (negative) numbers indicate wind assisted the athlete, while the higher (positive) numbers indicate the converse.</p></div>`);
+            }
 
             function pushDown() {
                 setTimeout(() => {

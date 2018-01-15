@@ -43,7 +43,6 @@ router.get('/get/activity', (req, res, next) => {
             country: segmentData.country });
         }
       });
-
       if (req.query.filtered !== undefined && req.query.filtered === 'true') {
         const unselectedFilters = req.query.filters.split('|');
         const filterMap = filters.getFilterMap();
@@ -54,7 +53,6 @@ router.get('/get/activity', (req, res, next) => {
           }
         });
       }
-
       res.send({ segmentsArr: segments });
     });
   }
@@ -68,7 +66,7 @@ router.get('/get/activities', (req, res, next) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else {
-    requestify.get(`https://www.strava.com/api/v3/athlete/activities?access_token=${req.user.accessToken}`).then((response) => {
+    requestify.get(`https://www.strava.com/api/v3/athlete/activities?access_token=${req.user.accessToken}&per_page=200`).then((response) => {
       const activities = JSON.parse(response.body);
       res.send(activities);
     });
