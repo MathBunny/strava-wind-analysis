@@ -68,6 +68,7 @@ router.put('/put/reset-cache', (req, res) => {
     client.keys(`*user=${req.user.id}*`, (err, keys) => {
       if (err) {
         res.send('fail');
+        console.log(err);
       } else {
         res.send({ message: `Successfully deleted ${keys.length} records` });
         keys.forEach((key) => {

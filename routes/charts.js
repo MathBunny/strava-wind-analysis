@@ -28,6 +28,9 @@ router.get('/get/chart/individual-aggregate-ride-scatterplot-ml', (req, res, nex
           activityObj.label = activity.name;
           activityObj.x = activity.distance / 1000;
           activityObj.y = ((activity.distance * 3.6) / activity.moving_time);
+          if (isNaN(activityObj.y)) {
+            activityObj.y = 0;
+          }
           dataArr.push(activityObj);
         }
       });
