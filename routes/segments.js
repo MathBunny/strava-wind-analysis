@@ -151,6 +151,7 @@ router.get('/details', (req, res) => {
       requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}?&access_token=${req.user.accessToken}`).then((segmentResponse) => {
         const segmentData = JSON.parse(segmentResponse.body);
         segmentData.athleteID = athleteID;
+        segmentData.distance_raw = segmentData.distance;
         segmentData.distance /= 1000;
         segmentData.distance = segmentData.distance.toFixed(2);
         segmentData.leaderboard = leaderboard;
@@ -208,7 +209,7 @@ router.get('/details', (req, res) => {
                 } else {
                   effort.rank = `${effort.rank}th`;
                 }
-                effort.speed = `${(((effort.distance * 3.6) / effort.elapsed_time).toFixed(2))}km/h`;
+                effort.speed = `${(((segmentData.distance_raw * 3.6) / effort.elapsed_time).toFixed(2))}km/h`;
       
                 darkskydatahandler.getWeatherDetails(config.weatherKey, req.user.id, segmentData.latitude, segmentData.longitude, effort.start_date_iso).then((windData) => {
                   const date = new Date(effort.start_date_iso);
