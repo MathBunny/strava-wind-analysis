@@ -35,5 +35,8 @@ config.js
 # Redis files
 *.rdb
 
+# NYC Logs
+.nyc_output
+
 .DS_Store
 package-lock.json
