@@ -47,7 +47,7 @@ describe('Aggregate Bar Graph', () => {
     it('Label text => ProvidedLabel', () => {
       expect(new BarGraphDataSetDecorator(new AggregateBarChart([10, 10, 10, 10, 10, 10, 10], 'ProvidedLabel'), [1, 2, 3, 4, 5, 6, 7], 'Test').getData().datasets[0].label).to.equal('ProvidedLabel');
     });
-    it('Dataset count => 1', () => {
+    it('Dataset count => 2', () => {
       expect(new BarGraphDataSetDecorator(new AggregateBarChart([10, 10, 10, 10, 10, 10, 10], ''), [1, 2, 3, 4, 5, 6, 7], 'Test').getData().datasets.length).to.equal(2);
     });
   });
