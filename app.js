@@ -84,6 +84,8 @@ app.use((err, req, res) => {
 
 process.on('uncaughtException', err => console.log(err.stack));
 
+process.on('unhandledRejection', err => console.log(err));
+
 passport.serializeUser((user, done) => {
   done(null, user);
 });
