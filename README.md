@@ -1,6 +1,14 @@
 ![Strava Wind Analysis](https://i.imgur.com/9eaXBJu.png)
+<br>Bringing machine learning analytics, data visualization and weather data to cycling activities and segments.
 
-Bringing machine learning analytics, data visualization and weather data to cycling activities and segments.
+![Travis CI](https://travis-ci.org/MathBunny/strava-wind-analysis.svg?branch=master)
+[![GitHub issues](https://img.shields.io/github/issues/MathBunny/strava-wind-analysis.svg)](https://github.com/MathBunny/strava-wind-analysis/issues)
+![Uptime Robot ratio (7 days)](https://img.shields.io/uptimerobot/ratio/7/m780079116-6032e09891aff5228e33d6c0.svg)
+![node](https://img.shields.io/badge/node-%3E=6.3-brightgreen.svg)
+![npm](https://img.shields.io/npm/v/npm.svg)
+![release](https://img.shields.io/badge/release-v1.2-blue.svg)
+[![GitHub license](https://img.shields.io/github/license/MathBunny/strava-wind-analysis.svg)](https://github.com/MathBunny/strava-wind-analysis/blob/master/LICENSE.md)
+
 
 ## Features
 * Strava OAuth authentication
