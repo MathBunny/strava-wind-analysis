@@ -1,6 +1,8 @@
 ![Strava Wind Analysis](https://i.imgur.com/9eaXBJu.png)
-
 Bringing machine learning analytics, data visualization and weather data to cycling activities and segments.
+
+---
+![Travis CI](https://travis-ci.org/MathBunny/strava-wind-analysis.svg?branch=master)
 
 ## Features
 * Strava OAuth authentication
