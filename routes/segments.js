@@ -53,6 +53,10 @@ router.get('/get/activity', (req, res, next) => {
           }
         });
       }
+      
+      // Resolves @69: Filter virtual rides / resolve Zwift segment pollution on segments selection page
+      segments = segments.filter(segment => segment.activity_type !== 'Ride');
+
       res.send({ segmentsArr: segments });
     });
   }
@@ -67,7 +71,7 @@ router.get('/get/activities', (req, res, next) => {
     res.redirect('/');
   } else {
     requestify.get(`https://www.strava.com/api/v3/athlete/activities?access_token=${req.user.accessToken}&per_page=200`).then((response) => {
-      const activities = JSON.parse(response.body);
+      const activities = JSON.parse(response.body).filter(activity => activity.type === 'Ride');
       res.send(activities);
     });
   }
