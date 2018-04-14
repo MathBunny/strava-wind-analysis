@@ -14,6 +14,7 @@ const wind = require('./routes/wind');
 const settings = require('./routes/settings');
 const legacy = require('./routes/legacy');
 const passport = require('passport');
+const elasticsearchdatahandler = require('./data/elasticsearchdatahandler');
 const StravaStrategy = require('passport-strava').Strategy;
 
 const app = express();
@@ -52,6 +53,7 @@ passport.use(new StravaStrategy({
   process.nextTick(() => {
     const userProfile = profile;
     userProfile.accessToken = accessToken;
+    elasticsearchdatahandler.userRefresh(accessToken, userProfile.id);
     return done(null, profile);
   });
 }));
