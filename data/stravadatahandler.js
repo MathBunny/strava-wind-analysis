@@ -28,6 +28,24 @@ class StravaDataHandler {
     });
   }
 
+  static getActivitiesListAfterEpoch(accessToken, epoch) {
+    return new Promise((resolve) => {
+      requestify.get(`https://www.strava.com/api/v3/athlete/activities?&access_token=${accessToken}&after=${epoch}&per_page=200`).then((activitiesResponse) => {
+        const activitesList = JSON.parse(activitiesResponse.body);
+        resolve(activitesList);
+      }).fail(err => console.log(err));
+    });
+  }
+
+  static getActivitiesListBeforeEpoch(accessToken, epoch) {
+    return new Promise((resolve) => {
+      requestify.get(`https://www.strava.com/api/v3/athlete/activities?&access_token=${accessToken}&before=${epoch}&per_page=200`).then((activitiesResponse) => {
+        const activitesList = JSON.parse(activitiesResponse.body);
+        resolve(activitesList);
+      }).fail(err => console.log(err));
+    });
+  }
+
   static getLeaderboardAthletes(accessToken, segmentID) {
     return new Promise((resolve) => {
       requestify.get(`https://www.strava.com/api/v3/segments/${segmentID}/leaderboard?&access_token=${accessToken}`).then((segmentResponse) => {

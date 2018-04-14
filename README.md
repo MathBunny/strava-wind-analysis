@@ -51,6 +51,7 @@ const mlEndpoint = "YourMLEndPoint";
 const defaultExpirationTime = 7200; // Redis cache expiration time
 const mongoDBUrl = ''; // MongoDB url
 const dailyDarkSkyLimit = 500; // Hard limit on API calls per day
+const elasticsearchendpoint = 'YourElasticsearchEndpoint';
 
 exports.clientID = clientID;
 exports.clientSecret = clientSecret;
@@ -62,6 +63,7 @@ exports.mlEndpoint = mlEndpoint;
 exports.defaultExpirationTime = defaultExpirationTime;
 exports.mongoDBUrl = mongoDBUrl;
 exports.dailyDarkSkyLimit = dailyDarkSkyLimit;
+exports.elasticsearchendpoint = elasticsearchendpoint;
 ```
 
 Now setup a Redis instance and direct it to `localhost` with port `6379` (default configuration).
