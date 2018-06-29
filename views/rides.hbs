@@ -342,8 +342,8 @@
                         initialize();    
 
                         $("#modal-elevation").text(activityDetails.total_elevation_gain + "m");
-                        const hours = ((activityDetails.elapsed_time / 60) / 60).toFixed(0);
-                        const minutes = ((activityDetails.elapsed_time / 60) % 60).toFixed(0);
+                        const hours = ((activityDetails.moving_time / 60) / 60).toFixed(0);
+                        const minutes = ((activityDetails.moving_time / 60) % 60).toFixed(0);
                         let hoursString = "";
                         if (parseInt(hours) === 1)
                             hoursString = "1 hour and ";
