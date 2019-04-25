@@ -37,6 +37,10 @@
                         <ul class="control unstyled" style="margin-top: -10px">
                             <li class="fw-300"><input type="checkbox" id="ridesFilter"><label for="ridesFilter">Filter non-cycling rides</label></li>
                         </ul>
+
+                        <ul class="control unstyled" style="margin-top: -10px">
+                            <li class="fw-300"><input type="checkbox" id="metricUnits"><label for="metricUnits">Metric units</label></li>
+                        </ul>
                     </div>
                 </fieldset>
                 <fieldset>
@@ -122,7 +126,7 @@
                 e.preventDefault();
                 $.ajax({
                     type: "PUT",
-                    url: `settings/put/rides-filter?ridesFilter=${($('#ridesFilter').prop('checked'))}`,
+                    url: `settings/put/update-settings?ridesFilter=${($('#ridesFilter').prop('checked'))}&metricUnits=${($('#metricUnits').prop('checked'))}`,
                     data: { 
                     },
                     success: (success) => {
@@ -162,6 +166,23 @@
                         $('#ridesFilter').prop('checked', false);
                     } else {
                         $('#ridesFilter').prop('checked', true);
+                    }
+                },
+                error: (result) => {
+                }
+            });
+
+            $.ajax({
+                type: "GET",
+                async: false,
+                url: 'settings/get/metric-units?',
+                data: { 
+                },
+                success: (success) => {
+                    if (success === 'false') {
+                        $('#metricUnits').prop('checked', false);
+                    } else {
+                        $('#metricUnits').prop('checked', true);
                     }
                 },
                 error: (result) => {

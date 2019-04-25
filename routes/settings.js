@@ -61,6 +61,26 @@ router.get('/get/rides-filter', (req, res) => {
   }
 });
 
+router.get('/get/metric-units', (req, res) => {
+  if (!req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    MongoClient.connect(config.mongoDBUrl, (err, db) => {
+      db.collection('users').findOne({ id: req.user.id }, (error, result) => {
+        if (error) {
+          console.log(error);
+        }
+        db.close();
+        if (result.metricUnits === undefined) {
+          res.send(true);
+        } else {
+          res.send(result.metricUnits);
+        }
+      });
+    });
+  }
+});
+
 router.put('/put/reset-cache', (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
@@ -79,12 +99,13 @@ router.put('/put/reset-cache', (req, res) => {
   }
 });
 
-router.put('/put/rides-filter', (req, res) => {
-  if (!req.isAuthenticated() || req.query.ridesFilter === undefined) {
+// Expects both settings to be supplemented in the query string
+router.put('/put/update-settings', (req, res) => {
+  if (!req.isAuthenticated() || req.query.ridesFilter === undefined || req.query.metricUnits === undefined) {
     res.redirect('/');
   } else {
     MongoClient.connect(config.mongoDBUrl, (err, db) => {
-      const newVal = { $set: { ridesFilter: req.query.ridesFilter } };
+      const newVal = { $set: { ridesFilter: req.query.ridesFilter, metricUnits: req.query.metricUnits } };
       db.collection('users').updateOne({ id: req.user.id }, newVal, (error) => {
         if (error) {
           console.log(error);
