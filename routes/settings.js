@@ -115,6 +115,8 @@ router.put('/put/update-settings', (req, res) => {
         db.close();
       });
     });
+    req.session.metricUnits = req.query.metricUnits; // update session-wide metricUnits store
+    req.session.save();
   }
 });
 

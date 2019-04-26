@@ -35,18 +35,28 @@ router.get('/', (req, res) => {
       }
       db.collection('users').findOne({ id: req.user.id }, (error, result) => {
         let logins = 0;
+        let metricUnits = true;
+
         if (result === null) {
           const newUserObj = req.user._json; // eslint-disable-line
-          newUserObj.ridesFilter = false;
+          newUserObj.ridesFilter = 'false';
           newUserObj.logins = 0;
           newUserObj.api = {};
           
           db.collection('users').insertOne(newUserObj, () => {
           });
-        } else if (result.logins !== undefined) {
-          logins = result.logins;
+        } else {
+          if (result.logins !== undefined) {
+            logins = result.logins;
+          }
+          if (result.metricUnits !== undefined) {
+            metricUnits = result.metricUnits;
+          }
         }
-        const newVal = { $set: { logins: logins + 1 } };
+        const newVal = { $set: { logins: logins + 1, metricUnits } };
+        req.session.metricUnits = metricUnits; // store session-wide
+        req.session.save();
+
         db.collection('users').updateOne({ id: req.user.id }, newVal, () => {
           db.close();
         });
