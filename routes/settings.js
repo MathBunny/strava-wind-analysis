@@ -64,6 +64,8 @@ router.get('/get/rides-filter', (req, res) => {
 router.get('/get/metric-units', (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
+  } else if (req.session.metricUnits !== undefined) {
+    res.send(req.session.metricUnits);
   } else {
     MongoClient.connect(config.mongoDBUrl, (err, db) => {
       db.collection('users').findOne({ id: req.user.id }, (error, result) => {

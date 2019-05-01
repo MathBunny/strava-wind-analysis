@@ -102,11 +102,11 @@
                                 <li class="heading"> Distance </li>
                                 <div class="fw-300">
                                 <ul class="control unstyled">
-                                    <li><input type="checkbox" id="d1" checked="checked"><label for="cb5"> 0m - 250m</label></li>
-                                    <li><input type="checkbox" id="d2" checked="checked"><label for="cb4"> 250m - 1km</label></li>
-                                    <li><input type="checkbox" id="d3" checked="checked"><label for="cb3"> 1km - 2.5km</label></li>
-                                    <li><input type="checkbox" id="d4" checked="checked"><label for="cb2"> 2.5km - 5km</label></li>
-                                    <li><input type="checkbox" id="d5" checked="checked"><label for="cb1"> 5km+</label></li>
+                                    <li><input type="checkbox" id="d1" checked="checked"><label for="cb5" id="ld1"> 0m - 250m</label></li>
+                                    <li><input type="checkbox" id="d2" checked="checked"><label for="cb4" id="ld2"> 250m - 1km</label></li>
+                                    <li><input type="checkbox" id="d3" checked="checked"><label for="cb3" id="ld3"> 1km - 2.5km</label></li>
+                                    <li><input type="checkbox" id="d4" checked="checked"><label for="cb2" id="ld4"> 2.5km - 5km</label></li>
+                                    <li><input type="checkbox" id="d5" checked="checked"><label for="cb1" id="ld5"> 5km+</label></li>
                                     <li><input type="checkbox" id="d6" checked="checked"><label for="cb1"> Select All</label></li>
                                 </ul>
                                 </div>
@@ -201,7 +201,11 @@
                                 let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
                                 segmentRow += "<td>" + segment.name + "</td>";
                                 segmentRow += "<td>" + segment.city + ", " + segment.country + "</td>";
-                                segmentRow += "<td>" + segment.distance + "km </td>";
+                                if (segmentDetails.metricUnits === 'false') {
+                                    segmentRow += "<td>" + segment.distance_imperial + "miles </td>";
+                                } else {
+                                    segmentRow += "<td>" + segment.distance_metric + "km </td>";
+                                }
                                 segmentRow += "<td>" + segment.average_grade + "% </td>";
                                 segmentRow += "<td>" + segment.maximum_grade + "% </td>";
                                 segmentRow += "</tr>";
@@ -236,6 +240,23 @@
               ga('create', 'UA-85289613-1', 'auto');
               ga('send', 'pageview');
 
+            $.ajax( {url: "settings/get/metric-units", dataType: "json", success: metricUnits => {
+                if (metricUnits === false) {
+                    $('#ld1').text(' 0 - 800ft');
+                    $('#ld2').text(' 800ft - 1 mile');
+                    $('#ld3').text(' 1 - 2.5 miles');
+                    $('#ld4').text(' 2.5 - 5 miles');
+                    $('#ld5').text(' 5 miles+');
+                } else {
+                    $('#ld1').text(' 0m - 250m');
+                    $('#ld2').text(' 250m - 1km');
+                    $('#ld3').text(' 1km - 2.5km');
+                    $('#ld4').text(' 2.5km - 5km');
+                    $('#ld5').text(' 5km+');
+                }
+            }});
+
+
             $.ajax( {url: "segments/get/activities", dataType: "json", success: activities => {
               activities.forEach(activity => {
                 $.ajax( {url: "segments/get/activity?activityID=" + activity.id, dataType: "json", success: segmentDetails => {
@@ -243,7 +264,12 @@
                         let segmentRow = "<tr class=\"fw-100\" onclick=\"window.document.location='/segments/details?id=" + segment.id + "'\">";
                         segmentRow += "<td>" + segment.name + "</td>";
                         segmentRow += "<td>" + segment.city + ", " + segment.country + "</td>";
-                        segmentRow += "<td>" + segment.distance + "km </td>";
+                        // TODO: Fix code duplication
+                        if (segmentDetails.metricUnits === 'false') {
+                            segmentRow += "<td>" + segment.distance_imperial + " miles </td>";
+                        } else {
+                            segmentRow += "<td>" + segment.distance_metric + "km </td>";
+                        }
                         segmentRow += "<td>" + segment.average_grade + "% </td>";
                         segmentRow += "<td>" + segment.maximum_grade + "% </td>";
                         segmentRow += "</tr>";
