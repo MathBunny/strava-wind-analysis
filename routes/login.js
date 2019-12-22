@@ -3,7 +3,7 @@ const passport = require('passport');
 
 const router = express.Router();
 
-router.get('/', passport.authenticate('strava', { scope: ['public'] }), () => { });
+router.get('/', passport.authenticate('strava', { scope: ['read'] }), () => { });
 
 router.get('/callback',
   passport.authenticate('strava', { failureRedirect: '/login' }),
