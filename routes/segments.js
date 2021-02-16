@@ -32,6 +32,15 @@ router.get('/get/activity', (req, res, next) => {
           if (segmentData.name.length > 35) {
             segmentData.name = `${segmentData.name.substring(0, 32)}...`;
           }
+          if (segmentData.city > 15) {
+            segmentData.city = `${segmentData.city.substring(0, 12)}...`;
+          }
+          if (segmentData.province > 15) {
+            segmentData.province = `${segmentData.province.substring(0, 12)}...`;
+          }
+          if (segmentData.country > 15) {
+            segmentData.country = `${segmentData.country.substring(0, 12)}...`;
+          }
           segments.push({ name: segmentData.name,
             id: segmentData.id,
             distance: (segmentData.distance / 1000).toFixed(2),
