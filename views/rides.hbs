@@ -102,12 +102,21 @@
                                     <li class="heading"> Distance </li>
                                     <div class="fw-300">
                                     <ul class="control unstyled">
-                                        <li><input type="checkbox" id="dr1" checked="checked"><label for="cb5">  0km - 20km</label></li>
-                                        <li><input type="checkbox" id="dr2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
-                                        <li><input type="checkbox" id="dr3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
-                                        <li><input type="checkbox" id="dr4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
-                                        <li><input type="checkbox" id="dr5" checked="checked"><label for="cb1"> 200km+</label></li>
-                                        <li><input type="checkbox" id="dr6" checked="checked"><label for="cb1"> Select All</label></li>
+                                        {{#if metricUnits}}
+                                            <li><input type="checkbox" id="dr1" checked="checked"><label for="cb5"> 0km - 20km</label></li>
+                                            <li><input type="checkbox" id="dr2" checked="checked"><label for="cb4"> 20km - 50km</label></li>
+                                            <li><input type="checkbox" id="dr3" checked="checked"><label for="cb3"> 50km - 100km</label></li>
+                                            <li><input type="checkbox" id="dr4" checked="checked"><label for="cb2"> 100km - 200km</label></li>
+                                            <li><input type="checkbox" id="dr5" checked="checked"><label for="cb1"> 200km+</label></li>
+                                            <li><input type="checkbox" id="dr6" checked="checked"><label for="cb1"> Select All</label></li>
+                                        {{else}}
+                                            <li><input type="checkbox" id="dr1" checked="checked"><label for="cb5"> 0 miles - 20 miles</label></li>
+                                            <li><input type="checkbox" id="dr2" checked="checked"><label for="cb4"> 20 miles - 50 miles</label></li>
+                                            <li><input type="checkbox" id="dr3" checked="checked"><label for="cb3"> 50 miles - 100 miles</label></li>
+                                            <li><input type="checkbox" id="dr4" checked="checked"><label for="cb2"> 100 miles - 200 miles</label></li>
+                                            <li><input type="checkbox" id="dr5" checked="checked"><label for="cb1"> 200 miles+</label></li>
+                                            <li><input type="checkbox" id="dr6" checked="checked"><label for="cb1"> Select All</label></li>
+                                        {{/if}}
                                     </ul>
                                     </div>
                                 </ul>
@@ -118,14 +127,26 @@
                                     <li class="heading"> Average Speed </li>
                                     <div class="fw-300">
                                     <ul class="control unstyled">
-                                        <li><input type="checkbox" id="s1" checked="checked"><label for="cb5">  0km/h - 15km/h</label></li>
-                                        <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
-                                        <li><input type="checkbox" id="s3" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
-                                        <li><input type="checkbox" id="s4" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
-                                        <li><input type="checkbox" id="s5" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
-                                        <li><input type="checkbox" id="s6" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
-                                        <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 37km/h+</label></li>
-                                        <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All</label></li>
+                                        <!-- TODO: Adjust mph speeds to reflect lower quantitaties -->
+                                        {{#if metricUnits}}
+                                            <li><input type="checkbox" id="s1" checked="checked"><label for="cb5"> 0k/h - 15km/h</label></li>
+                                            <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15km/h - 18km/h</label></li>
+                                            <li><input type="checkbox" id="s3" checked="checked"><label for="cb4"> 18km/h - 23km/h</label></li>
+                                            <li><input type="checkbox" id="s4" checked="checked"><label for="cb4"> 23km/h - 27km/h</label></li>
+                                            <li><input type="checkbox" id="s5" checked="checked"><label for="cb3"> 27km/h - 33km/h</label></li>
+                                            <li><input type="checkbox" id="s6" checked="checked"><label for="cb2"> 33km/h - 37km/h</label></li>
+                                            <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 37km/h+</label></li>
+                                            <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All</label></li>
+                                        {{else}}
+                                            <li><input type="checkbox" id="s1" checked="checked"><label for="cb5"> 0mph - 15mph</label></li>
+                                            <li><input type="checkbox" id="s2" checked="checked"><label for="cb4"> 15mph - 18mph</label></li>
+                                            <li><input type="checkbox" id="s3" checked="checked"><label for="cb4"> 18mph - 23mph</label></li>
+                                            <li><input type="checkbox" id="s4" checked="checked"><label for="cb4"> 23mph - 27mph</label></li>
+                                            <li><input type="checkbox" id="s5" checked="checked"><label for="cb3"> 27mph - 33km/h</label></li>
+                                            <li><input type="checkbox" id="s6" checked="checked"><label for="cb2"> 33mph - 37km/h</label></li>
+                                            <li><input type="checkbox" id="s7" checked="checked"><label for="cb1"> 37mph+</label></li>
+                                            <li><input type="checkbox" id="s8" checked="checked"><label for="cb1"> Select All</label></li>
+                                        {{/if}}
                                     </ul>
                                     </div>
                                 </ul>
@@ -316,8 +337,13 @@
                         }
                         segmentRow += "<td>" + activityName + "</td>";
                         segmentRow += "<td>" + activity.start_date.substring(0, 10) + "</td>";
-                        segmentRow += "<td>" + (activity.distance / 1000).toFixed(2) + "km </td>";
-                        segmentRow += "<td>" + ((activity.distance * 3.6) / activity.moving_time).toFixed(2) + " km/h </td>";
+                        if (activities.metricUnits === 'true') {
+                            segmentRow += "<td>" + (activity.distance / 1000).toFixed(2) + "km </td>";
+                            segmentRow += "<td>" + ((activity.distance * 3.6) / activity.moving_time).toFixed(2) + " km/h </td>";
+                        } else {
+                            segmentRow += "<td>" + ((activity.distance / 1000) * 0.621371).toFixed(2) + "miles </td>";
+                            segmentRow += "<td>" + (((activity.distance * 3.6) / activity.moving_time) * 0.621371).toFixed(2) + " mph </td>";
+                        }
                         segmentRow += "<td>" + (activity.average_watts === undefined ? ('Zero') : (activity.average_watts)) + " watts </td>";
                         segmentRow += "</tr>";
                         $("#activity-list tbody").append(segmentRow);
@@ -341,7 +367,11 @@
                         path["resource_state"] = activityDetails.map.resource_state;
                         initialize();    
 
-                        $("#modal-elevation").text(activityDetails.total_elevation_gain + "m");
+                        if (activityDetails.metricUnits === 'true') {
+                            $("#modal-elevation").text(activityDetails.total_elevation_gain + "m"); 
+                        } else {
+                            $("#modal-elevation").text((activityDetails.total_elevation_gain * 3.28084).toFixed(2) + "ft");
+                        }
                         const hours = ((activityDetails.moving_time / 60) / 60).toFixed(0);
                         const minutes = ((activityDetails.moving_time / 60) % 60).toFixed(0);
                         let hoursString = "";
@@ -353,12 +383,22 @@
                         if (minutes == 1)
                             minuteString = (minutes + " minute ");
                         $("#modal-moving-time").text(hoursString + minuteString);
-                        $("#modal-distance").text((activityDetails.distance / 1000).toFixed(2) + " km");
+                        if (activityDetails.metricUnits === 'true') {
+                            $("#modal-distance").text((activityDetails.distance / 1000).toFixed(2) + " km");
+                        } else {
+                            $("#modal-distance").text(((activityDetails.distance / 1000) * 0.621371).toFixed(2) + " miles");
+                        }
                         const windReq = `wind/get/wind-data?latitude=${activityDetails.start_latlng[0]}&longitude=${activityDetails.start_latlng[1]}&start_date_iso=${activityDetails.start_date}&start_long=${activityDetails.start_latlng[1]}&start_lat=${activityDetails.start_latlng[0]}&end_long=${activityDetails.end_latlng[1]}&end_lat=${activityDetails.end_latlng[0]}`;
                         
                         $.ajax( {url: windReq, success: windDetails => {
                             $("#modal-wind-direction").text(windDetails.wind_bearing_str);
-                            $("#modal-wind-speed").text(windDetails.wind_speed_str + " km/h");
+
+                             if (activityDetails.metricUnits === 'true') {
+                                $("#modal-wind-speed").text((windDetails.wind_speed).toFixed(2) + " km/h");
+                            } else {
+                                console.log(activityDetails.metricUnits);
+                                $("#modal-wind-speed").text(((windDetails.wind_speed) * 0.621371).toFixed(2) + " mph");
+                            }
                             $("#modal-wind-correlation").text(windDetails.coefficient_str);
                         }});
                     } else {
@@ -377,8 +417,13 @@
                 }
                 segmentRow += "<td>" + activityName + "</td>";
                 segmentRow += "<td>" + activity.start_date.substring(0, 10) + "</td>";
-                segmentRow += "<td>" + (activity.distance / 1000).toFixed(2) + "km </td>";
-                segmentRow += "<td>" + ((activity.distance * 3.6) / activity.moving_time).toFixed(2) + " km/h </td>";
+                if (activity.metricUnits === 'true') {
+                    segmentRow += "<td>" + (activity.distance / 1000).toFixed(2) + "km </td>";
+                    segmentRow += "<td>" + ((activity.distance * 3.6) / activity.moving_time).toFixed(2) + " km/h </td>";
+                } else {
+                    segmentRow += "<td>" + (activity.distance / 1000 * 0.621371).toFixed(2) + "miles </td>";
+                    segmentRow += "<td>" + ((activity.distance * 3.6 * 0.621371) / activity.moving_time).toFixed(2) + "mph </td>";
+                }
                 segmentRow += "<td>" + (activity.average_watts === undefined ? ('Zero') : (activity.average_watts)) + " watts </td>";
                 segmentRow += "</tr>";
                 $("#activity-list tbody").append(segmentRow);

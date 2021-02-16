@@ -26,6 +26,7 @@ router.get('/get/activity', (req, res, next) => {
   } else {
     requestify.get(`https://www.strava.com/api/v3/activities/${req.query.id}?access_token=${req.user.accessToken}`).then((response) => {
       const activityDetails = JSON.parse(response.body);
+      activityDetails.metricUnits = req.session.metricUnits;
       res.send(activityDetails);
     });
   }
@@ -60,6 +61,9 @@ router.get('/get/activities', (req, res, next) => {
           if (result.ridesFilter === 'true') {
             activities = activities.filter(x => x.type === 'Ride');
           }
+          activities.forEach((activity) => {
+            activity.metricUnits = req.session.metricUnits;
+          });
           res.json(activities);
         });
       });
@@ -72,7 +76,7 @@ router.get('/', (req, res) => {
   if (!req.isAuthenticated()) {
     res.redirect('/');
   } else {
-    res.render('rides', { title: 'Wind Analysis - Rides' });
+    res.render('rides', { title: 'Wind Analysis - Rides', metricUnits: req.session.metricUnits === 'true' });
   }
 });
 

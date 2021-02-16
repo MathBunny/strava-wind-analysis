@@ -106,7 +106,11 @@
                                     <ul>
                                         <li> Average Slope: <div class="slab-100" style="display: inline"> {{average_grade}}% </div></li>
                                         <li> Maximum Slope: <div class="slab-100" style="display: inline"> {{maximum_grade}}% </div></li>
-                                        <li> Distance: <div class="slab-100" style="display: inline"> {{distance}}km </div></li>
+                                        {{#if metricUnits}}
+                                            <li> Distance: <div class="slab-100" style="display: inline"> {{distance}}km </div></li>
+                                        {{else}}
+                                            <li> Distance: <div class="slab-100" style="display: inline"> {{distance_imperial}} miles </div></li>
+                                        {{/if}}
                                         <li> Location: <div class="slab-100" style="display: inline"> {{city}}, {{country}} </div></li>
                                         <li> Participants: <div class="slab-100" style="display: inline"> {{participants}} athletes</div></li>
                                         <li> Official Leaderboard: <div class="slab-100" style="display: inline"> <a href="{{leaderboardLink}}" target="_blank">View on Strava </a></div></li>
@@ -134,20 +138,37 @@
                                         </tr>
                                     </thead>
                                     <tbody class="fw-300">
-                                        {{#each leaderboard}}
-                                            {{#with this}}
-                                                    <tr class="fw-100" onclick="showModal({{athlete_id}});">
-                                                        <td>{{rank}}</td>
-                                                        <td>{{athlete_name}}</td>
-                                                        <td>{{start_date}}</td>
-                                                        <td>{{speed}}</td>
-                                                        <td>{{wind_speed_str}}km/h</td>
-                                                        <td>{{wind_bearing_str}}&deg;</td>
-                                                        <td>{{ride_bearing_str}}&deg;</td>
-                                                        <td>{{coefficient_str}}</td>
-                                                    </tr>
-                                            {{/with}}
-                                        {{/each}}
+                                        {{#if metricUnits}}
+                                            {{#each leaderboard}}
+                                                {{#with this}}
+                                                        <tr class="fw-100" onclick="showModal({{athlete_id}});">
+                                                            <td>{{rank}}</td>
+                                                            <td>{{athlete_name}}</td>
+                                                            <td>{{start_date}}</td>
+                                                            <td>{{speed}}</td>
+                                                            <td>{{wind_speed_str}}km/h</td>
+                                                            <td>{{wind_bearing_str}}&deg;</td>
+                                                            <td>{{ride_bearing_str}}&deg;</td>
+                                                            <td>{{coefficient_str}}</td>
+                                                        </tr>
+                                                {{/with}}
+                                            {{/each}}
+                                        {{else}}
+                                            {{#each leaderboard}}
+                                                {{#with this}}
+                                                        <tr class="fw-100" onclick="showModal({{athlete_id}});">
+                                                            <td>{{rank}}</td>
+                                                            <td>{{athlete_name}}</td>
+                                                            <td>{{start_date}}</td>
+                                                            <td>{{speed_imperial}}</td>
+                                                            <td>{{wind_speed_imperial_str}}mph</td>
+                                                            <td>{{wind_bearing_str}}&deg;</td>
+                                                            <td>{{ride_bearing_str}}&deg;</td>
+                                                            <td>{{coefficient_str}}</td>
+                                                        </tr>
+                                                {{/with}}
+                                            {{/each}}
+                                        {{/if}}
                                     </tbody>
                                 </table>
                                 <div id="influenceContainer">

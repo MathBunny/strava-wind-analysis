@@ -34,7 +34,8 @@ router.get('/get/activity', (req, res, next) => {
           }
           segments.push({ name: segmentData.name,
             id: segmentData.id,
-            distance: (segmentData.distance / 1000).toFixed(2),
+            distance_metric: (segmentData.distance / 1000).toFixed(2),
+            distance_imperial: ((segmentData.distance / 1000) * 0.621371).toFixed(2), // #90
             average_grade: segmentData.average_grade,
             maximum_grade: segmentData.maximum_grade,
             ranking: prRank,
@@ -49,6 +50,10 @@ router.get('/get/activity', (req, res, next) => {
         unselectedFilters.forEach((filter) => {
           if (filterMap[filter] !== undefined) {
             const f = filterMap[filter];
+            segments.forEach((segment) => {
+              const modifiedSegment = segment; // do not modify parameter to lambda function
+              modifiedSegment.distance = (req.session.metricUnits === 'true') ? segment.distance_metric : segment.distance_imperial;
+            });
             segments = segments.filter(x => f(x));
           }
         });
@@ -57,7 +62,7 @@ router.get('/get/activity', (req, res, next) => {
       // Resolves @69: Filter virtual rides / resolve Zwift segment pollution on segments selection page
       segments = segments.filter(segment => segment.activity_type !== 'Ride');
 
-      res.send({ segmentsArr: segments });
+      res.send({ segmentsArr: segments, metricUnits: req.session.metricUnits });
     });
   }
 });
@@ -156,13 +161,14 @@ router.get('/details', (req, res) => {
         const segmentData = JSON.parse(segmentResponse.body);
         segmentData.athleteID = athleteID;
         segmentData.distance_raw = segmentData.distance;
-        segmentData.distance /= 1000;
-        segmentData.distance = segmentData.distance.toFixed(2);
+        segmentData.distance = (segmentData.distance / 1000).toFixed(2);
+        segmentData.distance_imperial = (segmentData.distance * 0.621371).toFixed(2);
         segmentData.leaderboard = leaderboard;
         segmentData.participants = leaderboardResponse.entry_count;
         segmentData.leaderboardLink = `https://www.strava.com/segments/${segmentID}?filter=overall`;
         segmentData.latitude = segmentData.start_latlng[0];
         segmentData.longitude = segmentData.start_latlng[1];
+        segmentData.metricUnits = req.session.metricUnits === 'true';
         let polyline = '';
         for (let x = 0; x < segmentData.map.polyline.length; x += 1) {
           if (segmentData.map.polyline.charAt(x) !== '\\') {
@@ -214,12 +220,15 @@ router.get('/details', (req, res) => {
                   effort.rank = `${effort.rank}th`;
                 }
                 effort.speed = `${(((segmentData.distance_raw * 3.6) / effort.elapsed_time).toFixed(2))}km/h`;
+                effort.speed_imperial = `${(((segmentData.distance_raw * 2.2369356) / effort.elapsed_time).toFixed(2))}mph`;
       
                 darkskydatahandler.getWeatherDetails(config.weatherKey, req.user.id, segmentData.latitude, segmentData.longitude, effort.start_date_iso).then((windData) => {
                   const date = new Date(effort.start_date_iso);
                   
                   effort.wind_speed = windData.hourly.data[date.getHours()].windSpeed;
                   effort.wind_speed_str = effort.wind_speed.toFixed(2);
+                  effort.wind_speed_imperial = effort.wind_speed * 0.621371;
+                  effort.wind_speed_imperial_str = effort.wind_speed_imperial.toFixed(2);
       
       
                   effort.wind_bearing = windData.hourly.data[date.getHours()].windBearing;
